@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Interfaces\IStudentStorage.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Interfaces\IStudentStorage.xaml" />
+  </ItemGroup>
+
+</Project>
