@@ -40,7 +40,7 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            var attestation = context.Attestations.FirstOrDefault(rec => rec.RecordBookNumber == model.RecordBookNumber || rec.Id == model.Id);
+            var attestation = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
             return attestation != null ? CreateModel(attestation) : null;
         }
         public void Insert(AttestationBindingModel model)
