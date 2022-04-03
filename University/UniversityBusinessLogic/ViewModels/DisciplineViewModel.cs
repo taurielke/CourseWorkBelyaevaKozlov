@@ -13,5 +13,6 @@ namespace UniversityBusinessLogic.ViewModels
         [DisplayName("Описание дисциплины")]
         public string DisciplineDescription { get; set; }
         public int TeacherId { get; set; }
+        public Dictionary<int, string> DisciplineLearningPlans { get; set; }
     }
 }

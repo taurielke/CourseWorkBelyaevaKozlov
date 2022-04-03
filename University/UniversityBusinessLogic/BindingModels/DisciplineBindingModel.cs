@@ -10,5 +10,6 @@ namespace UniversityBusinessLogic.BindingModels
         public string DisciplineName { get; set; }
         public string DisciplineDescription { get; set; }
         public int TeacherId { get; set; }
+        public Dictionary<int, string> DisciplineLearningPlans { get; set; }
     }
 }
