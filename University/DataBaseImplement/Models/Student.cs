@@ -13,7 +13,7 @@ namespace UniversityDataBaseImplement.Models
         //или в унике для которого прогу делаем нет слэшей в номерах зачеток тогда
 
         //пускай будет без слэшей, чтобы не усложнять, кому это надо
-
+        [Key]
         public int RecordBookNumber { get; set; }
         [Required]
         public string StudentName { get; set; }
