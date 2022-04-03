@@ -1,12 +1,21 @@
-﻿<Window x:Class="UniversityView.MainWindow"
+﻿<Window x:Name="MainWindow1" x:Class="UniversityView.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversityView"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Университет 'Все отчислены'" Height="450" Width="800">
     <Grid>
+        <Menu>
+            <MenuItem x:Name = "MenuItemAttestation" Header="Аттестация" Height="34" Width="86"/>
+            <MenuItem x:Name="MenuItemStudents" Header="Студенты" Height="38" Width="68"/>
+            <MenuItem x:Name="MenuItemLearningPlans" Header="Планы обучения" Height="46" Width="104"/>
+            <MenuItem x:Name="MenuItemTeachers" Header="Преподаватели" Width="101"/>
+            <MenuItem x:Name="MenuItemDisciplines" Header="Дисциплины" Height="58" Width="82"/>
+            <MenuItem x:Name="MenuItemInterimReports" Header="Промежуточная аттестация" Height="62" Width="173"/>
+            <Image Height="338" Width="420" RenderTransformOrigin="0.499,0.519" Source="/nicePic.png"/>
+        </Menu>
 
     </Grid>
 </Window>
