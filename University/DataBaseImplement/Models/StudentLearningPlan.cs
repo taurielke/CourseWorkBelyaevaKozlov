@@ -13,6 +13,5 @@ namespace UniversityDataBaseImplement.Models
         public int RecordBookNumber { get; set; }
         public virtual LearningPlan LearningPlan { get; set; }
         public virtual Student Student { get; set; }
-
     }
 }

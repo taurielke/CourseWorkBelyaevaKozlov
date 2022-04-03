@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UniversityDataBaseImplement.Implementation
 {
-    public class LearningPlanStorage : ILearningPlanStorage
+    public class DisciplineStorage : IDisciplineStorage
     {
         public List<LearningPlanViewModel> GetFullList()
         {
             using var context = new UniversityDatabase();
-            return context.LearningPlans
+            return context.Disciplines
             .Include(rec => rec.DisciplineLearningPlans)
-            .ThenInclude(rec => rec.Discipline)
+            .ThenInclude(rec => rec.LearningPlan)
             .ToList()
             .Select(CreateModel)
             .ToList();
@@ -31,7 +31,7 @@ namespace UniversityDataBaseImplement.Implementation
             using var context = new UniversityDatabase();
             return context.LearningPlans
                 .Include(rec => rec.DisciplineLearningPlans)
-                .ThenInclude(rec => rec.Discipline)
+                .ThenInclude(rec => rec.LearningPlan)
                 .Where(rec => rec.LearningPlanName.Contains(model.LearningPlanName))
                 .ToList()
                 .Select(CreateModel)
@@ -46,7 +46,7 @@ namespace UniversityDataBaseImplement.Implementation
             using var context = new UniversityDatabase();
             var learningPlan = context.LearningPlans
                 .Include(rec => rec.DisciplineLearningPlans)
-                .ThenInclude(rec => rec.Discipline)
+                .ThenInclude(rec => rec.LearningPlan)
                 .FirstOrDefault(rec => rec.LearningPlanName == model.LearningPlanName || rec.Id == model.Id);
             return learningPlan != null ? CreateModel(learningPlan) : null;
         }

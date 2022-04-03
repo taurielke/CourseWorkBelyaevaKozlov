@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniversityDataBaseImplement.Models
 {
-    public class IntermediateAttestation
+    public class InterimReport
     {
         public int Id { get; set; }
         public int RecordBookNumber { get; set; }

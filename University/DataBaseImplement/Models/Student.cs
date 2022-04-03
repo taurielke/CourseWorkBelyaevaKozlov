@@ -11,6 +11,9 @@ namespace UniversityDataBaseImplement.Models
         //если у нас primary key - это номер зачетки, то получается без ID будем? + на диаграмме номер зачетки - это int,
         //а у нас в зачетках есть слэш, то есть надо стринг что ли? 
         //или в унике для которого прогу делаем нет слэшей в номерах зачеток тогда
+
+        //пускай будет без слэшей, чтобы не усложнять, кому это надо
+
         public int RecordBookNumber { get; set; }
         [Required]
         public string StudentName { get; set; }
