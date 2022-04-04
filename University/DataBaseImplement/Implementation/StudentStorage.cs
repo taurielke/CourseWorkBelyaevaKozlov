@@ -15,12 +15,7 @@ namespace UniversityDataBaseImplement.Implementation
         public List<StudentViewModel> GetFullList()
         {
             using var context = new UniversityDatabase();
-            return context.Students
-            .Include(rec => rec.StudentLearningPlans)
-            .ThenInclude(rec => rec.LearningPlan)
-            .ToList()
-            .Select(CreateModel)
-            .ToList();
+            return context.Students.Include(rec => rec.LearningPlan).ToList().Select(CreateModel).ToList();
         }
         public List<StudentViewModel> GetFilteredList(StudentBindingModel model)
         {
@@ -29,13 +24,11 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.Students
-                .Include(rec => rec.StudentLearningPlans)
-                .ThenInclude(rec => rec.LearningPlan)
-                .Where(rec => rec.StudentName.Contains(model.StudentName))
+            return context.Students.Include(rec => rec.LearningPlan)
+                .Where(rec => rec.RecordBookNumber.Equals(model.RecordBookNumber))
                 .ToList()
-                .Select(CreateModel)
-                .ToList();
+                .Select(CreateModel).ToList();
+
         }
         public StudentViewModel GetElement(StudentBindingModel model)
         {
@@ -44,11 +37,8 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            var student = context.Students
-                .Include(rec => rec.StudentLearningPlans)
-                .ThenInclude(rec => rec.LearningPlan)
-                .FirstOrDefault(rec => rec.StudentName == model.StudentName || rec.RecordBookNumber == model.RecordBookNumber);
-            return student != null ? CreateModel(student) : null;
+            var Student = context.Students.Include(rec => rec.LearningPlan).FirstOrDefault(rec => rec.RecordBookNumber == model.RecordBookNumber);
+            return Student != null ? CreateModel(Student) : null;
         }
         public void Insert(StudentBindingModel model)
         {
@@ -56,14 +46,8 @@ namespace UniversityDataBaseImplement.Implementation
             using var transaction = context.Database.BeginTransaction();
             try
             {
-                Student student = new Student()
-                {
-                    StudentName = model.StudentName,
-                    EnrollingDate = model.EnrollingDate
-                };
-                context.Students.Add(student);
+                context.Students.Add(CreateModel(model, new Student()));
                 context.SaveChanges();
-                CreateModel(model, student, context);
                 transaction.Commit();
             }
             catch
@@ -83,7 +67,7 @@ namespace UniversityDataBaseImplement.Implementation
                 {
                     throw new Exception("Элемент не найден");
                 }
-                CreateModel(model, element, context);
+                CreateModel(model, element);
                 context.SaveChanges();
                 transaction.Commit();
             }
@@ -107,31 +91,15 @@ namespace UniversityDataBaseImplement.Implementation
                 throw new Exception("Элемент не найден");
             }
         }
-        private static Student CreateModel(StudentBindingModel model, Student student, UniversityDatabase context)
+        private static Student CreateModel(StudentBindingModel model, Student student)
         {
+            student.RecordBookNumber = (int)model.RecordBookNumber;
             student.StudentName = model.StudentName;
             student.EnrollingDate = model.EnrollingDate;
-            if (model.RecordBookNumber.HasValue)
-            {
-                var StudentLearningPlans = context.StudentLearningPlans.Where(rec => rec.RecordBookNumber == model.RecordBookNumber.Value).ToList();
-                context.StudentLearningPlans.RemoveRange(StudentLearningPlans.Where(rec => !model.StudentLearningPlans.ContainsKey(rec.LearningPlanId)).ToList());
-                context.SaveChanges();
-                foreach (var updateLearningPlan in StudentLearningPlans)
-                {
-                    model.StudentLearningPlans.Remove(updateLearningPlan.LearningPlanId);
-                }
-                context.SaveChanges();
-            }
-            // добавили новые
-            foreach (var pc in model.StudentLearningPlans)
-            {
-                context.StudentLearningPlans.Add(new StudentLearningPlan
-                {
-                    RecordBookNumber = student.RecordBookNumber,
-                    LearningPlanId = pc.Key
-                });
-                context.SaveChanges();
-            }
+            student.CourseYear = model.CourseYear;
+            student.GroupId = model.GroupId;
+            student.LearningPlanId = model.LearningPlanId;
+                
             return student;
         }
         private static StudentViewModel CreateModel(Student student)
@@ -145,7 +113,8 @@ namespace UniversityDataBaseImplement.Implementation
                 CourseYear = student.CourseYear,
                 GroupId = student.GroupId,
                 GroupName = context.Groups.FirstOrDefault(rec => rec.Id == student.GroupId)?.GroupName,
-                StudentLearningPlans = student.StudentLearningPlans.ToDictionary(recPC => recPC.LearningPlanId, recPC => (recPC.LearningPlan?.LearningPlanName))
+                LearningPlanId = student.LearningPlanId,
+                LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName
             };
         }
     }

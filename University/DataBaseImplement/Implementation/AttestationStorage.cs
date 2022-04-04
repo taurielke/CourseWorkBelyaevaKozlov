@@ -30,8 +30,8 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            //add data filtering
-            return context.Attestations.Where(rec => rec.RecordBookNumber == model.RecordBookNumber).Select(CreateModel).ToList();
+            //added data filtering for forming a report where a user choose a student and dates for which they want to receive their marks
+            return context.Attestations.Where(rec => rec.RecordBookNumber == model.RecordBookNumber && rec.ExamDate>=model.DateFrom && rec.ExamDate<=model.DateFrom).Select(CreateModel).ToList();
         }
         public AttestationViewModel GetElement(AttestationBindingModel model)
         {

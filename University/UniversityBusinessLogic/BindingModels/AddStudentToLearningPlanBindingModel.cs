@@ -8,6 +8,6 @@ namespace UniversityBusinessLogic.BindingModels
     public class AddStudentToLearningPlanBindingModel
     {
         public int LearningPlanId { get; set; }
-        public StudentViewModel Teacher { get; set; }
+        public StudentViewModel Student { get; set; }
     }
 }

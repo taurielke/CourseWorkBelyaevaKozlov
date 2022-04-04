@@ -17,7 +17,9 @@ namespace UniversityBusinessLogic.ViewModels
         public int GroupId { get; set; }
         [DisplayName("Название группы")]
         public string GroupName { get; set; }
-        public Dictionary<int, string> StudentLearningPlans { get; set; }
+        public int LearningPlanId { get; set; }
+        [DisplayName("Название плана обучения")]
+        public string LearningPlanName { get; set; }
 
     }
 }

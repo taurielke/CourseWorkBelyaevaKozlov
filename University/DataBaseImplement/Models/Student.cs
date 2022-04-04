@@ -8,11 +8,6 @@ namespace UniversityDataBaseImplement.Models
 {
     public class Student
     {
-        //если у нас primary key - это номер зачетки, то получается без ID будем? + на диаграмме номер зачетки - это int,
-        //а у нас в зачетках есть слэш, то есть надо стринг что ли? 
-        //или в унике для которого прогу делаем нет слэшей в номерах зачеток тогда
-
-        //пускай будет без слэшей, чтобы не усложнять, кому это надо
         [Key]
         public int RecordBookNumber { get; set; }
         [Required]
@@ -21,8 +16,8 @@ namespace UniversityDataBaseImplement.Models
         [Required]
         public int CourseYear { get; set; }
         public int GroupId { get; set; }
+        public int LearningPlanId { get; set; }
         public virtual Group Group { get; set; }
-        [ForeignKey("RecordBookNumber")]
-        public virtual List<StudentLearningPlan> StudentLearningPlans { get; set; }
+        public virtual LearningPlan LearningPlan { get; set; }
     }
 }

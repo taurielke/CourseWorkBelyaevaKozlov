@@ -10,7 +10,7 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220403140018_InitialCreate")]
+    [Migration("20220404172540_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,7 +123,13 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DisciplineId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InterimReportId")
                         .HasColumnType("int");
 
                     b.Property<int>("Mark")
@@ -140,7 +146,7 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DisciplineId");
+                    b.HasIndex("InterimReportId");
 
                     b.HasIndex("StudentRecordBookNumber");
 
@@ -158,7 +164,7 @@ namespace UniversityDataBaseImplement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SemesterNumber")
+                    b.Property<int>("RecordBookNumber")
                         .HasColumnType("int");
 
                     b.Property<string>("SpecialtyName")
@@ -190,6 +196,9 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LearningPlanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("StudentName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -198,29 +207,9 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.StudentLearningPlan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LearningPlanId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecordBookNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("LearningPlanId");
 
-                    b.HasIndex("RecordBookNumber");
-
-                    b.ToTable("StudentLearningPlans");
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Teacher", b =>
@@ -310,9 +299,7 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
                         .WithMany()
-                        .HasForeignKey("DisciplineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InterimReportId");
 
                     b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
                         .WithMany()
@@ -342,26 +329,15 @@ namespace UniversityDataBaseImplement.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Group");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.StudentLearningPlan", b =>
-                {
                     b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
-                        .WithMany("StudentLearningPlans")
+                        .WithMany("Students")
                         .HasForeignKey("LearningPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
-                        .WithMany("StudentLearningPlans")
-                        .HasForeignKey("RecordBookNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Group");
 
                     b.Navigation("LearningPlan");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
@@ -373,12 +349,7 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     b.Navigation("DisciplineLearningPlans");
 
-                    b.Navigation("StudentLearningPlans");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
-                {
-                    b.Navigation("StudentLearningPlans");
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

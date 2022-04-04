@@ -29,13 +29,10 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.Disciplines
-                .Include(rec => rec.DisciplineLearningPlans)
-                .ThenInclude(rec => rec.Discipline)
-                .Where(rec => rec.DisciplineName.Contains(model.DisciplineName))
-                .ToList()
-                .Select(CreateModel)
-                .ToList();
+            return context.Disciplines.Include(rec => rec.Teacher)
+               .Where(rec => rec.Id.Equals(model.Id))
+               .ToList()
+               .Select(CreateModel).ToList();
         }
         public DisciplineViewModel GetElement(DisciplineBindingModel model)
         {

@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataBaseImplement\UniversityDataBaseImplement.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="nicePic.png" />
   </ItemGroup>
 

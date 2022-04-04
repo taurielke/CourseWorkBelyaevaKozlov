@@ -22,6 +22,7 @@ namespace UniversityDataBaseImplement.Implementation
             .Select(CreateModel)
             .ToList();
         }
+        //report with students connected to a specific learningPlan
         public List<LearningPlanViewModel> GetFilteredList(LearningPlanBindingModel model)
         {
             if (model == null)
@@ -29,13 +30,10 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.LearningPlans
-                .Include(rec => rec.DisciplineLearningPlans)
-                .ThenInclude(rec => rec.Discipline)
-                .Where(rec => rec.LearningPlanName.Contains(model.LearningPlanName))
+            return context.LearningPlans.Include(rec => rec.Students)
+                .Where(rec => rec.Id.Equals(model.Id))
                 .ToList()
-                .Select(CreateModel)
-                .ToList();
+                .Select(CreateModel).ToList();
         }
         public LearningPlanViewModel GetElement(LearningPlanBindingModel model)
         {
@@ -59,8 +57,7 @@ namespace UniversityDataBaseImplement.Implementation
                 LearningPlan learningPlan = new LearningPlan()
                 {
                     LearningPlanName = model.LearningPlanName,
-                    SpecialtyName = model.SpecialtyName,
-                    SemesterNumber = model.SemesterNumber
+                    SpecialtyName = model.SpecialtyName
                 };
                 context.LearningPlans.Add(learningPlan);
                 context.SaveChanges();
@@ -112,7 +109,6 @@ namespace UniversityDataBaseImplement.Implementation
         {
             learningPlan.LearningPlanName = model.LearningPlanName;
             learningPlan.SpecialtyName = model.SpecialtyName;
-            learningPlan.SemesterNumber = model.SemesterNumber;
             if (model.Id.HasValue)
             {
                 var LearningPlanLearningPlans = context.DisciplineLearningPlans.Where(rec => rec.Id == model.Id.Value).ToList();
@@ -144,7 +140,6 @@ namespace UniversityDataBaseImplement.Implementation
                 Id = learningPlan.Id,
                 LearningPlanName = learningPlan.LearningPlanName,
                 SpecialtyName = learningPlan.SpecialtyName,
-                SemesterNumber = learningPlan.SemesterNumber,
                 UserId = learningPlan.UserId,
                 DisciplineLearningPlans = learningPlan.DisciplineLearningPlans.ToDictionary(recPC => recPC.LearningPlanId, recPC => (recPC.LearningPlan?.LearningPlanName))
             };

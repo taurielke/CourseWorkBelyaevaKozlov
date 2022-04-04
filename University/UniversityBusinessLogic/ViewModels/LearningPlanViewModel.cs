@@ -18,5 +18,6 @@ namespace UniversityBusinessLogic.ViewModels
         [DisplayName("ФИО пользователя")]
         public string UserName { get; set; }
         public Dictionary<int, string> DisciplineLearningPlans { get; set; } //чтобы отображались все дисциплины в плане обучения?
+        public Dictionary<int, string> Students { get; set; }
     }
 }

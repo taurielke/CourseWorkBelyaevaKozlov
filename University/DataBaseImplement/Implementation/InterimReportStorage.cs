@@ -17,6 +17,7 @@ namespace UniversityDataBaseImplement.Implementation
             using var context = new UniversityDatabase();
             return context.InterimReports.Select(CreateModel).ToList();
         }
+        //выводятся промежуточные ведомости за определенный период по студенту и дициплине
         public List<InterimReportViewModel> GetFilteredList(InterimReportBindingModel model)
         {
             if (model == null)
@@ -24,7 +25,11 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            return context.InterimReports.Where(rec => rec.RecordBookNumber == model.RecordBookNumber).Select(CreateModel).ToList();
+            return context.InterimReports
+                .Where(rec => rec.RecordBookNumber == model.RecordBookNumber
+                && rec.DisciplineId == model.DisciplineId
+                &&rec.DateCreate>=model.DateFrom && rec.DateCreate <= model.DateTo)
+                .Select(CreateModel).ToList();
         }
         public InterimReportViewModel GetElement(InterimReportBindingModel model)
         {
@@ -73,12 +78,14 @@ namespace UniversityDataBaseImplement.Implementation
             interimReport.SemesterNumber = model.SemesterNumber;
             interimReport.DisciplineId = model.DisciplineId;
             interimReport.Mark = model.Mark;
+            interimReport.DateCreate = model.DateCreate;
             return interimReport;
         }
 
         private static InterimReportViewModel CreateModel(InterimReport interimReport)
         {
             using var context = new UniversityDatabase();
+            int? TeacherId = context.Disciplines.FirstOrDefault(rec => rec.Id == interimReport.DisciplineId)?.TeacherId;
             return new InterimReportViewModel
             {
                 Id = interimReport.Id,
@@ -87,7 +94,9 @@ namespace UniversityDataBaseImplement.Implementation
                 SemesterNumber = interimReport.SemesterNumber,
                 DisciplineId = interimReport.DisciplineId,
                 DisciplineName = context.Disciplines.FirstOrDefault(rec => rec.Id == interimReport.DisciplineId)?.DisciplineName,
-                Mark = interimReport.Mark
+                TeacherName = context.Teachers.FirstOrDefault(rec => rec.Id == TeacherId)?.TeacherName,
+                Mark = interimReport.Mark,
+                DateCreate = interimReport.DateCreate
             };
         }
     }

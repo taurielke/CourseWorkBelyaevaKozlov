@@ -11,6 +11,6 @@ namespace UniversityBusinessLogic.BindingModels
         public DateTime EnrollingDate { get; set; }
         public int CourseYear { get; set; }
         public int GroupId { get; set; }
-        public Dictionary<int, string> StudentLearningPlans { get; set; }
+        public int LearningPlanId { get; set; }
     }
 }

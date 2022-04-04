@@ -13,7 +13,9 @@ namespace UniversityDataBaseImplement.Models
         public int SemesterNumber { get; set; }
         public int DisciplineId { get; set; }
         public int Mark { get; set; }
+        public DateTime DateCreate { get; set; }
         public virtual Student Student { get; set; }
+        [ForeignKey("InterimReportId")]
         public virtual Discipline Discipline { get; set; }
     }
 }

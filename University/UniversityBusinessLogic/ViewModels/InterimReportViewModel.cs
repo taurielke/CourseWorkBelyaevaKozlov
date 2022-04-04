@@ -17,7 +17,11 @@ namespace UniversityBusinessLogic.ViewModels
         public int DisciplineId { get; set; }
         [DisplayName("Название дисциплины")]
         public string DisciplineName { get; set; }
+        [DisplayName("ФИО преподавателя")]
+        public string TeacherName { get; set; }
         [DisplayName("Оценка")]
         public int Mark { get; set; }
+        [DisplayName("Дата создания")]
+        public DateTime DateCreate { get; set; }
     }
 }

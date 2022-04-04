@@ -9,8 +9,8 @@ namespace UniversityBusinessLogic.BindingModels
         public int? Id { get; set; }
         public string LearningPlanName { get; set; }
         public string SpecialtyName { get; set; }
-        public int SemesterNumber { get; set; }
         public int UserId { get; set; }
         public Dictionary<int, string> DisciplineLearningPlans { get; set; }
+        public Dictionary<int, string> Students { get; set; }
     }
 }

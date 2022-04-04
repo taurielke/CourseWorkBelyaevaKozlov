@@ -12,5 +12,7 @@ namespace UniversityBusinessLogic.BindingModels
         public int DisciplineId { get; set; }
         public int Mark { get; set; }
         public DateTime ExamDate { get; set; }
+        public DateTime DateFrom { get; set; }
+        public DateTime DateTo { get; set; }
     }
 }
