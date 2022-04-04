@@ -40,19 +40,41 @@ namespace UniversityDataBaseImplement.Implementation
         public void Insert(GroupBindingModel model)
         {
             using var context = new UniversityDatabase();
-            context.Groups.Add(CreateModel(model, new Group()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Groups.Add(CreateModel(model, new Group()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
         }
         public void Update(GroupBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var element = context.Groups.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Groups.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
         }
         public void Delete(GroupBindingModel model)
         {

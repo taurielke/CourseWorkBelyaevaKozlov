@@ -40,19 +40,41 @@ namespace UniversityDataBaseImplement.Implementation
         public void Insert(TeacherBindingModel model)
         {
             using var context = new UniversityDatabase();
-            context.Teachers.Add(CreateModel(model, new Teacher()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Teachers.Add(CreateModel(model, new Teacher()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
         }
         public void Update(TeacherBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var element = context.Teachers.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Teachers.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
         }
         public void Delete(TeacherBindingModel model)
         {

@@ -46,19 +46,39 @@ namespace UniversityDataBaseImplement.Implementation
         public void Insert(AttestationBindingModel model)
         {
             using var context = new UniversityDatabase();
-            context.Attestations.Add(CreateModel(model, new Attestation()));
-            context.SaveChanges();
+            using var transaction = context.Database.BeginTransaction();
+            try
+            {
+                context.Attestations.Add(CreateModel(model, new Attestation()));
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Update(AttestationBindingModel model)
         {
             using var context = new UniversityDatabase();
-            var element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                throw new Exception("Элемент не найден");
+                var element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, element);
+                context.SaveChanges();
+                transaction.Commit();
             }
-            CreateModel(model, element);
-            context.SaveChanges();
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
         public void Delete(AttestationBindingModel model)
         {
