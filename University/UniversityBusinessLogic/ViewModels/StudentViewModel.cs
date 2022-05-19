@@ -20,6 +20,11 @@ namespace UniversityBusinessLogic.ViewModels
         public int LearningPlanId { get; set; }
         [DisplayName("Название плана обучения")]
         public string LearningPlanName { get; set; }
+        [DisplayName("Логин")]
+        public string Email { get; set; }
+
+        [DisplayName("Пароль")]
+        public string Password { get; set; }
 
     }
 }

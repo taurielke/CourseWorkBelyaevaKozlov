@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversityDataBaseImplement.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class check : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,8 +76,7 @@ namespace UniversityDataBaseImplement.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LearningPlanName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SpecialtyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RecordBookNumber = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -87,7 +86,7 @@ namespace UniversityDataBaseImplement.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,7 +125,9 @@ namespace UniversityDataBaseImplement.Migrations
                     EnrollingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CourseYear = table.Column<int>(type: "int", nullable: false),
                     GroupId = table.Column<int>(type: "int", nullable: false),
-                    LearningPlanId = table.Column<int>(type: "int", nullable: false)
+                    LearningPlanId = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,18 +187,17 @@ namespace UniversityDataBaseImplement.Migrations
                     DisciplineId = table.Column<int>(type: "int", nullable: false),
                     Mark = table.Column<int>(type: "int", nullable: false),
                     DateCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    StudentRecordBookNumber = table.Column<int>(type: "int", nullable: true),
-                    InterimReportId = table.Column<int>(type: "int", nullable: true)
+                    StudentRecordBookNumber = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InterimReports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_InterimReports_Disciplines_InterimReportId",
-                        column: x => x.InterimReportId,
+                        name: "FK_InterimReports_Disciplines_DisciplineId",
+                        column: x => x.DisciplineId,
                         principalTable: "Disciplines",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InterimReports_Students_StudentRecordBookNumber",
                         column: x => x.StudentRecordBookNumber,
@@ -232,9 +232,9 @@ namespace UniversityDataBaseImplement.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InterimReports_InterimReportId",
+                name: "IX_InterimReports_DisciplineId",
                 table: "InterimReports",
-                column: "InterimReportId");
+                column: "DisciplineId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InterimReports_StudentRecordBookNumber",

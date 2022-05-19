@@ -6,7 +6,7 @@ using UniversityBusinessLogic.Interfaces;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class DisciplineLogic
+    public class DisciplineLogic : IDisciplineLogic
     {
         private readonly IDisciplineStorage _disciplineStorage;
 

@@ -10,8 +10,8 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220404172540_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220519085759_check")]
+    partial class check
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,9 +129,6 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("DisciplineId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("InterimReportId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Mark")
                         .HasColumnType("int");
 
@@ -146,7 +143,7 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InterimReportId");
+                    b.HasIndex("DisciplineId");
 
                     b.HasIndex("StudentRecordBookNumber");
 
@@ -164,13 +161,10 @@ namespace UniversityDataBaseImplement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecordBookNumber")
-                        .HasColumnType("int");
-
                     b.Property<string>("SpecialtyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -190,6 +184,9 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("CourseYear")
                         .HasColumnType("int");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("EnrollingDate")
                         .HasColumnType("datetime2");
 
@@ -198,6 +195,9 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.Property<int>("LearningPlanId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentName")
                         .IsRequired()
@@ -299,7 +299,9 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
                         .WithMany()
-                        .HasForeignKey("InterimReportId");
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
                         .WithMany()
@@ -314,9 +316,7 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

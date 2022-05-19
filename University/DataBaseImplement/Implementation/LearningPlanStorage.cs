@@ -140,7 +140,6 @@ namespace UniversityDataBaseImplement.Implementation
                 Id = learningPlan.Id,
                 LearningPlanName = learningPlan.LearningPlanName,
                 SpecialtyName = learningPlan.SpecialtyName,
-                UserId = learningPlan.UserId,
                 DisciplineLearningPlans = learningPlan.DisciplineLearningPlans.ToDictionary(recPC => recPC.LearningPlanId, recPC => (recPC.LearningPlan?.LearningPlanName))
             };
         }

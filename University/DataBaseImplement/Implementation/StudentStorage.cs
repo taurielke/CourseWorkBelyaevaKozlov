@@ -15,7 +15,8 @@ namespace UniversityDataBaseImplement.Implementation
         public List<StudentViewModel> GetFullList()
         {
             using var context = new UniversityDatabase();
-            return context.Students.Include(rec => rec.LearningPlan).ToList().Select(CreateModel).ToList();
+            return context.Students.Select(CreateModel).ToList();
+            /*return context.Students.Include(rec => rec.LearningPlan).ToList().Select(CreateModel).ToList();*/
         }
         public List<StudentViewModel> GetFilteredList(StudentBindingModel model)
         {
@@ -25,8 +26,9 @@ namespace UniversityDataBaseImplement.Implementation
             }
             using var context = new UniversityDatabase();
             return context.Students.Include(rec => rec.LearningPlan)
-                .Where(rec => rec.RecordBookNumber.Equals(model.RecordBookNumber))
-                .ToList()
+                /*.Where(rec => rec.RecordBookNumber.Equals(model.RecordBookNumber))
+                .ToList()*/
+                .Where(rec => rec.Email == model.Email)
                 .Select(CreateModel).ToList();
 
         }
@@ -37,8 +39,8 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            var Student = context.Students.Include(rec => rec.LearningPlan).FirstOrDefault(rec => rec.RecordBookNumber == model.RecordBookNumber);
-            return Student != null ? CreateModel(Student) : null;
+            var student = context.Students.Include(rec => rec.LearningPlan).FirstOrDefault(rec => rec.Email == model.Email || rec.RecordBookNumber == model.RecordBookNumber);
+            return student != null ? CreateModel(student) : null;
         }
         public void Insert(StudentBindingModel model)
         {
@@ -99,6 +101,10 @@ namespace UniversityDataBaseImplement.Implementation
             student.CourseYear = model.CourseYear;
             student.GroupId = model.GroupId;
             student.LearningPlanId = model.LearningPlanId;
+
+
+            student.Email = model.Email;
+            student.Password = model.Password;
                 
             return student;
         }
@@ -114,7 +120,10 @@ namespace UniversityDataBaseImplement.Implementation
                 GroupId = student.GroupId,
                 GroupName = context.Groups.FirstOrDefault(rec => rec.Id == student.GroupId)?.GroupName,
                 LearningPlanId = student.LearningPlanId,
-                LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName
+                LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName,
+
+                Email = student.Email,
+                Password = student.Password
             };
         }
     }

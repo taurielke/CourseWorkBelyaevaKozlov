@@ -12,8 +12,6 @@ namespace UniversityDataBaseImplement.Models
         [Required]
         public string LearningPlanName { get; set; }
         public string SpecialtyName { get; set; }
-        public int UserId { get; set; }
-        public int RecordBookNumber { get; set; }
         public virtual User User { get; set; }
         [ForeignKey("LearningPlanId")]
         public virtual List<DisciplineLearningPlan> DisciplineLearningPlans { get; set; }

@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30711.63
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDataBaseImplement", "DataBaseImplement\UniversityDataBaseImplement.csproj", "{68D16D94-8D93-4920-A3F2-7515BB331F18}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityBusinessLogic", "UniversityBusinessLogic\UniversityBusinessLogic.csproj", "{BDC23A6D-99E9-4C5B-975B-B244EFA11FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityView", "UniversityView\UniversityView.csproj", "{E810C570-52C5-46CB-B127-B9D2FB446EAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityView", "UniversityView\UniversityView.csproj", "{E810C570-52C5-46CB-B127-B9D2FB446EAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityRestApi", "UniversityRestApi\UniversityRestApi.csproj", "{466E2377-EA1F-4270-A8C7-DC53D34D217E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityStudentApp", "UniversityStudentApp\UniversityStudentApp.csproj", "{7A874EA5-6779-4F89-819E-8CC3E8844869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,14 @@ Global
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{466E2377-EA1F-4270-A8C7-DC53D34D217E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466E2377-EA1F-4270-A8C7-DC53D34D217E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466E2377-EA1F-4270-A8C7-DC53D34D217E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466E2377-EA1F-4270-A8C7-DC53D34D217E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A874EA5-6779-4F89-819E-8CC3E8844869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A874EA5-6779-4F89-819E-8CC3E8844869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A874EA5-6779-4F89-819E-8CC3E8844869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A874EA5-6779-4F89-819E-8CC3E8844869}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

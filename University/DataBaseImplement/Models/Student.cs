@@ -17,6 +17,13 @@ namespace UniversityDataBaseImplement.Models
         public int CourseYear { get; set; }
         public int GroupId { get; set; }
         public int LearningPlanId { get; set; }
+
+
+        //убрала аннотацию required тк должна быть возможность заносить в базу студентов без почты, наверное? а может и нет
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+
         public virtual Group Group { get; set; }
         public virtual LearningPlan LearningPlan { get; set; }
     }

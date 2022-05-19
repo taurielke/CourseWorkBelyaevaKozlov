@@ -5,9 +5,9 @@ using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.ViewModels;
 
-namespace UniversityBusinessLogic.BusinessLogic
+namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class AttestationLogic
+    public class AttestationLogic : IAttestationLogic
     {
         private readonly IAttestationStorage _attestationStorage;
 

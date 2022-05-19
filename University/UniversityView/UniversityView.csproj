@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataBaseImplement\UniversityDataBaseImplement.csproj" />
+    <ProjectReference Include="..\UniversityBusinessLogic\UniversityBusinessLogic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

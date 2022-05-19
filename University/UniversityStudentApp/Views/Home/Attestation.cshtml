@@ -1,0 +1,62 @@
+﻿@using UniversityBusinessLogic.ViewModels
+
+@model List<AttestationViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Аттестация</h1>
+</div>
+
+
+<div class="text-center">
+    @{
+        if (Model == null)
+        {
+            <h3 class="display-4">Авторизируйтесь</h3>
+            return;
+        }
+
+        <p>
+            <a asp-action="CreateAttestationReport">Создать отчет по аттестации</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Номер семестра
+                    </th>
+                    <th>
+                        Дисциплина
+                    </th>
+                    <th>
+                        Оценка
+                    </th>
+                    <th>
+                        Дата проведения экзамена
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SemesterNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisciplineName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExamDate)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

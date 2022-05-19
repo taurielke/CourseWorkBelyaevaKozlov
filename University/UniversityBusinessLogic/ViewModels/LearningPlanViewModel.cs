@@ -12,8 +12,6 @@ namespace UniversityBusinessLogic.ViewModels
         public string LearningPlanName { get; set; }
         [DisplayName("Название специальности")]
         public string SpecialtyName { get; set; }
-        [DisplayName("Номер семестра")]
-        public int SemesterNumber { get; set; }
         public int UserId { get; set; }
         [DisplayName("ФИО пользователя")]
         public string UserName { get; set; }

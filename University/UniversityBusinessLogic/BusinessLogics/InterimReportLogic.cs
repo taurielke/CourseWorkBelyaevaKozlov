@@ -6,7 +6,7 @@ using UniversityBusinessLogic.Interfaces;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class InterimReportLogic
+    public class InterimReportLogic : IInterimReportLogic
     {
         private readonly IInterimReportStorage _interimReportStorage;
 

@@ -1,0 +1,47 @@
+﻿@using UniversityBusinessLogic.ViewModels
+
+@model StudentViewModel
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<div class="text-center">
+    <h2 class="display-4">Личные данные</h2>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-4">Логин:</div>
+        <div class="col-8"><input type="text" name="login" value="@Model.Email"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">Пароль:</div>
+        <div class="col-8"><input type="password" name="password" value="@Model.Password"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">ФИО:</div>
+        <div class="col-8">< value="@Model.StudentName"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">Номер зачетной книжки:</div>
+        <div class="col-8">< value="@Model.RecordBookNumber"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">Дата поступления:</div>
+        <div class="col-8">< value="@Model.EnrollingDate"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">Курс:</div>
+        <div class="col-8">< value="@Model.CourseYear"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">Группа:</div>
+        <div class="col-8">< value="@Model.GroupName"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">План обучения:</div>
+        <div class="col-8">< value="@Model.LearningPlanName"/></div>
+    </div>
+    <div class="row">
+        <div class="col-8"></div>
+        <div class="col-4"><input type="submit" value="Сохранить" class="btn btnprimary" /></div>
+    </div>
+</form> 
