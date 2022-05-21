@@ -7,6 +7,7 @@ namespace UniversityBusinessLogic.BindingModels
     public class StudentBindingModel
     {
         public int? RecordBookNumber { get; set; }
+        public int DeaneryId { get; set; }
         public string StudentName { get; set; }
         public DateTime EnrollingDate { get; set; }
         public int CourseYear { get; set; }

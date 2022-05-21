@@ -9,11 +9,13 @@ namespace UniversityDataBaseImplement.Models
     public class Attestation
     {
         public int Id { get; set; }
+        public int DeaneryId { get; set; }
         public int RecordBookNumber { get; set; }
         public int SemesterNumber { get; set; }
         public int DisciplineId { get; set; }
         public int Mark { get; set; }
         public DateTime ExamDate { get; set; }
+        public virtual Deanery Deanery { get; set; }
         public virtual Student Student { get; set; }
         public virtual Discipline Discipline { get; set; }
     }

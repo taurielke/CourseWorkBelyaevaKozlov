@@ -12,12 +12,14 @@ namespace UniversityRestApi.Controllers
         private readonly ILearningPlanLogic learningPlanLogic;
         private readonly IAttestationLogic attestationLogic;
         private readonly IStudentLogic studentLogic;
+        private readonly IDisciplineLogic disciplineLogic;
 
-        public MainController(IAttestationLogic attestationlogic, ILearningPlanLogic learningPlanLogic, IStudentLogic studentLogic)
+        public MainController(IAttestationLogic attestationLogic, ILearningPlanLogic learningPlanLogic, IStudentLogic studentLogic, IDisciplineLogic disciplineLogic)
         {
             this.studentLogic = studentLogic;
             this.learningPlanLogic = learningPlanLogic;
-            this.attestationLogic = attestationlogic;
+            this.attestationLogic = attestationLogic;
+            this.disciplineLogic = disciplineLogic;
         }
         /* [HttpGet]
          public List<AttestationViewModel> GetAttestationList() => logic.Read(null)?.ToList();
@@ -25,13 +27,14 @@ namespace UniversityRestApi.Controllers
          public FurnitureViewModel GetFurniture(int furnitureId) => _furniture.Read(new FurnitureBindingModel { Id = furnitureId })?[0];*/
         /*[HttpPost]
          public void CreateOrder(CreateOrderBindingModel model) => _order.CreateOrder(model);*/
-
+        [HttpGet]
+        public List<DisciplineViewModel> GetDisciplineList() => disciplineLogic.Read(null)?.ToList();
         [HttpGet]
         public List<LearningPlanViewModel> GetLearningPlans(int deaneryId) => learningPlanLogic.Read(new LearningPlanBindingModel { DeaneryId = deaneryId });
         [HttpGet]
-        public List<StudentViewModel> GetStudents(int learningPlanId) => studentLogic.Read(new StudentBindingModel { LearningPlanId = learningPlanId });
+        public List<StudentViewModel> GetStudents(int deaneryId) => studentLogic.Read(new StudentBindingModel { DeaneryId = deaneryId });
         [HttpGet]
-        public List<AttestationViewModel> GetAttestations(int recordBookNumber) => attestationLogic.Read(new AttestationBindingModel { RecordBookNumber = recordBookNumber });
+        public List<AttestationViewModel> GetAttestations(int deaneryId) => attestationLogic.Read(new AttestationBindingModel { DeaneryId = deaneryId });
         [HttpPost]
         public void CreateOrUpdateLearningPlan(LearningPlanBindingModel model) => learningPlanLogic.CreateOrUpdate(model);
         [HttpPost]
