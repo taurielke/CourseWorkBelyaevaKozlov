@@ -7,7 +7,8 @@ namespace UniversityBusinessLogic.BindingModels
     public class DisciplineBindingModel
     {
         public int? Id { get; set; }
-        public string Name { get; set; }
+        public string DisciplineName { get; set; }
+        public string DisciplineDescription { get; set; }
         public string DepartmentLogin { get; set; }
     }
 }

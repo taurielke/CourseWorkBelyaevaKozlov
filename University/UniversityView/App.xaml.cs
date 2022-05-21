@@ -71,8 +71,6 @@ namespace UniversityView
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<ITeacherLogic, TeacherLogic>(new
             HierarchicalLifetimeManager());
-            currentContainer.RegisterType<IUserStorage, UserStorage>(new
-            HierarchicalLifetimeManager());
             currentContainer.RegisterType<AbstractSaveToExcel, SaveToExcel>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<AbstractSaveToPdf, SaveToPdf>(new

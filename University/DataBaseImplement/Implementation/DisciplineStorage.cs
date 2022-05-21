@@ -108,7 +108,7 @@ namespace UniversityDataBaseImplement.Implementation
         {
             discipline.DisciplineName = model.DisciplineName;
             discipline.DisciplineDescription = model.DisciplineDescription;
-            if (model.Id.HasValue)
+           /* if (model.Id.HasValue)
             {
                 var DisciplineDisciplines = context.DisciplineLearningPlans.Where(rec => rec.Id == model.Id.Value).ToList();
                 context.DisciplineLearningPlans.RemoveRange(DisciplineDisciplines.Where(rec => !model.DisciplineLearningPlans.ContainsKey(rec.DisciplineId)).ToList());
@@ -128,7 +128,7 @@ namespace UniversityDataBaseImplement.Implementation
                     DisciplineId = pc.Key
                 });
                 context.SaveChanges();
-            }
+            }*/
             return discipline;
         }
         private static DisciplineViewModel CreateModel(Discipline discipline)

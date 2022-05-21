@@ -35,7 +35,7 @@ namespace UniversityBusinessLogic.BusinessLogics
         {
             var element = _disciplineStorage.GetElement(new DisciplineBindingModel
             {
-                Name = model.Name
+                DisciplineName = model.DisciplineName
             });
             if (element != null && element.Id != model.Id)
             {
