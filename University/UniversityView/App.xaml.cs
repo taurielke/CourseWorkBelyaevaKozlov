@@ -35,8 +35,8 @@ namespace UniversityView
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            MainWindow mainWindow = Container.Resolve<MainWindow>();
-            mainWindow.Show();
+            var startWindow = Container.Resolve<AuthorizationWindow>();
+            startWindow.Show();
         }
         private static IUnityContainer BuildUnityContainer()
         {
@@ -44,6 +44,10 @@ namespace UniversityView
             currentContainer.RegisterType<IAttestationStorage, AttestationStorage>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IAttestationLogic, AttestationLogic>(new
+            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IDepartmentStorage, DepartmentStorage>(new
+            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<DepartmentLogic>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IDisciplineStorage, DisciplineStorage>(new
             HierarchicalLifetimeManager());

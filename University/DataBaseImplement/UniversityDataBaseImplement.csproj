@@ -17,4 +17,8 @@
     <ProjectReference Include="..\UniversityBusinessLogic\UniversityBusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

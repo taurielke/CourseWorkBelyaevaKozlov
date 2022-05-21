@@ -62,7 +62,8 @@ namespace UniversityView
 
         private void CancelClick(object sender, RoutedEventArgs e)
         {
-
+            DialogResult = DialogResult;
+            Close();
         }
     }
 }

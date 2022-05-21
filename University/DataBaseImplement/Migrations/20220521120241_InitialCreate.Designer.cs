@@ -10,7 +10,7 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220521072157_InitialCreate")]
+    [Migration("20220521120241_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,6 +226,28 @@ namespace UniversityDataBaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("UniversityDatabaseImplement.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentLogin")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentLogin");
+
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Attestation", b =>

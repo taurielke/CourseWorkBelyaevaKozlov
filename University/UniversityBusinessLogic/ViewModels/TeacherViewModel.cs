@@ -10,5 +10,8 @@ namespace UniversityBusinessLogic.ViewModels
         public int Id { get; set; }
         [DisplayName("ФИО преподавателя")]
         public string TeacherName { get; set; }
+        [DisplayName("Дисциалина")]
+        public string Discipline { get; set; }
+        public int DisciplineID { get; set; }
     }
 }

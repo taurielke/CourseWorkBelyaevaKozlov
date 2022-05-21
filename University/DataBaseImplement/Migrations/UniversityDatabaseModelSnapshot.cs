@@ -226,6 +226,28 @@ namespace UniversityDataBaseImplement.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("UniversityDatabaseImplement.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentLogin")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentLogin");
+
+                    b.ToTable("Departments");
+                });
+
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Attestation", b =>
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")

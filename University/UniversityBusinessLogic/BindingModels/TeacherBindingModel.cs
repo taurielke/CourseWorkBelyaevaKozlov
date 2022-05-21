@@ -8,5 +8,6 @@ namespace UniversityBusinessLogic.BindingModels
     {
         public int? Id { get; set; }
         public string TeacherName { get; set; }
+        public int DisciplineID { get; set; }
     }
 }
