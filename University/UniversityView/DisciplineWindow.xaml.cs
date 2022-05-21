@@ -62,6 +62,7 @@ namespace UniversityView
                 {
                     Id = id,
                     DisciplineName = TextBoxName.Text,
+                    DisciplineDescription = TextBoxDescription.Text,
                     DepartmentLogin = login
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);

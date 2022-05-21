@@ -10,8 +10,8 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220521120241_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220521184947_c")]
+    partial class c
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,6 +27,9 @@ namespace UniversityDataBaseImplement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DeaneryId")
+                        .HasColumnType("int");
 
                     b.Property<int>("DisciplineId")
                         .HasColumnType("int");
@@ -48,11 +51,37 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DeaneryId");
+
                     b.HasIndex("DisciplineId");
 
                     b.HasIndex("StudentRecordBookNumber");
 
                     b.ToTable("Attestations");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Deanery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DeaneryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Deaneries");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
@@ -142,19 +171,18 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("DeaneryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LearningPlanName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecialtyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("DeaneryId");
 
                     b.ToTable("LearningPlans");
                 });
@@ -169,17 +197,11 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("CourseYear")
                         .HasColumnType("int");
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("EnrollingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LearningPlanId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentName")
                         .IsRequired()
@@ -208,26 +230,6 @@ namespace UniversityDataBaseImplement.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("UniversityDatabaseImplement.Models.Department", b =>
                 {
                     b.Property<string>("DepartmentLogin")
@@ -252,6 +254,12 @@ namespace UniversityDataBaseImplement.Migrations
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Attestation", b =>
                 {
+                    b.HasOne("UniversityDataBaseImplement.Models.Deanery", "Deanery")
+                        .WithMany()
+                        .HasForeignKey("DeaneryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
                         .WithMany()
                         .HasForeignKey("DisciplineId")
@@ -261,6 +269,8 @@ namespace UniversityDataBaseImplement.Migrations
                     b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentRecordBookNumber");
+
+                    b.Navigation("Deanery");
 
                     b.Navigation("Discipline");
 
@@ -316,11 +326,13 @@ namespace UniversityDataBaseImplement.Migrations
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlan", b =>
                 {
-                    b.HasOne("UniversityDataBaseImplement.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.HasOne("UniversityDataBaseImplement.Models.Deanery", "Deanery")
+                        .WithMany("LearningPlans")
+                        .HasForeignKey("DeaneryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Deanery");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
@@ -332,6 +344,11 @@ namespace UniversityDataBaseImplement.Migrations
                         .IsRequired();
 
                     b.Navigation("LearningPlan");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Deanery", b =>
+                {
+                    b.Navigation("LearningPlans");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>

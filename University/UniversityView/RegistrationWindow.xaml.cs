@@ -84,7 +84,6 @@ namespace UniversityView
                     Password = TextBoxPassword.Password,
                 });
                 MessageBox.Show("Поздравляем! Вы зарегистрированы.", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
-                DialogResult = true;
                 Close();
             }
             catch (Exception ex)

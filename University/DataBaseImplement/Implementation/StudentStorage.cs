@@ -28,7 +28,7 @@ namespace UniversityDataBaseImplement.Implementation
             return context.Students.Include(rec => rec.LearningPlan)
                 /*.Where(rec => rec.RecordBookNumber.Equals(model.RecordBookNumber))
                 .ToList()*/
-                .Where(rec => rec.Email == model.Email)
+                .Where(rec => rec.RecordBookNumber.Equals(model.RecordBookNumber))
                 .Select(CreateModel).ToList();
 
         }
@@ -39,7 +39,7 @@ namespace UniversityDataBaseImplement.Implementation
                 return null;
             }
             using var context = new UniversityDatabase();
-            var student = context.Students.Include(rec => rec.LearningPlan).FirstOrDefault(rec => rec.Email == model.Email || rec.RecordBookNumber == model.RecordBookNumber);
+            var student = context.Students.Include(rec => rec.LearningPlan).FirstOrDefault(rec => rec.RecordBookNumber == model.RecordBookNumber);
             return student != null ? CreateModel(student) : null;
         }
         public void Insert(StudentBindingModel model)
@@ -100,10 +100,6 @@ namespace UniversityDataBaseImplement.Implementation
             student.EnrollingDate = model.EnrollingDate;
             student.CourseYear = model.CourseYear;
             student.LearningPlanId = model.LearningPlanId;
-
-
-            student.Email = model.Email;
-            student.Password = model.Password;
                 
             return student;
         }
@@ -117,10 +113,7 @@ namespace UniversityDataBaseImplement.Implementation
                 EnrollingDate = student.EnrollingDate,
                 CourseYear = student.CourseYear,
                 LearningPlanId = student.LearningPlanId,
-                LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName,
-
-                Email = student.Email,
-                Password = student.Password
+                LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName
             };
         }
     }
