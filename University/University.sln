@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityView", "Universit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityRestApi", "UniversityRestApi\UniversityRestApi.csproj", "{466E2377-EA1F-4270-A8C7-DC53D34D217E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityStudentApp", "UniversityStudentApp\UniversityStudentApp.csproj", "{7A874EA5-6779-4F89-819E-8CC3E8844869}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDeaneryApp", "UniversityStudentApp\UniversityDeaneryApp.csproj", "{7A874EA5-6779-4F89-819E-8CC3E8844869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
