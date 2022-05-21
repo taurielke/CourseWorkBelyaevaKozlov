@@ -23,10 +23,13 @@ namespace UniversityRestApi
         {
             services.AddTransient<IStudentStorage, StudentStorage>();
             services.AddTransient<IAttestationStorage, AttestationStorage>();
-            services.AddTransient<IInterimReportStorage, InterimReportStorage>();
+            services.AddTransient<IDeaneryStorage, DeaneryStorage>();
+            services.AddTransient<ILearningPlanStorage, LearningPlanStorage>();
             services.AddTransient<IStudentLogic, StudentLogic>();
             services.AddTransient<IAttestationLogic, AttestationLogic>();
-            services.AddTransient<IInterimReportLogic, InterimReportLogic>();
+            services.AddTransient<IDeaneryLogic, DeaneryLogic>();
+            services.AddTransient<ILearningPlanLogic, LearningPlanLogic>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

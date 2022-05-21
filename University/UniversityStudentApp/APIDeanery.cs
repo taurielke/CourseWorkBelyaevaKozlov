@@ -7,7 +7,7 @@ using System.Text;
 
 namespace UniversityStudentApp
 {
-    public class APIStudent
+    public class APIDeanery
     {
         private static readonly HttpClient client = new HttpClient();
         public static void Connect(IConfiguration configuration)

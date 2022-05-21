@@ -25,7 +25,7 @@ namespace UniversityStudentApp.Controllers
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIStudent.GetRequest<List<AttestationViewModel>>($"api/main/getattestations?recordBookNumber={Program.Student.RecordBookNumber}"));
+            return View(APIDeanery.GetRequest<List<AttestationViewModel>>($"api/main/getattestations?recordBookNumber={Program.Student.RecordBookNumber}"));
         }
 
         public IActionResult InterimReport()
@@ -34,7 +34,7 @@ namespace UniversityStudentApp.Controllers
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIStudent.GetRequest<List<InterimReportViewModel>>($"api/main/getinterimreports?recordBookNumber={Program.Student.RecordBookNumber}"));
+            return View(APIDeanery.GetRequest<List<InterimReportViewModel>>($"api/main/getinterimreports?recordBookNumber={Program.Student.RecordBookNumber}"));
         }
 
         [HttpGet]
@@ -52,7 +52,7 @@ namespace UniversityStudentApp.Controllers
         {
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
-                APIStudent.PostRequest("api/student/updatedata", new StudentBindingModel
+                APIDeanery.PostRequest("api/student/updatedata", new StudentBindingModel
                 {
                     RecordBookNumber = Program.Student.RecordBookNumber,
                     Email = login,
@@ -83,7 +83,7 @@ namespace UniversityStudentApp.Controllers
         {
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
-                Program.Student = APIStudent.GetRequest<StudentViewModel>($"api/student/login?login={login}&password={password}");
+                Program.Student = APIDeanery.GetRequest<StudentViewModel>($"api/student/login?login={login}&password={password}");
                 if (Program.Student == null)
                 {
                     throw new Exception("Неверный логин/пароль");

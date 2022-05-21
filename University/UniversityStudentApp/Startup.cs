@@ -11,7 +11,7 @@ namespace UniversityStudentApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            APIStudent.Connect(configuration);
+            APIDeanery.Connect(configuration);
         }
 
         public IConfiguration Configuration { get; }

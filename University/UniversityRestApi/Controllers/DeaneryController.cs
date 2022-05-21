@@ -8,18 +8,17 @@ namespace UniversityRestApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class DeaneryController : ControllerBase
     {
-        private readonly IStudentLogic _logic;
-        public StudentController(IStudentLogic logic)
+        private readonly IDeaneryLogic _logic;
+        public DeaneryController(IDeaneryLogic logic)
         {
             _logic = logic;
         }
-        //we don't need to let them login so this is probably useless
         [HttpGet]
-        public StudentViewModel Login(string login, string password)
+        public DeaneryViewModel Login(string login, string password)
         {
-            var list = _logic.Read(new StudentBindingModel
+            var list = _logic.Read(new DeaneryBindingModel
             {
                 Email = login,
                 Password = password
@@ -27,8 +26,8 @@ namespace UniversityRestApi.Controllers
             return (list != null && list.Count > 0) ? list[0] : null;
         }
         [HttpPost]
-        public void Register(StudentBindingModel model) => _logic.CreateOrUpdate(model);
+        public void Register(DeaneryBindingModel model) => _logic.CreateOrUpdate(model);
         [HttpPost]
-        public void UpdateData(StudentBindingModel model) => _logic.CreateOrUpdate(model);
+        public void UpdateData(DeaneryBindingModel model) => _logic.CreateOrUpdate(model);
     }
 }
