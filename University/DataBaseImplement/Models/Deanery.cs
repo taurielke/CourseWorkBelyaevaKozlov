@@ -6,12 +6,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UniversityDataBaseImplement.Models
 {
-    public class User
+    public class Deanery
     {
         public int Id { get; set; }
+
         [Required]
-        public string Login { get; set; }
+        public string DeaneryName { get; set; }
+
+        [Required]
+        public string Email { get; set; }
+
         [Required]
         public string Password { get; set; }
+
+        [ForeignKey("DeaneryId")]
+        public virtual List<LearningPlan> LearningPlans { get; set; }
     }
 }

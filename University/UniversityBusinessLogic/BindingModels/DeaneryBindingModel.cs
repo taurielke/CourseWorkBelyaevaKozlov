@@ -4,9 +4,11 @@ using System.Text;
 
 namespace UniversityBusinessLogic.BindingModels
 {
-    public class GroupBindingModel
+    public class DeaneryBindingModel
     {
         public int? Id { get; set; }
-        public string GroupName { get; set; }
+        public string DeaneryName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

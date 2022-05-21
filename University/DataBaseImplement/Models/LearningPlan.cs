@@ -10,9 +10,10 @@ namespace UniversityDataBaseImplement.Models
     {
         public int Id { get; set;}
         [Required]
+        public int DeaneryId { get; set;}  
         public string LearningPlanName { get; set; }
         public string SpecialtyName { get; set; }
-        public virtual User User { get; set; }
+        public virtual Deanery Deanery { get; set; }
         [ForeignKey("LearningPlanId")]
         public virtual List<DisciplineLearningPlan> DisciplineLearningPlans { get; set; }
         [ForeignKey("LearningPlanId")]
