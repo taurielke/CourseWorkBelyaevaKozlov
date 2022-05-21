@@ -10,7 +10,7 @@
         <Menu>
             <MenuItem x:Name = "MenuItemAttestation" Header="Аттестация" Height="34" Width="86"/>
             <MenuItem x:Name="MenuItemStudents" Header="Студенты" Height="38" Width="68"/>
-            <MenuItem x:Name="MenuItemLearningPlans" Header="Планы обучения" Height="46" Width="104"/>
+            <MenuItem x:Name="MenuItemLearningPlans" Header="Планы обучения" Height="46" Width="104" Click="MenuItemLearningPlans_Click"/>
             <MenuItem x:Name="MenuItemTeachers" Header="Преподаватели" Width="101"/>
             <MenuItem x:Name="MenuItemDisciplines" Header="Дисциплины" Height="58" Width="82"/>
             <MenuItem x:Name="MenuItemInterimReports" Header="Промежуточная аттестация" Height="62" Width="173"/>

@@ -15,7 +15,6 @@ namespace UniversityDataBaseImplement.Models
         public DateTime EnrollingDate { get; set; }
         [Required]
         public int CourseYear { get; set; }
-        public int GroupId { get; set; }
         public int LearningPlanId { get; set; }
 
 
@@ -23,8 +22,6 @@ namespace UniversityDataBaseImplement.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-
-        public virtual Group Group { get; set; }
         public virtual LearningPlan LearningPlan { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220519085759_check")]
-    partial class check
+    [Migration("20220521072157_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -101,21 +101,6 @@ namespace UniversityDataBaseImplement.Migrations
                     b.ToTable("DisciplineLearningPlans");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Group", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("GroupName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Groups");
-                });
-
             modelBuilder.Entity("UniversityDataBaseImplement.Models.InterimReport", b =>
                 {
                     b.Property<int>("Id")
@@ -190,9 +175,6 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<DateTime>("EnrollingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
                     b.Property<int>("LearningPlanId")
                         .HasColumnType("int");
 
@@ -204,8 +186,6 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecordBookNumber");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("LearningPlanId");
 
@@ -323,19 +303,11 @@ namespace UniversityDataBaseImplement.Migrations
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
                 {
-                    b.HasOne("UniversityDataBaseImplement.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
                         .WithMany("Students")
                         .HasForeignKey("LearningPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Group");
 
                     b.Navigation("LearningPlan");
                 });

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace UniversityView
 {
@@ -23,6 +24,12 @@ namespace UniversityView
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MenuItemLearningPlans_Click(object sender, RoutedEventArgs e)
+        {
+            var form = App.Container.Resolve<LearningPlans>();
+            form.ShowDialog();
         }
     }
 }

@@ -3,23 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversityDataBaseImplement.Migrations
 {
-    public partial class check : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Groups",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GroupName = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Groups", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Teachers",
                 columns: table => new
@@ -124,7 +111,6 @@ namespace UniversityDataBaseImplement.Migrations
                     StudentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EnrollingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CourseYear = table.Column<int>(type: "int", nullable: false),
-                    GroupId = table.Column<int>(type: "int", nullable: false),
                     LearningPlanId = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -132,12 +118,6 @@ namespace UniversityDataBaseImplement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.RecordBookNumber);
-                    table.ForeignKey(
-                        name: "FK_Students_Groups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "Groups",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Students_LearningPlans_LearningPlanId",
                         column: x => x.LearningPlanId,
@@ -247,11 +227,6 @@ namespace UniversityDataBaseImplement.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_GroupId",
-                table: "Students",
-                column: "GroupId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Students_LearningPlanId",
                 table: "Students",
                 column: "LearningPlanId");
@@ -276,9 +251,6 @@ namespace UniversityDataBaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
-
-            migrationBuilder.DropTable(
-                name: "Groups");
 
             migrationBuilder.DropTable(
                 name: "LearningPlans");

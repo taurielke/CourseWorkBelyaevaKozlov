@@ -12,14 +12,13 @@ namespace UniversityDataBaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=LAPTOP-3ONQPAF5\SQLEXPRESS;Initial Catalog=FurnitureAssemblyDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-AGBO4M3\SQLEXPRESS;Initial Catalog=FurnitureAssemblyDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
         public virtual DbSet<Attestation> Attestations { set; get; }
         public virtual DbSet<Discipline> Disciplines { set; get; }
         public virtual DbSet<DisciplineLearningPlan> DisciplineLearningPlans { set; get; }
-        public virtual DbSet<Group> Groups { set; get; }
         public virtual DbSet<InterimReport> InterimReports { set; get; }
         public virtual DbSet<LearningPlan> LearningPlans { set; get; }
         public virtual DbSet<Student> Students { set; get; }

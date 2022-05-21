@@ -99,7 +99,6 @@ namespace UniversityDataBaseImplement.Implementation
             student.StudentName = model.StudentName;
             student.EnrollingDate = model.EnrollingDate;
             student.CourseYear = model.CourseYear;
-            student.GroupId = model.GroupId;
             student.LearningPlanId = model.LearningPlanId;
 
 
@@ -117,8 +116,6 @@ namespace UniversityDataBaseImplement.Implementation
                 StudentName = student.StudentName,
                 EnrollingDate = student.EnrollingDate,
                 CourseYear = student.CourseYear,
-                GroupId = student.GroupId,
-                GroupName = context.Groups.FirstOrDefault(rec => rec.Id == student.GroupId)?.GroupName,
                 LearningPlanId = student.LearningPlanId,
                 LearningPlanName = context.LearningPlans.FirstOrDefault(rec => rec.Id == student.LearningPlanId)?.LearningPlanName,
 
