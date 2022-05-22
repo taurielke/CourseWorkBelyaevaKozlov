@@ -13,16 +13,16 @@ namespace UniversityDataBaseImplement.Implements
     {
         public List<AttestationViewModel> GetFullList()
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            return context.Attestations
+            .Select(rec => new AttestationViewModel
             {
-                return context.Attestations
-                .Select(rec => new AttestationViewModel
-                {
-                    Id = rec.Id,
-                    Date = rec.Date,
-                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
-                }).ToList();
-            }
+                Id = rec.Id,
+                Date = rec.Date,
+                StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
+            }).ToList();
+            
         }
         public List<AttestationViewModel> GetFilteredList(AttestationBindingModel model)
         {
@@ -30,18 +30,18 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            return context.Attestations
+            .Where(rec => rec.StudentGradebookNumber == model.StudentId && rec.Date >= model.DateFrom && rec.Date <= model.DateTo)
+            .Select(rec => new AttestationViewModel
             {
-                return context.Attestations
-                .Where(rec => rec.StudentGradebookNumber == model.StudentId && rec.DeaneryId== model.DeaneryId)
-                .Select(rec => new AttestationViewModel
-                {
-                    Id = rec.Id,
-                    Date = rec.Date,
-                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
-                })
-                .ToList();
-            }
+                Id = rec.Id,
+                Date = rec.Date,
+                StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
+            })
+            .ToList();
+            
         }
         public AttestationViewModel GetElement(AttestationBindingModel model)
         {
@@ -49,63 +49,64 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            var Cert = context.Attestations
+            .FirstOrDefault(rec => rec.Date == model.Date || rec.DeaneryId == model.DeaneryId);
+            return Cert != null ?
+            new AttestationViewModel
             {
-                var Cert = context.Attestations
-                .FirstOrDefault(rec => rec.Date == model.Date || rec.DeaneryId == model.DeaneryId);
-                return Cert != null ?
-                new AttestationViewModel
-                {
-                    Id = Cert.Id,
-                    Date = Cert.Date,
-                    StudentId = Cert.StudentGradebookNumber,
-                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == x.GradebookNumber).Name
-                } :
-                null;
-            }
+                Id = Cert.Id,
+                Date = Cert.Date,
+                StudentId = Cert.StudentGradebookNumber,
+                StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == x.GradebookNumber).Name
+            } :
+            null;
+            
         }
         public void Insert(AttestationBindingModel model)
         {
-            using (var context = new UniversityDatabase())
-            {
-                context.Attestations.Add(CreateModel(model, new Attestation()));
-                context.SaveChanges();
-            }
+            var context = new UniversityDatabase();
+            
+            context.Attestations.Add(CreateModel(model, new Attestation()));
+            context.SaveChanges();
+            
         }
         public void Update(AttestationBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            var element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
-                var element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element == null)
-                {
-                    throw new Exception("Элемент не найден");
-                }
-                CreateModel(model, element);
-                context.SaveChanges();
+                throw new Exception("Элемент не найден");
             }
+            CreateModel(model, element);
+            context.SaveChanges();
+            
         }
         public void Delete(AttestationBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            Attestation element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element != null)
             {
-                Attestation element = context.Attestations.FirstOrDefault(rec => rec.Id == model.Id);
-                if (element != null)
-                {
-                    context.Attestations.Remove(element);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                context.Attestations.Remove(element);
+                context.SaveChanges();
             }
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
+            
         }
-        private Attestation CreateModel(AttestationBindingModel model, Attestation Attestation)
+        private Attestation CreateModel(AttestationBindingModel model, Attestation attestation)
         {
-            Attestation.Date = model.Date;
-            Attestation.DeaneryId = (int)model.DeaneryId;
-            return Attestation;
+            attestation.Date = model.Date;
+            attestation.StudentGradebookNumber = model.StudentId;
+            attestation.DeaneryId = (int)model.DeaneryId;
+            return attestation;
         }
     }
 }

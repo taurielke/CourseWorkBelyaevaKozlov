@@ -66,9 +66,8 @@ namespace UniversityDataBaseImplement.Implements
             {
                 Student student = new Student
                 {
-                    GradebookNumber = (int)model.GradebookNumber,
                     Name = model.Name,
-                    DeaneryId = (int)model.DeaneryId
+                    DeaneryId = (int)model.DeaneryId,
                 };
                 context.Students.Add(student);
                 context.SaveChanges();
@@ -123,7 +122,6 @@ namespace UniversityDataBaseImplement.Implements
         }
         private Student CreateModel(StudentBindingModel model, Student student, UniversityDatabase context)
         {
-            student.GradebookNumber = (int)model.GradebookNumber;
             student.Name = model.Name;
             student.DeaneryId = (int)model.DeaneryId;
 

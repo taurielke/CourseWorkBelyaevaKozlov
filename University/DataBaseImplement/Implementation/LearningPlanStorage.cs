@@ -13,16 +13,10 @@ namespace UniversityDataBaseImplement.Implements
     {
         public List<LearningPlanViewModel> GetFullList()
         {
-            using (var context = new UniversityDatabase())
-            {
-                return context.LearningPlans
-                .Select(rec => new LearningPlanViewModel
-                {
-                    Id = rec.Id,
-                    StreamName = rec.StreamName,
-                    Hours = rec.Hours,
-                }).ToList();
-            }
+            var context = new UniversityDatabase();
+            return context.LearningPlans
+            .Select(CreateModel).ToList();
+            
         }
         public List<LearningPlanViewModel> GetFilteredList(LearningPlanBindingModel model)
         {
@@ -30,18 +24,13 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
+            var context = new UniversityDatabase();
+            
                 return context.LearningPlans
                 .Where(rec => rec.StreamName == model.StreamName)
-                .Select(rec => new LearningPlanViewModel
-                {
-                    Id = rec.Id,
-                    StreamName = rec.StreamName,
-                    Hours = rec.Hours,
-                })
+                .Select(CreateModel)
                 .ToList();
-            }
+            
         }
         public LearningPlanViewModel GetElement(LearningPlanBindingModel model)
         {
@@ -49,32 +38,25 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
-                var ep = context.LearningPlans
-                .FirstOrDefault(rec => rec.StreamName == model.StreamName || rec.Id == model.Id);
-                return ep != null ?
-                new LearningPlanViewModel
-                {
-                    Id = ep.Id,
-                    StreamName = ep.StreamName,
-                    Hours = ep.Hours
-                } :
-                null;
-            }
+            var context = new UniversityDatabase();
+            
+            var lp = context.LearningPlans  
+            .FirstOrDefault(rec => rec.StreamName == model.StreamName || rec.Id == model.Id);
+            return lp != null ? CreateModel(lp) : null;
+            
         }
         public void Insert(LearningPlanBindingModel model)
         {
-            using (var context = new UniversityDatabase())
-            {
+            var context = new UniversityDatabase();
+            
                 context.LearningPlans.Add(CreateModel(model, new LearningPlan()));
                 context.SaveChanges();
-            }
+            
         }
         public void Update(LearningPlanBindingModel model)
         {
-            using (var context = new UniversityDatabase())
-            {
+            var context = new UniversityDatabase();
+            
                 var element = context.LearningPlans.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
@@ -82,12 +64,12 @@ namespace UniversityDataBaseImplement.Implements
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
-            }
+            
         }
         public void Delete(LearningPlanBindingModel model)
         {
-            using (var context = new UniversityDatabase())
-            {
+            var context = new UniversityDatabase();
+            
                 LearningPlan element = context.LearningPlans.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element != null)
                 {
@@ -98,13 +80,25 @@ namespace UniversityDataBaseImplement.Implements
                 {
                     throw new Exception("Элемент не найден");
                 }
-            }
+            
         }
         private LearningPlan CreateModel(LearningPlanBindingModel model, LearningPlan LearningPlan)
         {
             LearningPlan.StreamName = model.StreamName;
             LearningPlan.Hours = model.Hours;
             return LearningPlan;
+        }
+
+        private static LearningPlanViewModel CreateModel(LearningPlan learningPlan)
+        {
+            return new LearningPlanViewModel
+            {
+                Id = learningPlan.Id,
+                StreamName = learningPlan.StreamName,
+                Hours = learningPlan.Hours,
+                LearningPlanTeachers = learningPlan.LearningPlanTeachers
+                .ToDictionary(recCLP => recCLP.LearningPlanId, recCLP => (recCLP.LearningPlan?.StreamName))
+            };
         }
     }
 }

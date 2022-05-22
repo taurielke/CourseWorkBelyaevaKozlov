@@ -10,8 +10,8 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220522105949_courseWork")]
-    partial class courseWork
+    [Migration("20220522172559_coursework")]
+    partial class coursework
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

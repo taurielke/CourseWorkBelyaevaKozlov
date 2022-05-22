@@ -111,14 +111,14 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Attestation()
         {
-            return View(APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestationList"));
-/*            return View(APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestations?deaneryId={Program.Deanery.Id}"));
-*/        }
+            
+            return View(APIDeanery.GetRequest<List<AttestationViewModel>>($"api/attestation/GetAttestations?deaneryId={Program.Deanery.Id}"));
+        }
 
         [HttpGet]
         public IActionResult AttestationCreate()
         {
-            ViewBag.Students = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}");
+            ViewBag.Students = APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudents?deaneryId={Program.Deanery.Id}");
             return View();
         }
 
@@ -142,8 +142,8 @@ namespace UniversityDeaneryApp.Controllers
         [HttpGet]
         public IActionResult AttestationUpdate(int attestationId)
         {
-            ViewBag.Attestation = APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestation?attestationId={attestationId}");
-            ViewBag.Students = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}");
+            ViewBag.Attestation = APIDeanery.GetRequest<List<AttestationViewModel>>($"api/attestation/GetAttestation?attestationId={attestationId}");
+            ViewBag.Students = APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudents?deaneryId={Program.Deanery.Id}");
             return View();
         }
 
@@ -180,8 +180,8 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Student()
         {
-            /*return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}"));*/
-            return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudentList"));
+            return View(APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudents?deaneryId={Program.Deanery.Id}"));
+ 
         }
 
         [HttpGet]
@@ -191,13 +191,12 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void StudentCreate(int gradebookNumber, string name)
+        public void StudentCreate(string name)
         {
-            if (gradebookNumber != 0)
+            if (!string.IsNullOrEmpty(name))
             {
                 APIDeanery.PostRequest("api/student/CreateOrUpdateStudent", new StudentBindingModel
                 {
-                    GradebookNumber = gradebookNumber,
                     Name = name,
                     LearningPlans = new Dictionary<int, string>(),
                     Disciplines = new Dictionary<int, string>(),
@@ -206,13 +205,13 @@ namespace UniversityDeaneryApp.Controllers
                 Response.Redirect("Student");
                 return;
             }
-            throw new Exception("Заполните номер зачетной книжки и ФИО!");
+            throw new Exception("Заполните ФИО!");
         }
 
         [HttpGet]
         public IActionResult StudentUpdate(int gradebookNumber)
         {
-            ViewBag.Student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+            ViewBag.Student = APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudent?gradebookNumber={gradebookNumber}") ;
             return View();
         }
 
@@ -221,7 +220,7 @@ namespace UniversityDeaneryApp.Controllers
         {
             if (gradebookNumber != 0 && !string.IsNullOrEmpty(name))
             {
-                var student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+                var student = APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudent?gradebookNumber={gradebookNumber}");
                 if (student == null)
                 {
                     return;
@@ -241,14 +240,14 @@ namespace UniversityDeaneryApp.Controllers
         [HttpPost]
         public void StudentDelete(int gradebookNumber)
         {
-            var student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+            var student = APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudent?gradebookNumber={gradebookNumber}");
             APIDeanery.PostRequest("api/student/DeleteStudent", student);
             Response.Redirect("Index");
         }
 
         public IActionResult LearningPlan()
         {
-            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlanList"));
+            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}"));
         }
 
         [HttpGet]
@@ -279,7 +278,7 @@ namespace UniversityDeaneryApp.Controllers
         [HttpGet]
         public IActionResult LearningPlanUpdate(int learningPlanId)
         {
-            ViewBag.LearningPlan = APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
+            ViewBag.LearningPlan = APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
             ViewBag.Teachers = APIDeanery.GetRequest<List<TeacherViewModel>>("api/learningPlan/GetTeacherList");
             return View();
         }

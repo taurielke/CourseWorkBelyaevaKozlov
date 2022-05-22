@@ -9,11 +9,11 @@ namespace UniversityBusinessLogic.BusinessLogics
     public class StudentLogic : IStudentLogic
     {
         private readonly IStudentStorage _studentStorage;
-        private readonly ITeacherStorage _lectorStorage;
-        public StudentLogic(IStudentStorage studentStorage, ITeacherStorage lectorStorage)
+        private readonly ITeacherStorage _teacherStorage;
+        public StudentLogic(IStudentStorage studentStorage, ITeacherStorage teacherStorage)
         {
             _studentStorage = studentStorage;
-            _lectorStorage = lectorStorage;
+            _teacherStorage = teacherStorage;
         }
         public List<StudentViewModel> Read(StudentBindingModel model)
         {
@@ -31,11 +31,12 @@ namespace UniversityBusinessLogic.BusinessLogics
         {
             var element = _studentStorage.GetElement(new StudentBindingModel
             {
+                DeaneryId = model.DeaneryId,
                 Name = model.Name,
             });
             if (element != null && element.GradebookNumber != model.GradebookNumber)
             {
-                throw new Exception("Уже есть студент с таким именем");
+                throw new Exception("Уже есть студент с такой зачетной книжкой");
             }
             if (model.GradebookNumber.HasValue)
             {
@@ -58,12 +59,12 @@ namespace UniversityBusinessLogic.BusinessLogics
 
         public List<StudentViewModel> SelectByTeacher(TeacherBindingModel model)
         {
-            var lector = _lectorStorage.GetElement(model);
-            if (lector == null)
+            var teacher = _teacherStorage.GetElement(model);
+            if (teacher == null)
             {
                 throw new Exception("Преподаватель не найден");
             }
-            return _studentStorage.GetByDisciplineId(lector.DisciplineId);
+            return _studentStorage.GetByDisciplineId(teacher.DisciplineId);
         }
 
         public void BindingDiscipline(int gradebookNumber, int subjectId)
