@@ -10,15 +10,15 @@ namespace UniversityRestApi.Controllers
     public class LearningPlanController : ControllerBase
     {
         private readonly ILearningPlanLogic logic;
-        private readonly IDisciplineLogic dLogic;
-        public LearningPlanController(ILearningPlanLogic logic, IDisciplineLogic dLogic)
+        private readonly ITeacherLogic dLogic;
+        public LearningPlanController(ILearningPlanLogic logic, ITeacherLogic dLogic)
         {
             this.logic = logic;
             this.dLogic = dLogic;
         }
 
         [HttpGet]
-        public List<DisciplineViewModel> GetDisciplineList() => dLogic.Read(null)?.ToList();
+        public List<TeacherViewModel> GetTeacherList() => dLogic.Read(null)?.ToList();
 
         [HttpGet]
         public List<LearningPlanViewModel> GetLearningPlanList() => logic.Read(null)?.ToList();

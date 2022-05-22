@@ -32,6 +32,7 @@ namespace UniversityRestApi
             services.AddTransient<IDeaneryLogic, DeaneryLogic>();
             services.AddTransient<ILearningPlanLogic, LearningPlanLogic>();
             services.AddTransient<IDisciplineLogic, DisciplineLogic>();
+            services.AddTransient<ITeacherLogic, TeacherLogic>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

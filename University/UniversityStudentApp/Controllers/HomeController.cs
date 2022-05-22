@@ -177,7 +177,139 @@ namespace UniversityDeaneryApp.Controllers
             Response.Redirect("Index");
         }
 
+        public IActionResult Student()
+        {
+            return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}"));
+        }
 
+        [HttpGet]
+        public IActionResult StudentCreate()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public void StudentCreate(int gradebookNumber, string name)
+        {
+            if (gradebookNumber != 0)
+            {
+                APIDeanery.PostRequest("api/student/CreateOrUpdateStudent", new StudentBindingModel
+                {
+                    GradebookNumber = gradebookNumber,
+                    Name = name,
+                    DeaneryId = Program.Deanery.Id
+                });
+                Response.Redirect("Student");
+                return;
+            }
+            throw new Exception("Заполните номер зачетной книжки и ФИО!");
+        }
+
+        [HttpGet]
+        public IActionResult StudentUpdate(int gradebookNumber)
+        {
+            ViewBag.Student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+            return View();
+        }
+
+        [HttpPost]
+        public void StudentUpdate(int gradebookNumber, string name)
+        {
+            if (gradebookNumber != 0 && !string.IsNullOrEmpty(name))
+            {
+                var student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+                if (student == null)
+                {
+                    return;
+                }
+                APIDeanery.PostRequest("api/student/CreateOrUpdateStudent", new StudentBindingModel
+                {
+                    GradebookNumber = gradebookNumber,
+                    Name=name,
+                    DeaneryId = Program.Deanery.Id
+                });
+                Response.Redirect("Student");
+                return;
+            }
+            throw new Exception("Заполните все поля");
+        }
+
+        [HttpPost]
+        public void StudentDelete(int gradebookNumber)
+        {
+            var student = APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudent?gradebookNumber={gradebookNumber}");
+            APIDeanery.PostRequest("api/student/DeleteStudent", student);
+            Response.Redirect("Index");
+        }
+
+        public IActionResult LearningPlan()
+        {
+            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}"));
+        }
+
+        [HttpGet]
+        public IActionResult LearningPlanCreate()
+        {
+            ViewBag.Teachers = APIDeanery.GetRequest<List<TeacherViewModel>>("api/learningPlan/GetTeacherList");
+            return View();
+        }
+
+        [HttpPost]
+        public void LearningPlanCreate(string streamName, int hours, Dictionary<int, string> Teachers)
+        {
+            if ( !string.IsNullOrEmpty(streamName) && hours !=0 && Teachers.Count != 0)
+            {
+                APIDeanery.PostRequest("api/LearningPlan/CreateOrUpdateLearningPlan", new LearningPlanBindingModel
+                {
+                    StreamName =  streamName,
+                    Hours = hours,
+                    Teachers = Teachers,
+                    DeaneryId = Program.Deanery.Id
+                });
+                Response.Redirect("LearningPlan");
+                return;
+            }
+            throw new Exception("Выберите преподавателей и заполните все поля");
+        }
+
+        [HttpGet]
+        public IActionResult LearningPlanUpdate(int learningPlanId)
+        {
+            ViewBag.LearningPlan = APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
+            ViewBag.Teachers = APIDeanery.GetRequest<List<TeacherViewModel>>("api/learningPlan/GetTeacherList");
+            return View();
+        }
+
+        [HttpPost]
+        public void LearningPlanUpdate(int learningPlanId, string streamName, int hours, Dictionary<int, string> Teachers)
+        {
+            if (learningPlanId != 0 && !string.IsNullOrEmpty(streamName) && hours != 0 && Teachers.Count != 0)
+            {
+                var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?LearningPlanId={learningPlanId}");
+                if (learningPlan == null)
+                {
+                    return;
+                }
+                APIDeanery.PostRequest("api/learningPlan/CreateOrUpdateLearningPlan", new LearningPlanBindingModel
+                {
+                    Id = learningPlan.Id,
+                    StreamName = streamName,
+                    Hours = hours,
+                    Teachers = Teachers,
+                    DeaneryId = Program.Deanery.Id
+                });
+                Response.Redirect("LearningPlan");
+                return;
+            }
+            throw new Exception("Выберите студента");
+        }
+
+        [HttpPost]
+        public void LearningPlanDelete(int learningPlanId)
+        {
+            var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/learningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
+            APIDeanery.PostRequest("api/learningPlan/DeleteLearningPlan", learningPlan);
+            Response.Redirect("Index");
+        }
     }
 }

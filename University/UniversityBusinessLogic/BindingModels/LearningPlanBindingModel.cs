@@ -12,5 +12,6 @@ namespace UniversityBusinessLogic.BindingModels
         public string StreamName { get; set; }
 
         public int Hours { get; set; }
+        public Dictionary<int, string> Teachers { get; set; }
     }
 }
