@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.ViewModels;
@@ -52,7 +53,7 @@ namespace UniversityDataBaseImplement.Implements
             var context = new UniversityDatabase();
             
             var Cert = context.Attestations
-            .FirstOrDefault(rec => rec.Date == model.Date || rec.DeaneryId == model.DeaneryId);
+            .FirstOrDefault(rec => rec.Id == model.Id || rec.Date == model.Date);
             return Cert != null ?
             new AttestationViewModel
             {

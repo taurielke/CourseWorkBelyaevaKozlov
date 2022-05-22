@@ -9,52 +9,50 @@ namespace UniversityBusinessLogic.BusinessLogics
 {
     public class AttestationLogic : IAttestationLogic
     {
-        private readonly IAttestationStorage _certificationStorage;
-        public AttestationLogic(IAttestationStorage certificationStorage)
+        private readonly IAttestationStorage _attestationStorage;
+        public AttestationLogic(IAttestationStorage attestationStorage)
         {
-            _certificationStorage = certificationStorage;
+            _attestationStorage = attestationStorage;
         }
         public List<AttestationViewModel> Read(AttestationBindingModel model)
         {
             if (model == null)
             {
-                return _certificationStorage.GetFullList();
+                return _attestationStorage.GetFullList();
             }
             if (model.Id.HasValue)
             {
-                return new List<AttestationViewModel> { _certificationStorage.GetElement(model) };
+                return new List<AttestationViewModel> { _attestationStorage.GetElement(model) };
             }
-            return _certificationStorage.GetFilteredList(model);
+            return _attestationStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(AttestationBindingModel model)
         {
-            var element = _certificationStorage.GetElement(new AttestationBindingModel
+            /*var element = _attestationStorage.GetElement(new AttestationBindingModel
             {
-                Date = model.Date,
-                StudentId = model.StudentId,
-                DeaneryId = model.DeaneryId
+                StudentId = model.StudentId
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Уже есть такая аттестация с таким именем");
-            }
+                throw new Exception("Уже есть аттестация для данного студента");
+            }*/
             if (model.Id.HasValue)
             {
-                _certificationStorage.Update(model);
+                _attestationStorage.Update(model);
             }
             else
             {
-                _certificationStorage.Insert(model);
+                _attestationStorage.Insert(model);
             }
         }
         public void Delete(AttestationBindingModel model)
         {
-            var element = _certificationStorage.GetElement(new AttestationBindingModel { Id = model.Id });
+            var element = _attestationStorage.GetElement(new AttestationBindingModel { Id = model.Id });
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            _certificationStorage.Delete(model);
+            _attestationStorage.Delete(model);
         }
     }
 }
