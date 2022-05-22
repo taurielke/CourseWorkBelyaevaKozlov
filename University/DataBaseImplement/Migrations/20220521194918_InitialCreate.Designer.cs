@@ -10,8 +10,13 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
     [Migration("20220521194918_InitialCreate")]
     partial class InitialCreate
+========
+    [Migration("20220521184947_c")]
+    partial class c
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +33,17 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Property<DateTime>("Date")
+========
+                    b.Property<int>("DeaneryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExamDate")
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeaneryLogin")
@@ -39,11 +54,21 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
+========
+                    b.HasIndex("DeaneryId");
+
+                    b.HasIndex("DisciplineId");
+
+                    b.HasIndex("StudentRecordBookNumber");
+
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                     b.ToTable("Attestations");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Deanery", b =>
                 {
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Property<string>("Login")
                         .HasColumnType("nvarchar(450)");
 
@@ -65,21 +90,41 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<string>("DepartmentLogin")
                         .HasColumnType("nvarchar(450)");
 
+========
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DeaneryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+========
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.HasKey("DepartmentLogin");
 
                     b.ToTable("Departments");
+========
+                    b.HasKey("Id");
+
+                    b.ToTable("Deaneries");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
@@ -148,6 +193,7 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Property<int>("Hours")
                         .HasColumnType("int");
 
@@ -157,6 +203,21 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasKey("Id");
 
+========
+                    b.Property<int>("DeaneryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LearningPlanName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SpecialtyName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DeaneryId");
+
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                     b.ToTable("LearningPlans");
                 });
 
@@ -167,12 +228,21 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Property<string>("GradebookNumber")
                         .HasColumnType("nvarchar(450)");
+========
+                    b.Property<int>("CourseYear")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EnrollingDate")
+                        .HasColumnType("datetime2");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
 
                     b.Property<int>("LearningPlanId")
                         .HasColumnType("int");
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.HasKey("Id");
 
                     b.HasIndex("GradebookNumber");
@@ -210,6 +280,9 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
+========
+                    b.Property<string>("StudentName")
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -237,6 +310,7 @@ namespace UniversityDataBaseImplement.Migrations
                     b.ToTable("Teachers");
                 });
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
             modelBuilder.Entity("UniversityDataBaseImplementation.Models.StudentDiscipline", b =>
                 {
                     b.Property<int>("Id")
@@ -257,6 +331,64 @@ namespace UniversityDataBaseImplement.Migrations
                     b.HasIndex("GradebookNumber");
 
                     b.ToTable("StudentDisciplines");
+========
+            modelBuilder.Entity("UniversityDatabaseImplement.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentLogin")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentLogin");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Attestation", b =>
+                {
+                    b.HasOne("UniversityDataBaseImplement.Models.Deanery", "Deanery")
+                        .WithMany()
+                        .HasForeignKey("DeaneryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
+                        .WithMany()
+                        .HasForeignKey("DisciplineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentRecordBookNumber");
+
+                    b.Navigation("Deanery");
+
+                    b.Navigation("Discipline");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
+                {
+                    b.HasOne("UniversityDataBaseImplement.Models.Teacher", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Teacher");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.DisciplineLearningPlan", b =>
@@ -338,9 +470,19 @@ namespace UniversityDataBaseImplement.Migrations
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlan", b =>
                 {
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
                     b.Navigation("LearningPlanStudents");
 
                     b.Navigation("LearningPlanTeachers");
+========
+                    b.HasOne("UniversityDataBaseImplement.Models.Deanery", "Deanery")
+                        .WithMany("LearningPlans")
+                        .HasForeignKey("DeaneryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Deanery");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
@@ -350,7 +492,16 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Navigation("StudentDisciplines");
                 });
 
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.Designer.cs
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Teacher", b =>
+========
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Deanery", b =>
+                {
+                    b.Navigation("LearningPlans");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.Designer.cs
                 {
                     b.Navigation("LearningPlanTeachers");
                 });

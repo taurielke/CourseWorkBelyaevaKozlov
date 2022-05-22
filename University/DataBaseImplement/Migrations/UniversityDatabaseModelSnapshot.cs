@@ -352,7 +352,6 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     b.Navigation("LearningPlanTeachers");
                 });
-#pragma warning restore 612, 618
         }
     }
 }

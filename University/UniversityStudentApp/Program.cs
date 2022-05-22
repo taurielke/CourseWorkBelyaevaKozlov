@@ -6,7 +6,7 @@ namespace UniversityStudentApp
 {
     public class Program
     {
-        public static StudentViewModel Student { get; set; }
+        public static DeaneryViewModel Deanery { get; set; }
 
         public static void Main(string[] args)
         {

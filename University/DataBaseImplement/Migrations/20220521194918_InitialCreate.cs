@@ -3,16 +3,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversityDataBaseImplement.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class c : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                 name: "Attestations",
+========
+                name: "Deaneries",
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentGradebookNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeaneryLogin = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -28,11 +33,19 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     Login = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+========
+                    DeaneryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                     table.PrimaryKey("PK_Deaneries", x => x.Login);
+========
+                    table.PrimaryKey("PK_Deaneries", x => x.Id);
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -50,6 +63,43 @@ namespace UniversityDataBaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
+========
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeacherName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LearningPlans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DeaneryId = table.Column<int>(type: "int", nullable: false),
+                    LearningPlanName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SpecialtyName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LearningPlans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LearningPlans_Deaneries_DeaneryId",
+                        column: x => x.DeaneryId,
+                        principalTable: "Deaneries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 name: "Disciplines",
                 columns: table => new
                 {
@@ -78,11 +128,12 @@ namespace UniversityDataBaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LearningPlans",
+                name: "Students",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    RecordBookNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                     StreamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hours = table.Column<int>(type: "int", nullable: false)
                 },
@@ -115,6 +166,22 @@ namespace UniversityDataBaseImplement.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teachers", x => x.Id);
+========
+                    StudentName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EnrollingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CourseYear = table.Column<int>(type: "int", nullable: false),
+                    LearningPlanId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.RecordBookNumber);
+                    table.ForeignKey(
+                        name: "FK_Students_LearningPlans_LearningPlanId",
+                        column: x => x.LearningPlanId,
+                        principalTable: "LearningPlans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -144,6 +211,7 @@ namespace UniversityDataBaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                 name: "LearningPlanStudents",
                 columns: table => new
                 {
@@ -171,18 +239,41 @@ namespace UniversityDataBaseImplement.Migrations
 
             migrationBuilder.CreateTable(
                 name: "StudentDisciplines",
+========
+                name: "Attestations",
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                     GradebookNumber = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DisciplineId = table.Column<int>(type: "int", nullable: false)
+========
+                    DeaneryId = table.Column<int>(type: "int", nullable: false),
+                    RecordBookNumber = table.Column<int>(type: "int", nullable: false),
+                    SemesterNumber = table.Column<int>(type: "int", nullable: false),
+                    DisciplineId = table.Column<int>(type: "int", nullable: false),
+                    Mark = table.Column<int>(type: "int", nullable: false),
+                    ExamDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StudentRecordBookNumber = table.Column<int>(type: "int", nullable: true)
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudentDisciplines", x => x.Id);
                     table.ForeignKey(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                         name: "FK_StudentDisciplines_Disciplines_DisciplineId",
+========
+                        name: "FK_Attestations_Deaneries_DeaneryId",
+                        column: x => x.DeaneryId,
+                        principalTable: "Deaneries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Attestations_Disciplines_DisciplineId",
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                         column: x => x.DisciplineId,
                         principalTable: "Disciplines",
                         principalColumn: "Id",
@@ -222,6 +313,24 @@ namespace UniversityDataBaseImplement.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
+========
+                name: "IX_Attestations_DeaneryId",
+                table: "Attestations",
+                column: "DeaneryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attestations_DisciplineId",
+                table: "Attestations",
+                column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attestations_StudentRecordBookNumber",
+                table: "Attestations",
+                column: "StudentRecordBookNumber");
+
+            migrationBuilder.CreateIndex(
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
                 name: "IX_DisciplineLearningPlans_DisciplineId",
                 table: "DisciplineLearningPlans",
                 column: "DisciplineId");
@@ -257,9 +366,25 @@ namespace UniversityDataBaseImplement.Migrations
                 column: "DisciplineId");
 
             migrationBuilder.CreateIndex(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                 name: "IX_StudentDisciplines_GradebookNumber",
                 table: "StudentDisciplines",
                 column: "GradebookNumber");
+========
+                name: "IX_InterimReports_StudentRecordBookNumber",
+                table: "InterimReports",
+                column: "StudentRecordBookNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LearningPlans_DeaneryId",
+                table: "LearningPlans",
+                column: "DeaneryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_LearningPlanId",
+                table: "Students",
+                column: "LearningPlanId");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -292,6 +417,7 @@ namespace UniversityDataBaseImplement.Migrations
                 name: "LearningPlans");
 
             migrationBuilder.DropTable(
+<<<<<<<< HEAD:University/DataBaseImplement/Migrations/20220521194918_InitialCreate.cs
                 name: "Teachers");
 
             migrationBuilder.DropTable(
@@ -299,6 +425,9 @@ namespace UniversityDataBaseImplement.Migrations
 
             migrationBuilder.DropTable(
                 name: "Students");
+========
+                name: "Deaneries");
+>>>>>>>> 300594a27c949bdcc488c4d70265fd149aa48490:University/DataBaseImplement/Migrations/20220521184947_c.cs
         }
     }
 }

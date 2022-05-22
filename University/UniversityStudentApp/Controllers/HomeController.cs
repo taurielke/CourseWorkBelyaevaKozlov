@@ -18,52 +18,13 @@ namespace UniversityStudentApp.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Attestation()
+        public IActionResult Index()
         {
-            if (Program.Student == null)
+            if (Program.Deanery == null)
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIDeanery.GetRequest<List<AttestationViewModel>>($"api/main/getattestations?recordBookNumber={Program.Student.RecordBookNumber}"));
-        }
-
-        public IActionResult InterimReport()
-        {
-            if (Program.Student == null)
-            {
-                return Redirect("~/Home/Enter");
-            }
-            return View(APIDeanery.GetRequest<List<InterimReportViewModel>>($"api/main/getinterimreports?recordBookNumber={Program.Student.RecordBookNumber}"));
-        }
-
-        [HttpGet]
-        public IActionResult Privacy()
-        {
-            if (Program.Student == null)
-            {
-                return Redirect("~/Home/Enter");
-            }
-            return View(Program.Student);
-        }
-
-        [HttpPost]
-        public void Privacy(string login, string password)
-        {
-            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
-            {
-                APIDeanery.PostRequest("api/student/updatedata", new StudentBindingModel
-                {
-                    RecordBookNumber = Program.Student.RecordBookNumber,
-                    Email = login,
-                    Password = password
-                });
-                Program.Student.Email = login;
-                Program.Student.Password = password;
-                Response.Redirect("Index");
-                return;
-            }
-            throw new Exception("Введите логин, пароль и ФИО");
+            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/main/getlearningplans?deaneryId={Program.Deanery.Id}"));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -83,8 +44,8 @@ namespace UniversityStudentApp.Controllers
         {
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
-                Program.Student = APIDeanery.GetRequest<StudentViewModel>($"api/student/login?login={login}&password={password}");
-                if (Program.Student == null)
+                Program.Deanery = APIDeanery.GetRequest<DeaneryViewModel>($"api/deanery/login?login={login}&password={password}");
+                if (Program.Deanery == null)
                 {
                     throw new Exception("Неверный логин/пароль");
                 }
@@ -94,29 +55,28 @@ namespace UniversityStudentApp.Controllers
             throw new Exception("Введите логин, пароль");
         }
 
-        /*[HttpGet]
-        public IActionResult CreateAttestationReport()
+        [HttpGet]
+        public IActionResult Register()
         {
-            ViewBag.Attestations = APIStudent.GetRequest<List<AttestationViewModel>>("api/main/getattestations");
             return View();
         }
 
         [HttpPost]
-        public void CreateAttestationReport(DateTime dateFrom, DateTime dateTo)
+        public void Register(string login, string password, string deaneryName)
         {
-            *//*if (count == 0 || sum == 0)
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(deaneryName))
             {
+                APIDeanery.PostRequest("api/Deanery/register", new DeaneryBindingModel
+                {
+                    DeaneryName= deaneryName,
+                    Email = login,
+                    Password = password
+                });
+                Response.Redirect("Enter");
                 return;
-            }*//*
-            APIStudent.PostRequest("api/main/createorder", new CreateAttestationReportBindingModel
-            {
-                ClientId = Program.Client.Id,
-                FlowerId = flower,
-                Count = count,
-                Sum = sum
-            });
-            Response.Redirect("Index");
-        }*/
+            }
+            throw new Exception("Введите логин, пароль и ФИО");
+        }
 
     }
 }
