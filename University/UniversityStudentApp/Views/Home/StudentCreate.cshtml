@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Create Student";
+}
+<div class="text-center">
+    <h2 class="display-4">Создание студента</h2>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-4">Номер зачетной книжки:</div>
+        <div class="col-8"><input type="text" name="recordbookNumber" id="recordbookNumber"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4">ФИО:</div>
+        <div class="col-8"><input type="text" name="name" id="name"/></div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

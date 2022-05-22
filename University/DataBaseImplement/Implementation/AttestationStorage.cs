@@ -20,8 +20,7 @@ namespace UniversityDataBaseImplement.Implements
                 {
                     Id = rec.Id,
                     Date = rec.Date,
-                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name,
-                    DenearyName = context.Deaneries.FirstOrDefault(x => x.Name == rec.DenearyLogin).Name
+                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
                 }).ToList();
             }
         }
@@ -34,13 +33,12 @@ namespace UniversityDataBaseImplement.Implements
             using (var context = new UniversityDatabase())
             {
                 return context.Attestations
-                .Where(rec => rec.StudentGradebookNumber == model.StudentId && rec.DenearyLogin == model.DenearyLogin)
+                .Where(rec => rec.StudentGradebookNumber == model.StudentId && rec.DeaneryId== model.DeaneryId)
                 .Select(rec => new AttestationViewModel
                 {
                     Id = rec.Id,
                     Date = rec.Date,
-                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name,
-                    DenearyName = context.Deaneries.FirstOrDefault(x => x.Name == rec.DenearyLogin).Name
+                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
                 })
                 .ToList();
             }
@@ -54,14 +52,14 @@ namespace UniversityDataBaseImplement.Implements
             using (var context = new UniversityDatabase())
             {
                 var Cert = context.Attestations
-                .FirstOrDefault(rec => rec.Date == model.Date || rec.DenearyLogin == model.DenearyLogin);
+                .FirstOrDefault(rec => rec.Date == model.Date || rec.DeaneryId == model.DeaneryId);
                 return Cert != null ?
                 new AttestationViewModel
                 {
                     Id = Cert.Id,
                     Date = Cert.Date,
-                    DenearyName = Cert.DenearyLogin,
-                    StudentName = Cert.StudentGradebookNumber
+                    StudentId = Cert.StudentGradebookNumber,
+                    StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == x.GradebookNumber).Name
                 } :
                 null;
             }
@@ -106,7 +104,7 @@ namespace UniversityDataBaseImplement.Implements
         private Attestation CreateModel(AttestationBindingModel model, Attestation Attestation)
         {
             Attestation.Date = model.Date;
-            Attestation.DenearyLogin = model.DenearyLogin;
+            Attestation.DeaneryId = (int)model.DeaneryId;
             return Attestation;
         }
     }

@@ -14,7 +14,7 @@ namespace UniversityBusinessLogic.Interfaces
         void Insert(StudentBindingModel model);
         void Update(StudentBindingModel model);
         void Delete(StudentBindingModel model);
-        public void BindingDiscipline(string gradebookNumber, int subjectId);
+        public void BindingDiscipline(int gradebookNumber, int subjectId);
         public List<StudentViewModel> GetByDisciplineId(int subjectId);
     }
 }

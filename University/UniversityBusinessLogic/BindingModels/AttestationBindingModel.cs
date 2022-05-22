@@ -7,11 +7,10 @@ namespace UniversityBusinessLogic.BindingModels
     public class AttestationBindingModel
     {
         public int? Id { get; set; }
+        public int? DeaneryId { get; set; }
 
         public DateTime Date { get; set; }
 
-        public string StudentId { get; set; }
-
-        public string DenearyLogin { get; set; }
+        public int StudentId { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace UniversityDataBaseImplement.Models
 	public class Student
 	{
 		[Key]
-		public string GradebookNumber { get; set; }
+		public int GradebookNumber { get; set; }
 		public int DeaneryId { get; set; }
 		[Required]
 		public string Name { get; set; }

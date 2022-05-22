@@ -8,7 +8,7 @@ namespace UniversityDataBaseImplementation.Models
     public class StudentDiscipline
     {
         public int Id { get; set; }
-        public string GradebookNumber { get; set; }
+        public int GradebookNumber { get; set; }
         public int DisciplineId { get; set; }
         public virtual Discipline Discipline { get; set; }
         public virtual Student Student { get; set; }

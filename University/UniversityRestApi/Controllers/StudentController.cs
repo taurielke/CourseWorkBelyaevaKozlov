@@ -22,7 +22,7 @@ namespace UniversityRestApi.Controllers
         public List<StudentViewModel> GetStudents(int deaneryId) => logic.Read(new StudentBindingModel { DeaneryId = deaneryId });
 
         [HttpGet]
-        public StudentViewModel GetStudent(string gradeBookNumber) => logic.Read(new StudentBindingModel { GradebookNumber = gradeBookNumber })?[0];
+        public StudentViewModel GetStudent(int gradeBookNumber) => logic.Read(new StudentBindingModel { GradebookNumber = gradeBookNumber })?[0];
 
         [HttpPost]
         public void CreateOrUpdateStudent(StudentBindingModel model) => logic.CreateOrUpdate(model);

@@ -21,7 +21,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 return _studentStorage.GetFullList();
             }
-            if (!string.IsNullOrEmpty(model.GradebookNumber))
+            if (model.GradebookNumber.HasValue)
             {
                 return new List<StudentViewModel> { _studentStorage.GetElement(model) };
             }
@@ -37,7 +37,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 throw new Exception("Уже есть студент с таким именем");
             }
-            if (!string.IsNullOrEmpty(model.GradebookNumber))
+            if (model.GradebookNumber.HasValue)
             {
                 _studentStorage.Update(model);
             }
@@ -66,7 +66,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             return _studentStorage.GetByDisciplineId(lector.DisciplineId);
         }
 
-        public void BindingDiscipline(string gradebookNumber, int subjectId)
+        public void BindingDiscipline(int gradebookNumber, int subjectId)
         {
             _studentStorage.BindingDiscipline(gradebookNumber, subjectId);
         }

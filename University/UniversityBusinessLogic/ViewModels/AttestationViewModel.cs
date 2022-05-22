@@ -9,11 +9,9 @@ namespace UniversityBusinessLogic.ViewModels
 
         [DisplayName("Дата")]
         public DateTime Date { get; set; }
+        public int StudentId { get; set; }
 
         [DisplayName("Студент")]
         public string StudentName { get; set; }
-
-        [DisplayName("Деканат")]
-        public string DenearyName { get; set; }
     }
 }

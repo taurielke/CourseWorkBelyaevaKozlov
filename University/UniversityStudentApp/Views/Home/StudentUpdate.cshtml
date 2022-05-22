@@ -1,28 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Update LearningPlan";
+    ViewData["Title"] = "Update Student";
 }
 <div class="text-center">
-    <h2 class="display-4">Изменение плана обучения</h2>
+    <h2 class="display-4">Изменение студента</h2>
 </div>
 <form method="post">
     <div class="row">
-        <div class="col-4">Название потока:</div>
-        <div class="col-8"><input type="text" name="streamName" id="streamName" value="@ViewBag.LearningPlan.StreamName" size="35" /></div>
+        <div class="col-4">Номер зачетной книжки:</div>
+        <div class="col-8"><input type="text" name="recordbookNumber" id="recordbookNumber" value="@ViewBag.Student.RecordBookNumber" size="35" /></div>
     </div>
     <div class="row">
-        <div class="col-4">Количество часов:</div>
-        <div class="col-8"><input type="text" name="hours" id="hours" value="@ViewBag.LearningPlan.Hours" /></div>
+        <div class="col-4">ФИО:</div>
+        <div class="col-8"><input type="text" name="name" id="name" value="@ViewBag.Student.Name" /></div>
     </div>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    Преподаватели
+                    Планы обучения
                 </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewBag.LearningPlan.LearningPlanTeachers)
+            @foreach (var item in ViewBag.Student.LearningPlanStudents)
             {
                 <tr>
                     <td>

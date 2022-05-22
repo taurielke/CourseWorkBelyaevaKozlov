@@ -6,8 +6,8 @@ namespace UniversityBusinessLogic.ViewModels
 	public class StudentViewModel
 	{
 		[DisplayName("Номер зачётной книжки")]
-		public string GradebookNumber { get; set; }
-		[DisplayName("Имя")]
+		public int GradebookNumber { get; set; }
+		[DisplayName("ФИО")]
 		public string Name { get; set; }
 		public Dictionary<int, string> Disciplines { get; set; }
 		public Dictionary<int, string> LearningPlans { get; set; }

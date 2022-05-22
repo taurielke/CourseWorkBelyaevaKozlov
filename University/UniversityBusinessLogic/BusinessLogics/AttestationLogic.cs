@@ -32,7 +32,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 Date = model.Date,
                 StudentId = model.StudentId,
-                DenearyLogin = model.DenearyLogin
+                DeaneryId = model.DeaneryId
             });
             if (element != null && element.Id != model.Id)
             {

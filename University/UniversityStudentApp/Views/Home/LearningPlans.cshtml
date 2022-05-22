@@ -1,5 +1,64 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using UniversityBusinessLogic.ViewModels
+
+@model List<LearningPlanViewModel>
 @{
+    ViewData["Title"] = "LearningPlans";
 }
+
+<div class="text-center">
+    <h1 class="display-4">Планы обучения</h1>
+</div>
+
+<div class="text-center">
+    @{
+        if (Model == null)
+        {
+            <h3 class="display-4">Авторизируйтесь</h3>
+            return;
+        }
+        <p>
+            <a asp-action="ReplenishmentCreate">Создать план обучения</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Номер
+                    </th>
+                    <th>
+                        Название потока
+                    </th>
+                    <th>
+                        Количество часов
+                    </th>
+                    <th>
+                        Изменение плана обучения
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StreamName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Hours)
+                        </td>
+                        <td>
+                            <a class="btn btn-warning button-fixed button-sm" asp-action="LearningPlanUpdate"
+                            asp-route-Id="@item.Id" asp-route-streamName="@item.StreamName" 
+                            asp-route-hours="@item.Hours">Изменить</a>
+
+                            <a class="btn btn-danger button-fixed button-sm" asp-action="LearningPlanDelete" asp-route-replenishmentId="@item.Id">Удалить</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

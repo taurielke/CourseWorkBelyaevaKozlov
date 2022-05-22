@@ -161,7 +161,7 @@ namespace UniversityDataBaseImplement.Implements
         private Student CreateModel(StudentBindingModel model, Student student, UniversityDatabase context)
         {
             // нужно передавать student уже с заполнеными полями и добавленным таблицу Students  
-            if (string.IsNullOrEmpty(model.GradebookNumber))
+            if (!model.GradebookNumber.HasValue)
             {
                 var studentDisciplines = context.StudentDisciplines.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
                 context.StudentDisciplines.RemoveRange(studentDisciplines.Where(rec => !model.Disciplines.ContainsKey(rec.DisciplineId)).ToList());
@@ -191,7 +191,7 @@ namespace UniversityDataBaseImplement.Implements
             return student;
         }
 
-        public void BindingDiscipline(string gradebookNumber, int subjectId)
+        public void BindingDiscipline(int gradebookNumber, int subjectId)
         {
             using (var context = new UniversityDatabase())
             {
