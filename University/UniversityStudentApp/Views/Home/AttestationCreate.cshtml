@@ -1,5 +1,20 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    ViewData["Title"] = "Create Attestation";
 }
+<div class="text-center">
+    <h2 class="display-4">Создание аттестации</h2>
+</div>
+<form method="post">
+    <div class="row">
+        <div class="col-4">Студент:</div>
+        <div class="col-8">
+            <select id="student" name="student" class="form-control" asp-items="@(new SelectList(@ViewBag.Students,"GradebookNumber", "StudentName"))"></select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
