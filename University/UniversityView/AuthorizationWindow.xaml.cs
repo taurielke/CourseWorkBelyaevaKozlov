@@ -45,7 +45,7 @@ namespace UniversityView
                 if (viewDepartment != null && viewDepartment[0] != null && viewDepartment.Count > 0 && viewDepartment[0].Password == TextBoxPassword.Password)
                 {
                     var window = Container.Resolve<MainWindow>();
-                    //window.Login = viewDepartment[0].Login;
+                    window.Login = viewDepartment[0].Login;
                     window.ShowDialog();
                     DialogResult = true;
                 }
