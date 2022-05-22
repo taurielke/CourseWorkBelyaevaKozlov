@@ -53,7 +53,7 @@ namespace UniversityView
                     var view = _logicTeacher.Read(new TeacherBindingModel { Id = id })?[0];
                     if (view != null)
                     {
-                        TextBoxName.Text = view.TeacherName;
+                        TextBoxName.Text = view.Name;
                     }
                 }
                 catch (Exception ex)

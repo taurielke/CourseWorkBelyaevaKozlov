@@ -39,7 +39,7 @@ namespace UniversityView
                     var view = _logicDiscipline.Read(new DisciplineBindingModel { Id = id })?[0];
                     if (view != null)
                     {
-                        TextBoxName.Text = view.DisciplineName;
+                        TextBoxName.Text = view.Name;
                     }
                 }
                 catch (Exception ex)
@@ -61,7 +61,7 @@ namespace UniversityView
                 _logicDiscipline.CreateOrUpdate(new DisciplineBindingModel
                 {
                     Id = id,
-                    DisciplineName = TextBoxName.Text,
+                    Name = TextBoxName.Text,
                     DepartmentLogin = login
                 });
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);

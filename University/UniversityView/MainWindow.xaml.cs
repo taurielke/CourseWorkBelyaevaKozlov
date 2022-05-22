@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using Unity;
+using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.ViewModels;
 
 namespace UniversityView
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -30,31 +19,63 @@ namespace UniversityView
         private string login;
 
         private readonly DepartmentLogic _logicDepartment;
-
         public MainWindow(DepartmentLogic logic)
         {
             InitializeComponent();
-            _logicDepartment = logic;
+            this._logicDepartment = logic;
         }
 
-        private void MenuItemLearningPlans_Click(object sender, RoutedEventArgs e)
+        private void MenuItemSubjects_Click(object sender, RoutedEventArgs e)
         {
-            var form = App.Container.Resolve<LearningPlans>();
-            form.ShowDialog();
+            var window = Container.Resolve<DisciplinesWindow>();
+            window.Login = login;
+            window.ShowDialog();
         }
 
-        private void MenuItemTeachers_Click(object sender, RoutedEventArgs e)
+        private void MenuItemLectors_Click(object sender, RoutedEventArgs e)
         {
-            var form = App.Container.Resolve<TeachersWindow>();
-            form.Login = login;
-            form.ShowDialog();
+            var window = Container.Resolve<TeachersWindow>();
+            window.Login = login;
+            window.ShowDialog();
         }
 
-        private void MenuItemDisciplines_Click(object sender, RoutedEventArgs e)
+
+        private void MenuItemCheckLists_Click(object sender, RoutedEventArgs e)
         {
-            var form = App.Container.Resolve<DisciplinesWindow>();
-            form.Login = login;
-            form.ShowDialog();
+            var window = Container.Resolve<CheckListsWindow>();
+            window.ShowDialog();
+        }
+
+        private void MenuItemGetList_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Container.Resolve<GetListWindow>();
+            window.ShowDialog();
+        }
+
+        private void MenuItemReport_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Container.Resolve<ReportWindow>();
+            window.Login = login;
+            window.ShowDialog();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var currentUser = _logicDepartment.Read(new DepartmentBindingModel { DepartmentLogin = login })?[0];
+            labelUser.Content = $"Кафедра \"{currentUser.Name}\"";
+        }
+
+        private void MenuItemBinding_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Container.Resolve<BindingSubjectWindow>();
+            window.Login = login;
+            window.ShowDialog();
+        }
+
+        private void MenuItemStats_Click(object sender, RoutedEventArgs e)
+        {
+            var window = Container.Resolve<StatsWindow>();
+            window.ShowDialog();
         }
     }
 }

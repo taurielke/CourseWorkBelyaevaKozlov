@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace UniversityDatabaseImplement.Models
+namespace UniversityDataBaseImplement.Models
 {
 	public class Department
 	{

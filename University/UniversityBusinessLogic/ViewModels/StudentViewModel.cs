@@ -1,30 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace UniversityBusinessLogic.ViewModels
 {
-    public class StudentViewModel
-    {
-        public int RecordBookNumber { get; set; }
-        [DisplayName("ФИО студента")]
-        public string StudentName { get; set; }
-        [DisplayName("Дата поступления")]
-        public DateTime EnrollingDate { get; set; }
-        [DisplayName("Курс")]
-        public int CourseYear { get; set; }
-        public int GroupId { get; set; }
-        [DisplayName("Название группы")]
-        public string GroupName { get; set; }
-        public int LearningPlanId { get; set; }
-        [DisplayName("Название плана обучения")]
-        public string LearningPlanName { get; set; }
-        [DisplayName("Логин")]
-        public string Email { get; set; }
-
-        [DisplayName("Пароль")]
-        public string Password { get; set; }
-
-    }
+	public class StudentViewModel
+	{
+		[DisplayName("Номер зачётной книжки")]
+		public string GradebookNumber { get; set; }
+		[DisplayName("Имя")]
+		public string Name { get; set; }
+		public Dictionary<int, string> Disciplines { get; set; }
+		public Dictionary<int, string> LearningPlans { get; set; }
+	}
 }

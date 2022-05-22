@@ -1,20 +1,29 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using UniversityDataBaseImplement.Models;
-using UniversityBusinessLogic.BindingModels;
-using UniversityBusinessLogic.ViewModels;
-using UniversityBusinessLogic.Interfaces;
 using System.Linq;
+using UniversityBusinessLogic.BindingModels;
+using UniversityBusinessLogic.Interfaces;
+using UniversityBusinessLogic.ViewModels;
+using UniversityDataBaseImplement.Models;
 
-namespace UniversityDataBaseImplement.Implementation
+namespace UniversityDataBaseImplement.Implements
 {
     public class TeacherStorage : ITeacherStorage
     {
         public List<TeacherViewModel> GetFullList()
         {
-            using var context = new UniversityDatabase();
-            return context.Teachers.Select(CreateModel).ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.Teachers
+                .Select(rec => new TeacherViewModel
+                {
+                    Id = rec.Id,
+                    Name = rec.Name,
+                    DisciplineName = context.Disciplines.FirstOrDefault(recDiscipline => rec.DisciplineId == recDiscipline.Id).Name,
+                    DisciplineId = rec.DisciplineId
+                }).ToList();
+            }
         }
         public List<TeacherViewModel> GetFilteredList(TeacherBindingModel model)
         {
@@ -22,43 +31,56 @@ namespace UniversityDataBaseImplement.Implementation
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            return context.Teachers.Where(rec => rec.TeacherName.Contains(model.TeacherName)).Select(CreateModel).ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.Teachers
+                .Include(rec => rec.LearningPlanTeachers)
+                .ThenInclude(rec => rec.LearningPlan)
+                .Where(rec => rec.DisciplineId == model.DisciplineID)
+                .Select(rec => new TeacherViewModel
+                {
+                    Id = rec.Id,
+                    Name = rec.Name,
+                    DisciplineName = context.Disciplines.FirstOrDefault(recDiscipline => rec.DisciplineId == recDiscipline.Id).Name,
+                    DisciplineId = rec.DisciplineId
+                })
+                .ToList();
+            }
         }
-
         public TeacherViewModel GetElement(TeacherBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            var teacher = context.Teachers.FirstOrDefault(rec => rec.TeacherName == model.TeacherName || rec.Id == model.Id);
-            return teacher != null ? CreateModel(teacher) : null;
+            using (var context = new UniversityDatabase())
+            {
+                var teacher = context.Teachers
+                .Include(rec => rec.LearningPlanTeachers)
+                .ThenInclude(rec => rec.LearningPlan)
+                .FirstOrDefault(rec => rec.Name == model.TeacherName || rec.Id == model.Id);
+                return teacher != null ?
+                new TeacherViewModel
+                {
+                    Id = teacher.Id,
+                    Name = teacher.Name,
+                    DisciplineName = context.Disciplines.FirstOrDefault(recDiscipline => teacher.DisciplineId == recDiscipline.Id).Name,
+                    DisciplineId = teacher.DisciplineId
+                } :
+                null;
+            }
         }
-
         public void Insert(TeacherBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
                 context.Teachers.Add(CreateModel(model, new Teacher()));
                 context.SaveChanges();
-                transaction.Commit();
             }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-            
         }
         public void Update(TeacherBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
                 var element = context.Teachers.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
@@ -67,42 +89,29 @@ namespace UniversityDataBaseImplement.Implementation
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
-                transaction.Commit();
             }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-            
         }
         public void Delete(TeacherBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            Teacher element = context.Teachers.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element != null)
+            using (var context = new UniversityDatabase())
             {
-                context.Teachers.Remove(element);
-                context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Элемент не найден");
+                Teacher element = context.Teachers.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element != null)
+                {
+                    context.Teachers.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
+                }
             }
         }
-        private static Teacher CreateModel(TeacherBindingModel model, Teacher teacher)
+        private Teacher CreateModel(TeacherBindingModel model, Teacher teacher)
         {
-            teacher.TeacherName = model.TeacherName;
+            teacher.Name = model.TeacherName;
+            teacher.DisciplineId = model.DisciplineID;
             return teacher;
-        }
-
-        private static TeacherViewModel CreateModel(Teacher teacher)
-        {
-            return new TeacherViewModel
-            {
-                Id = teacher.Id,
-                TeacherName = teacher.TeacherName
-            };
         }
     }
 }

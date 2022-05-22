@@ -1,35 +1,52 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using UniversityDataBaseImplement.Models;
-using UniversityBusinessLogic.BindingModels;
-using UniversityBusinessLogic.ViewModels;
-using UniversityBusinessLogic.Interfaces;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using UniversityBusinessLogic.BindingModels;
+using UniversityBusinessLogic.Interfaces;
+using UniversityBusinessLogic.ViewModels;
+using UniversityDataBaseImplement.Models;
 
-namespace UniversityDataBaseImplement.Implementation
+namespace UniversityDataBaseImplement.Implements
 {
     public class InterimReportStorage : IInterimReportStorage
     {
         public List<InterimReportViewModel> GetFullList()
         {
-            using var context = new UniversityDatabase();
-            return context.InterimReports.Select(CreateModel).ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.InterimReports
+                .Select(rec => new InterimReportViewModel
+                {
+                    Id = rec.Id,
+                    DateOfExam = rec.DateOfExam,
+                    TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
+                    TeacherId = rec.TeacherId,
+                }).ToList();
+            }
         }
-        //выводятся промежуточные ведомости за определенный период по студенту и дициплине
         public List<InterimReportViewModel> GetFilteredList(InterimReportBindingModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            return context.InterimReports
-                .Where(rec => rec.RecordBookNumber == model.RecordBookNumber
-                && rec.DisciplineId == model.DisciplineId
-                &&rec.DateCreate>=model.DateFrom && rec.DateCreate <= model.DateTo)
-                .Select(CreateModel).ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.InterimReports
+                .Where(rec => (!model.DateFrom.HasValue && !model.DateTo.HasValue && rec.TeacherId == model.TeacherId || rec.DateOfExam == model.DateOfExam) ||
+                (model.DateFrom.HasValue && model.DateTo.HasValue && (rec.TeacherId == model.TeacherId
+                || rec.DateOfExam.Date >= model.DateFrom.Value.Date && rec.DateOfExam.Date <= model.DateTo.Value.Date)))
+                .ToList()
+                .Select(rec => new InterimReportViewModel
+                {
+                    Id = rec.Id,
+                    DateOfExam = rec.DateOfExam,
+                    TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
+                    TeacherId = rec.TeacherId,
+                })
+                .ToList();
+            }
         }
         public InterimReportViewModel GetElement(InterimReportBindingModel model)
         {
@@ -37,32 +54,32 @@ namespace UniversityDataBaseImplement.Implementation
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            var interimReport = context.InterimReports.FirstOrDefault(rec => rec.RecordBookNumber == model.RecordBookNumber || rec.Id == model.Id);
-            return interimReport != null ? CreateModel(interimReport) : null;
+            using (var context = new UniversityDatabase())
+            {
+                var checkList = context.InterimReports
+                .FirstOrDefault(rec => (rec.TeacherId == model.TeacherId && rec.DateOfExam == model.DateOfExam) || rec.Id == model.Id);
+                return checkList != null ?
+                new InterimReportViewModel
+                {
+                    Id = checkList.Id,
+                    DateOfExam = checkList.DateOfExam,
+                    TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == checkList.TeacherId).Name,
+                    TeacherId = checkList.TeacherId,
+                } :
+                null;
+            }
         }
         public void Insert(InterimReportBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
                 context.InterimReports.Add(CreateModel(model, new InterimReport()));
                 context.SaveChanges();
-                transaction.Commit();
             }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-            
         }
         public void Update(InterimReportBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
                 var element = context.InterimReports.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
@@ -71,55 +88,93 @@ namespace UniversityDataBaseImplement.Implementation
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
-                transaction.Commit();
             }
-            catch
-            {
-                transaction.Rollback();
-                throw;
-            }
-            
         }
         public void Delete(InterimReportBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            InterimReport element = context.InterimReports.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element != null)
+            using (var context = new UniversityDatabase())
             {
-                context.InterimReports.Remove(element);
-                context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Элемент не найден");
+                InterimReport element = context.InterimReports.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element != null)
+                {
+                    context.InterimReports.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
+                }
             }
         }
-        private static InterimReport CreateModel(InterimReportBindingModel model, InterimReport interimReport)
+        private InterimReport CreateModel(InterimReportBindingModel model, InterimReport checkList)
         {
-            interimReport.RecordBookNumber = model.RecordBookNumber;
-            interimReport.SemesterNumber = model.SemesterNumber;
-            interimReport.DisciplineId = model.DisciplineId;
-            interimReport.Mark = model.Mark;
-            interimReport.DateCreate = model.DateCreate;
-            return interimReport;
+            checkList.DateOfExam = model.DateOfExam;
+            checkList.TeacherId = model.TeacherId;
+            return checkList;
         }
 
-        private static InterimReportViewModel CreateModel(InterimReport interimReport)
+        //public List<ReportInterimReportViewModel> GetByDiscipline(DateTime? dateFrom, DateTime? dateTo, int? subjectId)
+        //{
+        //    if (dateFrom.HasValue && dateTo.HasValue && subjectId.HasValue)
+        //    {
+        //        using (var context = new UniversityDatabase())
+        //        {
+        //            return context.InterimReports
+        //            .Where(rec => rec.DateOfExam >= dateFrom && rec.DateOfExam <= dateTo &&
+        //            context.Teachers.FirstOrDefault(l => l.Id == rec.TeacherId && l.DisciplineId == subjectId) != null)
+        //            .ToList()
+        //            .Select(rec => new ReportInterimReportViewModel
+        //            {
+        //                InterimReportId = rec.Id,
+        //                InterimReportDate = rec.DateOfExam,
+        //                TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
+        //            })
+        //            .ToList();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception("Данные не переданы");
+        //    }
+        //}
+
+        public List<InterimReportViewModel> GetByDateRange(InterimReportBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            int? TeacherId = context.Disciplines.FirstOrDefault(rec => rec.Id == interimReport.DisciplineId)?.TeacherId;
-            return new InterimReportViewModel
+            if (model == null)
             {
-                Id = interimReport.Id,
-                RecordBookNumber = interimReport.RecordBookNumber,
-                StudentName = context.Students.FirstOrDefault(rec => rec.RecordBookNumber == interimReport.RecordBookNumber)?.StudentName,
-                SemesterNumber = interimReport.SemesterNumber,
-                DisciplineId = interimReport.DisciplineId,
-                DisciplineName = context.Disciplines.FirstOrDefault(rec => rec.Id == interimReport.DisciplineId)?.DisciplineName,
-                TeacherName = context.Teachers.FirstOrDefault(rec => rec.Id == TeacherId)?.TeacherName,
-                Mark = interimReport.Mark,
-                DateCreate = interimReport.DateCreate
-            };
+                return null;
+            }
+            using (var context = new UniversityDatabase())
+            {
+                return context.InterimReports
+                .Where(rec => rec.DateOfExam.Date >= model.DateFrom.Value.Date && rec.DateOfExam.Date <= model.DateTo.Value.Date)
+                .ToList()
+                .Select(rec => new InterimReportViewModel
+                {
+                    Id = rec.Id,
+                    DateOfExam = rec.DateOfExam,
+                    TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
+                    TeacherId = rec.TeacherId,
+                })
+                .ToList();
+            }
         }
+
+        //public List<StatsViewModel> GetByDateRangeWithSubjets(InterimReportBindingModel model)
+        //{
+        //    using (var context = new UniversityDatabase())
+        //    {
+        //        return context.InterimReports
+        //        .Where(rec => rec.DateOfExam >= model.DateFrom && rec.DateOfExam <= model.DateTo)
+        //        .ToList()
+        //        .Select(rec => new StatsViewModel
+        //        {
+        //            InterimReportId = rec.Id,
+        //            InterimReportDate = rec.DateOfExam,
+        //            ItemName = context.Disciplines.FirstOrDefault(recS => recS.Id == context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).DisciplineId).Name,
+        //        })
+        //        .ToList();
+        //    }
+        //}
     }
 }

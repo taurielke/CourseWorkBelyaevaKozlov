@@ -8,14 +8,11 @@ namespace UniversityBusinessLogic.ViewModels
     public class LearningPlanViewModel
     {
         public int Id { get; set; }
-        [DisplayName("Название плана обучения")]
-        public string LearningPlanName { get; set; }
-        [DisplayName("Название специальности")]
-        public string SpecialtyName { get; set; }
-        public int UserId { get; set; }
-        [DisplayName("ФИО пользователя")]
-        public string UserName { get; set; }
-        public Dictionary<int, string> DisciplineLearningPlans { get; set; } //чтобы отображались все дисциплины в плане обучения?
-        public Dictionary<int, string> Students { get; set; }
+
+        [DisplayName("Название потока")]
+        public string StreamName { get; set; }
+
+        [DisplayName("Количество часов")]
+        public int Hours { get; set; }
     }
 }

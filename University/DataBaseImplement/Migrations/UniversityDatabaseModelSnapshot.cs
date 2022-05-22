@@ -26,31 +26,58 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DisciplineId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ExamDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
+                    b.Property<string>("DeaneryLogin")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecordBookNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SemesterNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StudentRecordBookNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentGradebookNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DisciplineId");
-
-                    b.HasIndex("StudentRecordBookNumber");
-
                     b.ToTable("Attestations");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Deanery", b =>
+                {
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Login");
+
+                    b.ToTable("Deaneries");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Department", b =>
+                {
+                    b.Property<string>("DepartmentLogin")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DepartmentLogin");
+
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
@@ -60,19 +87,14 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DisciplineDescription")
+                    b.Property<string>("DepartmentLogin")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DisciplineName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeacherId");
 
                     b.ToTable("Disciplines");
                 });
@@ -106,29 +128,13 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("DateCreate")
+                    b.Property<DateTime>("DateOfExam")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DisciplineId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Mark")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecordBookNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SemesterNumber")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("StudentRecordBookNumber")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DisciplineId");
-
-                    b.HasIndex("StudentRecordBookNumber");
 
                     b.ToTable("InterimReports");
                 });
@@ -140,52 +146,72 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("LearningPlanName")
+                    b.Property<int>("Hours")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StreamName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SpecialtyName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("LearningPlans");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlanStudent", b =>
                 {
-                    b.Property<int>("RecordBookNumber")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CourseYear")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EnrollingDate")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("GradebookNumber")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("LearningPlanId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Password")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("Id");
 
-                    b.Property<string>("StudentName")
+                    b.HasIndex("GradebookNumber");
+
+                    b.HasIndex("LearningPlanId");
+
+                    b.ToTable("LearningPlanStudents");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlanTeacher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LearningPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LearningPlanId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("LearningPlanTeacher");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
+                {
+                    b.Property<string>("GradebookNumber")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RecordBookNumber");
-
-                    b.HasIndex("LearningPlanId");
+                    b.HasKey("GradebookNumber");
 
                     b.ToTable("Students");
                 });
@@ -197,7 +223,10 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("TeacherName")
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -206,86 +235,38 @@ namespace UniversityDataBaseImplement.Migrations
                     b.ToTable("Teachers");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.User", b =>
+            modelBuilder.Entity("UniversityDataBaseImplementation.Models.StudentDiscipline", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DisciplineId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("GradebookNumber")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
-                });
+                    b.HasIndex("DisciplineId");
 
-            modelBuilder.Entity("UniversityDatabaseImplement.Models.Department", b =>
-                {
-                    b.Property<string>("DepartmentLogin")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasIndex("GradebookNumber");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("DepartmentLogin");
-
-                    b.ToTable("Departments");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Attestation", b =>
-                {
-                    b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
-                        .WithMany()
-                        .HasForeignKey("DisciplineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentRecordBookNumber");
-
-                    b.Navigation("Discipline");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
-                {
-                    b.HasOne("UniversityDataBaseImplement.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Teacher");
+                    b.ToTable("StudentDisciplines");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.DisciplineLearningPlan", b =>
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
-                        .WithMany("DisciplineLearningPlans")
+                        .WithMany()
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
-                        .WithMany("DisciplineLearningPlans")
+                        .WithMany()
                         .HasForeignKey("LearningPlanId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -295,53 +276,81 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Navigation("LearningPlan");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.InterimReport", b =>
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlanStudent", b =>
+                {
+                    b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
+                        .WithMany("LearningPlanStudents")
+                        .HasForeignKey("GradebookNumber");
+
+                    b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
+                        .WithMany("LearningPlanStudents")
+                        .HasForeignKey("LearningPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LearningPlan");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlanTeacher", b =>
+                {
+                    b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
+                        .WithMany("LearningPlanTeachers")
+                        .HasForeignKey("LearningPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityDataBaseImplement.Models.Teacher", "Teacher")
+                        .WithMany("LearningPlanTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("LearningPlan");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("UniversityDataBaseImplementation.Models.StudentDiscipline", b =>
                 {
                     b.HasOne("UniversityDataBaseImplement.Models.Discipline", "Discipline")
-                        .WithMany()
+                        .WithMany("StudentDisciplines")
                         .HasForeignKey("DisciplineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UniversityDataBaseImplement.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentRecordBookNumber");
+                        .WithMany("StudentDisciplines")
+                        .HasForeignKey("GradebookNumber");
 
                     b.Navigation("Discipline");
 
                     b.Navigation("Student");
                 });
 
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
+                {
+                    b.Navigation("StudentDisciplines");
+                });
+
             modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlan", b =>
                 {
-                    b.HasOne("UniversityDataBaseImplement.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                    b.Navigation("LearningPlanStudents");
 
-                    b.Navigation("User");
+                    b.Navigation("LearningPlanTeachers");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>
                 {
-                    b.HasOne("UniversityDataBaseImplement.Models.LearningPlan", "LearningPlan")
-                        .WithMany("Students")
-                        .HasForeignKey("LearningPlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("LearningPlanStudents");
 
-                    b.Navigation("LearningPlan");
+                    b.Navigation("StudentDisciplines");
                 });
 
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.Discipline", b =>
+            modelBuilder.Entity("UniversityDataBaseImplement.Models.Teacher", b =>
                 {
-                    b.Navigation("DisciplineLearningPlans");
-                });
-
-            modelBuilder.Entity("UniversityDataBaseImplement.Models.LearningPlan", b =>
-                {
-                    b.Navigation("DisciplineLearningPlans");
-
-                    b.Navigation("Students");
+                    b.Navigation("LearningPlanTeachers");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,14 +8,11 @@ namespace UniversityDataBaseImplement.Models
     public class Attestation
     {
         public int Id { get; set; }
-        public int DeaneryId { get; set; }
-        public int RecordBookNumber { get; set; }
-        public int SemesterNumber { get; set; }
-        public int DisciplineId { get; set; }
-        public int Mark { get; set; }
-        public DateTime ExamDate { get; set; }
-        public virtual Deanery Deanery { get; set; }
-        public virtual Student Student { get; set; }
-        public virtual Discipline Discipline { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
+        [ForeignKey("GradebookNumber")]
+        public string StudentGradebookNumber { get; set; }
+        [ForeignKey("DepartmentLogin")]
+        public string DeaneryLogin { get; set; }
     }
 }

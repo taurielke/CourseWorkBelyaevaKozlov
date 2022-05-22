@@ -90,6 +90,7 @@ namespace UniversityView
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine(ex.InnerException.Message);
             }
         }
     }

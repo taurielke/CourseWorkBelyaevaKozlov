@@ -1,12 +1,12 @@
 ﻿using UniversityBusinessLogic.BusinessLogics;
 using UniversityBusinessLogic.Interfaces;
-using UniversityDataBaseImplement.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using UniversityDataBaseImplement.Implements;
 
 namespace UniversityRestApi
 {
@@ -21,14 +21,14 @@ namespace UniversityRestApi
         //to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IStudentStorage, StudentStorage>();
-            services.AddTransient<IAttestationStorage, AttestationStorage>();
-            services.AddTransient<IDeaneryStorage, DeaneryStorage>();
-            services.AddTransient<ILearningPlanStorage, LearningPlanStorage>();
-            services.AddTransient<IStudentLogic, StudentLogic>();
-            services.AddTransient<IAttestationLogic, AttestationLogic>();
-            services.AddTransient<IDeaneryLogic, DeaneryLogic>();
-            services.AddTransient<ILearningPlanLogic, LearningPlanLogic>();
+            services.AddTransient<StudentStorage>();
+            services.AddTransient<AttestationStorage>();
+            services.AddTransient<DeaneryStorage>();
+            services.AddTransient<LearningPlanStorage>();
+            services.AddTransient<StudentLogic>();
+            services.AddTransient<AttestationLogic>();
+            services.AddTransient<DeaneryLogic>();
+            services.AddTransient<LearningPlanLogic>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

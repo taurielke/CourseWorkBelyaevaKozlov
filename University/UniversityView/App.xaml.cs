@@ -9,9 +9,9 @@ using Unity;
 using Unity.Lifetime;
 using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.BusinessLogics;
-using UniversityDataBaseImplement.Implementation;
 using UniversityBusinessLogic.OfficePackage;
 using UniversityBusinessLogic.OfficePackage.Implements;
+using UniversityDataBaseImplement.Implements;
 
 namespace UniversityView
 {
@@ -46,6 +46,10 @@ namespace UniversityView
             currentContainer.RegisterType<IAttestationLogic, AttestationLogic>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<IDepartmentStorage, DepartmentStorage>(new
+            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IDeaneryLogic, DeaneryLogic>(new
+            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IDeaneryStorage, DeaneryStorage>(new
             HierarchicalLifetimeManager());
             currentContainer.RegisterType<DepartmentLogic>(new
             HierarchicalLifetimeManager());

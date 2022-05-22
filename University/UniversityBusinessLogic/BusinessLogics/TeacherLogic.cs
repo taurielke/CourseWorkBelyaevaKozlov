@@ -1,68 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using UniversityBusinessLogic.ViewModels;
-using UniversityBusinessLogic.BindingModels;
+﻿using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.Interfaces;
+using UniversityBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
     public class TeacherLogic : ITeacherLogic
     {
-        private readonly ITeacherStorage _teacherStorage;
-
-        public TeacherLogic(ITeacherStorage teacherStorage)
+        private readonly ITeacherStorage _lectorStorage;
+        public TeacherLogic(ITeacherStorage lectorStorage)
         {
-            _teacherStorage = teacherStorage;
+            _lectorStorage = lectorStorage;
         }
-
         public List<TeacherViewModel> Read(TeacherBindingModel model)
         {
             if (model == null)
             {
-                return _teacherStorage.GetFullList();
+                return _lectorStorage.GetFullList();
             }
             if (model.Id.HasValue)
             {
-                return new List<TeacherViewModel>
-                {
-                    _teacherStorage.GetElement(model)
-                };
+                return new List<TeacherViewModel> { _lectorStorage.GetElement(model) };
             }
-            return _teacherStorage.GetFilteredList(model);
+            return _lectorStorage.GetFilteredList(model);
         }
-
         public void CreateOrUpdate(TeacherBindingModel model)
         {
-            var element = _teacherStorage.GetElement(new TeacherBindingModel
+            var element = _lectorStorage.GetElement(new TeacherBindingModel
             {
-                TeacherName = model.TeacherName
+                TeacherName = model.TeacherName,
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Такой преподаватель уже существует!");
+                throw new Exception("Уже есть преподаватель с таким именем");
             }
             if (model.Id.HasValue)
             {
-                _teacherStorage.Update(model);
+                _lectorStorage.Update(model);
             }
             else
             {
-                _teacherStorage.Insert(model);
+                _lectorStorage.Insert(model);
             }
         }
-
         public void Delete(TeacherBindingModel model)
         {
-            var element = _teacherStorage.GetElement(new TeacherBindingModel
-            {
-                Id = model.Id
-            });
-
+            var element = _lectorStorage.GetElement(new TeacherBindingModel { Id = model.Id });
             if (element == null)
             {
-                throw new Exception("Преподаватель не найден");
+                throw new Exception("Элемент не найден");
             }
-            _teacherStorage.Delete(model);
+            _lectorStorage.Delete(model);
         }
     }
 }

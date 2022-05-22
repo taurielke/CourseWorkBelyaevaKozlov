@@ -40,7 +40,7 @@ namespace UniversityBusinessLogic.OfficePackage
                     {
                         ColumnName = "B",
                         RowIndex = rowIndex,
-                        Text = discipline.DisciplineName,
+                        Text = discipline.Name,
                         StyleInfo = ExcelStyleInfoType.TextWithBroder
                     });
                    /* InsertCellInWorksheet(new ExcelCellParameters

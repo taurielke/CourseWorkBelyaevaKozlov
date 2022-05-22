@@ -65,7 +65,7 @@ namespace UniversityView
 				window.Login = login;
 				var record = (TeacherViewModel)DataGridView.SelectedCells[0].Item;
 				window.Id = record.Id;
-				window.DisciplineID = record.DisciplineID;
+				window.DisciplineID = record.DisciplineId;
 				if (window.ShowDialog().Value)
 				{
 					LoadData();

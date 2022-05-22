@@ -1,70 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using UniversityBusinessLogic.ViewModels;
-using UniversityBusinessLogic.BindingModels;
+﻿using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.Interfaces;
+using UniversityBusinessLogic.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
     public class InterimReportLogic : IInterimReportLogic
     {
-        private readonly IInterimReportStorage _interimReportStorage;
-
-        public InterimReportLogic(IInterimReportStorage interimReportStorage)
+        private readonly IInterimReportStorage _checkListStorage;
+        public InterimReportLogic(IInterimReportStorage checkListStorage)
         {
-            _interimReportStorage = interimReportStorage;
+            _checkListStorage = checkListStorage;
         }
-
         public List<InterimReportViewModel> Read(InterimReportBindingModel model)
         {
             if (model == null)
             {
-                return _interimReportStorage.GetFullList();
+                return _checkListStorage.GetFullList();
             }
             if (model.Id.HasValue)
             {
-                return new List<InterimReportViewModel>
-                {
-                    _interimReportStorage.GetElement(model)
-                };
+                return new List<InterimReportViewModel> { _checkListStorage.GetElement(model) };
             }
-            return _interimReportStorage.GetFilteredList(model);
+            return _checkListStorage.GetFilteredList(model);
         }
-
         public void CreateOrUpdate(InterimReportBindingModel model)
         {
-            var element = _interimReportStorage.GetElement(new InterimReportBindingModel
+            var element = _checkListStorage.GetElement(new InterimReportBindingModel
             {
-                RecordBookNumber = model.RecordBookNumber,
-                SemesterNumber = model.SemesterNumber,
-                DisciplineId = model.DisciplineId
+                DateOfExam = model.DateOfExam,
+                TeacherId = model.TeacherId,
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Промежуточная ведомость по этой дисциплине уже занесена!");
+                throw new Exception("Уже есть ведомость с этим преподавателем и той же датой");
             }
             if (model.Id.HasValue)
             {
-                _interimReportStorage.Update(model);
+                _checkListStorage.Update(model);
             }
             else
             {
-                _interimReportStorage.Insert(model);
+                _checkListStorage.Insert(model);
             }
         }
-
         public void Delete(InterimReportBindingModel model)
         {
-            var element = _interimReportStorage.GetElement(new InterimReportBindingModel
-            {
-                Id = model.Id
-            });
-
+            var element = _checkListStorage.GetElement(new InterimReportBindingModel { Id = model.Id });
             if (element == null)
             {
-                throw new Exception("Промежуточная ведомость не найдена");
+                throw new Exception("Элемент не найден");
             }
-            _interimReportStorage.Delete(model);
+            _checkListStorage.Delete(model);
         }
     }
 }

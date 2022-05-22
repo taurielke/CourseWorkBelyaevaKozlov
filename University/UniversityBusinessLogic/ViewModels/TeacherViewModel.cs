@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace UniversityBusinessLogic.ViewModels
 {
-    public class TeacherViewModel
-    {
-        public int Id { get; set; }
-        [DisplayName("ФИО преподавателя")]
-        public string TeacherName { get; set; }
-        [DisplayName("Дисциалина")]
-        public string Discipline { get; set; }
-        public int DisciplineID { get; set; }
-    }
+	public class TeacherViewModel
+	{
+		public int Id { get; set; }
+		[DisplayName("Имя")]
+		public string Name { get; set; }
+		[DisplayName("Предмет")]
+		public string DisciplineName { get; set; }
+		public int DisciplineId { get; set; }
+	}
 }

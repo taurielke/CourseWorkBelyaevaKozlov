@@ -1,26 +1,29 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using UniversityDataBaseImplement.Models;
-using UniversityBusinessLogic.BindingModels;
-using UniversityBusinessLogic.ViewModels;
-using UniversityBusinessLogic.Interfaces;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Text;
+using UniversityBusinessLogic.BindingModels;
+using UniversityBusinessLogic.Interfaces;
+using UniversityBusinessLogic.ViewModels;
+using UniversityDataBaseImplement.Models;
 
-namespace UniversityDataBaseImplement.Implementation
+namespace UniversityDataBaseImplement.Implements
 {
     public class DisciplineStorage : IDisciplineStorage
     {
         public List<DisciplineViewModel> GetFullList()
         {
-            using var context = new UniversityDatabase();
-            return context.Disciplines
-            .Include(rec => rec.DisciplineLearningPlans)
-            .ThenInclude(rec => rec.Discipline)
-            .ToList()
-            .Select(CreateModel)
-            .ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.Disciplines
+                .Select(rec => new DisciplineViewModel
+                {
+                    Id = rec.Id,
+                    Name = rec.Name,
+                    DepartmentName = context.Departments.FirstOrDefault(x => x.DepartmentLogin == rec.DepartmentLogin).Name,
+                }).ToList();
+            }
         }
         public List<DisciplineViewModel> GetFilteredList(DisciplineBindingModel model)
         {
@@ -28,11 +31,18 @@ namespace UniversityDataBaseImplement.Implementation
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            return context.Disciplines.Include(rec => rec.Teacher)
-               .Where(rec => rec.Id.Equals(model.Id))
-               .ToList()
-               .Select(CreateModel).ToList();
+            using (var context = new UniversityDatabase())
+            {
+                return context.Disciplines
+                .Where(rec => rec.DepartmentLogin == model.DepartmentLogin)
+                .Select(rec => new DisciplineViewModel
+                {
+                    Id = rec.Id,
+                    Name = rec.Name,
+                    DepartmentName = context.Departments.FirstOrDefault(x => x.DepartmentLogin == model.DepartmentLogin).Name,
+                })
+                .ToList();
+            }
         }
         public DisciplineViewModel GetElement(DisciplineBindingModel model)
         {
@@ -40,107 +50,62 @@ namespace UniversityDataBaseImplement.Implementation
             {
                 return null;
             }
-            using var context = new UniversityDatabase();
-            var discipline = context.Disciplines
-                .Include(rec => rec.DisciplineLearningPlans)
-                .ThenInclude(rec => rec.Discipline)
-                .FirstOrDefault(rec => rec.DisciplineName == model.DisciplineName || rec.Id == model.Id);
-            return discipline != null ? CreateModel(discipline) : null;
+            using (var context = new UniversityDatabase())
+            {
+                var subject = context.Disciplines
+                .FirstOrDefault(rec => rec.Name == model.Name || rec.Id == model.Id);
+                return subject != null ?
+                new DisciplineViewModel
+                {
+                    Id = subject.Id,
+                    Name = subject.Name,
+                    DepartmentName = context.Departments.FirstOrDefault(x => x.DepartmentLogin == subject.DepartmentLogin).Name
+                } :
+                null;
+            }
         }
         public void Insert(DisciplineBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
-                Discipline discipline = new Discipline()
-                {
-                    DisciplineName = model.DisciplineName,
-                    DisciplineDescription = model.DisciplineDescription
-                };
-                context.Disciplines.Add(discipline);
+                context.Disciplines.Add(CreateModel(model, new Discipline()));
                 context.SaveChanges();
-                CreateModel(model, discipline, context);
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
             }
         }
         public void Update(DisciplineBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            using var transaction = context.Database.BeginTransaction();
-            try
+            using (var context = new UniversityDatabase())
             {
                 var element = context.Disciplines.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
                 }
-                CreateModel(model, element, context);
+                CreateModel(model, element);
                 context.SaveChanges();
-                transaction.Commit();
-            }
-            catch
-            {
-                transaction.Rollback();
-                throw;
             }
         }
         public void Delete(DisciplineBindingModel model)
         {
-            using var context = new UniversityDatabase();
-            Discipline element = context.Disciplines.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element != null)
+            using (var context = new UniversityDatabase())
             {
-                context.Disciplines.Remove(element);
-                context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Элемент не найден");
-            }
-        }
-        private static Discipline CreateModel(DisciplineBindingModel model, Discipline discipline, UniversityDatabase context)
-        {
-            discipline.DisciplineName = model.DisciplineName;
-            discipline.DisciplineDescription = model.DisciplineDescription;
-           /* if (model.Id.HasValue)
-            {
-                var DisciplineDisciplines = context.DisciplineLearningPlans.Where(rec => rec.Id == model.Id.Value).ToList();
-                context.DisciplineLearningPlans.RemoveRange(DisciplineDisciplines.Where(rec => !model.DisciplineLearningPlans.ContainsKey(rec.DisciplineId)).ToList());
-                context.SaveChanges();
-                foreach (var updateDiscipline in DisciplineDisciplines)
+                Discipline element = context.Disciplines.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element != null)
                 {
-                    model.DisciplineLearningPlans.Remove(updateDiscipline.DisciplineId);
+                    context.Disciplines.Remove(element);
+                    context.SaveChanges();
                 }
-                context.SaveChanges();
-            }
-            // добавили новые
-            foreach (var pc in model.DisciplineLearningPlans)
-            {
-                context.DisciplineLearningPlans.Add(new DisciplineLearningPlan
+                else
                 {
-                    Id = discipline.Id,
-                    DisciplineId = pc.Key
-                });
-                context.SaveChanges();
-            }*/
-            return discipline;
+                    throw new Exception("Элемент не найден");
+                }
+            }
         }
-        private static DisciplineViewModel CreateModel(Discipline discipline)
+        private Discipline CreateModel(DisciplineBindingModel model, Discipline subject)
         {
-            using var context = new UniversityDatabase();
-            return new DisciplineViewModel
-            {
-                Id = discipline.Id,
-                DisciplineName = discipline.DisciplineName,
-                DisciplineDescription = discipline.DisciplineDescription,
-                DisciplineLearningPlans = discipline.DisciplineLearningPlans.ToDictionary(recPC => recPC.DisciplineId, recPC => (recPC.Discipline?.DisciplineName))
-            };
+            subject.Name = model.Name;
+            subject.DepartmentLogin = model.DepartmentLogin;
+            return subject;
         }
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using UniversityDataBaseImplement.Models;
 using Microsoft.EntityFrameworkCore;
-using UniversityDatabaseImplement.Models;
+using UniversityDataBaseImplement.Models;
+using UniversityDataBaseImplementation.Models;
 
 namespace UniversityDataBaseImplement
 {
@@ -20,6 +21,9 @@ namespace UniversityDataBaseImplement
         public virtual DbSet<Attestation> Attestations { set; get; }
         public virtual DbSet<Discipline> Disciplines { set; get; }
         public virtual DbSet<Department> Departments { set; get; }
+        
+        public virtual DbSet<StudentDiscipline> StudentDisciplines { set; get; }
+        public virtual DbSet<LearningPlanStudent> LearningPlanStudents { set; get; }
         public virtual DbSet<DisciplineLearningPlan> DisciplineLearningPlans { set; get; }
         public virtual DbSet<InterimReport> InterimReports { set; get; }
         public virtual DbSet<LearningPlan> LearningPlans { set; get; }
