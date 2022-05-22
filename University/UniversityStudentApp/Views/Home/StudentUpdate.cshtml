@@ -9,7 +9,7 @@
         <div class="col-4">ФИО:</div>
         <div class="col-8"><input type="text" name="name" id="name" value="@ViewBag.Student.Name" /></div>
     </div>
-    @*<table class="table">
+    <table class="table">
         <thead>
             <tr>
                 <th>
@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in ViewBag.Student.LearningPlanStudents)
+            @foreach (var item in ViewBag.Student.LearningPlans)
             {
                 <tr>
                     <td>
@@ -27,7 +27,7 @@
                 </tr>
             }
         </tbody>
-    </table>*@
+    </table>
     <div class="row">
         <div class="col-4"></div>
         <div class="col-8">
