@@ -7,6 +7,7 @@ namespace UniversityBusinessLogic.BindingModels
     public class LearningPlanBindingModel
     {
         public int? Id { get; set; }
+        public int? DeaneryId { get; set; }
 
         public string StreamName { get; set; }
 

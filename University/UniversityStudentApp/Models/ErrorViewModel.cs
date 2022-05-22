@@ -1,4 +1,4 @@
-namespace UniversityStudentApp.Models
+namespace UniversityDeaneryApp.Models
 {
     public class ErrorViewModel
     {

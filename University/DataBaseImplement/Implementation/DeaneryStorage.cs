@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,16 +14,10 @@ namespace UniversityDataBaseImplement.Implements
     {
         public List<DeaneryViewModel> GetFullList()
         {
-            using (var context = new UniversityDatabase())
-            {
-                return context.Deaneries
-                .Select(rec => new DeaneryViewModel
-                {
-                    Login = rec.Login,
-                    Name = rec.Name,
-                    Password = rec.Password
-                }).ToList();
-            }
+            using var context = new UniversityDatabase();
+            return context.Deaneries
+                .Select(CreateModel)
+                .ToList();
         }
         public List<DeaneryViewModel> GetFilteredList(DeaneryBindingModel model)
         {
@@ -30,18 +25,12 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
-                return context.Deaneries
-                .Where(rec => rec.Name == model.Name)
-                .Select(rec => new DeaneryViewModel
-                {
-                    Login = rec.Login,
-                    Name = rec.Name,
-                    Password = rec.Password
-                })
-                .ToList();
-            }
+            using var context = new UniversityDatabase();
+            return context.Deaneries
+            .Include(rec => rec.LearningPlans)
+            .Where(rec => rec.Login == model.Login)
+            .Select(CreateModel)
+            .ToList();
         }
         public DeaneryViewModel GetElement(DeaneryBindingModel model)
         {
@@ -49,63 +38,79 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
-                var Deanery = context.Deaneries
-                .FirstOrDefault(rec => rec.Name == model.Name || rec.Login == model.Login);
-                return Deanery != null ?
-                new DeaneryViewModel
-                {
-                    Login = Deanery.Login,
-                    Name = Deanery.Name,
-                    Password = Deanery.Password,
-                } :
-                null;
-            }
+            using var context = new UniversityDatabase();
+            var deanery = context.Deaneries
+            .Include(rec => rec.LearningPlans)
+            .FirstOrDefault(rec => rec.Login == model.Login || rec.Id == model.Id);
+            return deanery != null ? CreateModel(deanery) : null;
         }
         public void Insert(DeaneryBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            using var context = new UniversityDatabase();
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
                 context.Deaneries.Add(CreateModel(model, new Deanery()));
                 context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
         }
         public void Update(DeaneryBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            using var context = new UniversityDatabase();
+            using var transaction = context.Database.BeginTransaction();
+            try
             {
-                var element = context.Deaneries.FirstOrDefault(rec => rec.Login == model.Login);
+                var element = context.Deaneries.FirstOrDefault(rec => rec.Id == model.Id);
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
                 }
                 CreateModel(model, element);
                 context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
         }
         public void Delete(DeaneryBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            using var context = new UniversityDatabase();
+            Deanery element = context.Deaneries.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element != null)
             {
-                Deanery element = context.Deaneries.FirstOrDefault(rec => rec.Login == model.Login);
-                if (element != null)
-                {
-                    context.Deaneries.Remove(element);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                context.Deaneries.Remove(element);
+                context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Элемент не найден");
             }
         }
-        private Deanery CreateModel(DeaneryBindingModel model, Deanery Deanery)
+        private static Deanery CreateModel(DeaneryBindingModel model, Deanery deanery)
         {
-            Deanery.Name = model.Name;
-            Deanery.Password = model.Password;
-            Deanery.Login = model.Login;
-            return Deanery;
+            deanery.Name = model.Name;
+            deanery.Login = model.Login;
+            deanery.Password = model.Password;
+            return deanery;
+        }
+        private static DeaneryViewModel CreateModel(Deanery deanery)
+        {
+            return new DeaneryViewModel
+            {
+                Id = deanery.Id,
+                Name = deanery.Name,
+                Login = deanery.Login,
+                Password = deanery.Password
+            };
         }
     }
 }

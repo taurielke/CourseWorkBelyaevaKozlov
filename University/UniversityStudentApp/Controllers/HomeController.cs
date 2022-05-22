@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using UniversityStudentApp.Models;
+using UniversityDeaneryApp.Models;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using UniversityStudentApp;
 
-namespace UniversityStudentApp.Controllers
+
+namespace UniversityDeaneryApp.Controllers
 {
     public class HomeController : Controller
     {
@@ -66,16 +66,16 @@ namespace UniversityStudentApp.Controllers
         {
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password) && !string.IsNullOrEmpty(deaneryName))
             {
-                APIDeanery.PostRequest("api/Deanery/register", new DeaneryBindingModel
+                APIDeanery.PostRequest("api/deanery/register", new DeaneryBindingModel
                 {
-                    DeaneryName= deaneryName,
-                    Email = login,
+                    Name = deaneryName,
+                    Login = login,
                     Password = password
                 });
                 Response.Redirect("Enter");
                 return;
             }
-            throw new Exception("Введите логин, пароль и ФИО");
+            throw new Exception("Введите логин, пароль и название деканата");
         }
 
     }

@@ -7,6 +7,7 @@ namespace UniversityBusinessLogic.ViewModels
 {
 	public class DeaneryViewModel
 	{
+		public int Id { get; set; }
 		[DisplayName("Логин")]
 		public string Login { get; set; }
 		[DisplayName("Название")]

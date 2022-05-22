@@ -9,50 +9,53 @@ namespace UniversityBusinessLogic.BusinessLogics
 {
     public class DeaneryLogic : IDeaneryLogic
     {
-        private readonly IDeaneryStorage _denearyStorage;
-        public DeaneryLogic(IDeaneryStorage denearyStorage)
+        private readonly IDeaneryStorage _deaneryStorage;
+        public DeaneryLogic(IDeaneryStorage deaneryStorage)
         {
-            _denearyStorage = denearyStorage;
+            _deaneryStorage = deaneryStorage;
         }
         public List<DeaneryViewModel> Read(DeaneryBindingModel model)
         {
             if (model == null)
             {
-                return _denearyStorage.GetFullList();
+                return _deaneryStorage.GetFullList();
             }
             if (string.IsNullOrEmpty(model.Login))
             {
-                return new List<DeaneryViewModel> { _denearyStorage.GetElement(model) };
+                return new List<DeaneryViewModel> { _deaneryStorage.GetElement(model) };
             }
-            return _denearyStorage.GetFilteredList(model);
+            return _deaneryStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(DeaneryBindingModel model)
         {
-            var element = _denearyStorage.GetElement(new DeaneryBindingModel
+            var element = _deaneryStorage.GetElement(new DeaneryBindingModel
             {
-                Name = model.Name
+                Login = model.Login
             });
-            if (element != null && element.Login != model.Login)
+            if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Уже есть такой логин");
+                throw new Exception("Уже есть деканат с таким логином");
             }
-            if (string.IsNullOrEmpty(model.Login))
+            if (model.Id.HasValue)
             {
-                _denearyStorage.Update(model);
+                _deaneryStorage.Update(model);
             }
             else
             {
-                _denearyStorage.Insert(model);
+                _deaneryStorage.Insert(model);
             }
         }
         public void Delete(DeaneryBindingModel model)
         {
-            var element = _denearyStorage.GetElement(new DeaneryBindingModel { Login = model.Login });
+            var element = _deaneryStorage.GetElement(new DeaneryBindingModel
+            {
+                Id = model.Id
+            });
             if (element == null)
             {
-                throw new Exception("Элемент не найден");
+                throw new Exception("Удаляемый деканат не найден");
             }
-            _denearyStorage.Delete(model);
+            _deaneryStorage.Delete(model);
         }
     }
 }

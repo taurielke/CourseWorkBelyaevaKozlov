@@ -10,11 +10,13 @@ namespace UniversityDataBaseImplement.Models
 	{
 		[Key]
 		public string GradebookNumber { get; set; }
+		public int DeaneryId { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[ForeignKey("GradebookNumber")]
 		public virtual List<StudentDiscipline> StudentDisciplines { get; set; }
 		[ForeignKey("GradebookNumber")]
 		public virtual List<LearningPlanStudent> LearningPlanStudents { get; set; }
+		public virtual Deanery Deanery { get; set; }
 	}
 }

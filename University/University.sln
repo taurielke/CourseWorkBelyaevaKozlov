@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityBusinessLogic", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityView", "UniversityView\UniversityView.csproj", "{E810C570-52C5-46CB-B127-B9D2FB446EAE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityRestApi", "UniversityRestApi\UniversityRestApi.csproj", "{ED2BD08B-88C0-4E4E-ACAC-70513E17682D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityDeaneryApp", "UniversityStudentApp\UniversityDeaneryApp.csproj", "{E24B9A19-8652-4820-948F-4B09548AD520}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E810C570-52C5-46CB-B127-B9D2FB446EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED2BD08B-88C0-4E4E-ACAC-70513E17682D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED2BD08B-88C0-4E4E-ACAC-70513E17682D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED2BD08B-88C0-4E4E-ACAC-70513E17682D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED2BD08B-88C0-4E4E-ACAC-70513E17682D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E24B9A19-8652-4820-948F-4B09548AD520}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24B9A19-8652-4820-948F-4B09548AD520}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24B9A19-8652-4820-948F-4B09548AD520}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24B9A19-8652-4820-948F-4B09548AD520}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

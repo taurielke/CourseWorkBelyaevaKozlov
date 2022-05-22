@@ -2,7 +2,7 @@ using UniversityBusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace UniversityStudentApp
+namespace UniversityDeaneryApp
 {
     public class Program
     {

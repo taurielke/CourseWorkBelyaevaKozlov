@@ -10,6 +10,7 @@ namespace UniversityDataBaseImplement.Models
 	public class LearningPlan
 	{
 		public int Id { get; set; }
+		public int DeaneryId { get; set; }
 		[Required]
 		public string StreamName { get; set; }
 		[Required]
@@ -18,5 +19,6 @@ namespace UniversityDataBaseImplement.Models
 		public virtual List<LearningPlanStudent> LearningPlanStudents { get; set; }
 		[ForeignKey("LearningPlanId")]
 		public virtual List<LearningPlanTeacher> LearningPlanTeachers { get; set; }
+		public virtual Deanery Deanery { get; set; }
 	}
 }

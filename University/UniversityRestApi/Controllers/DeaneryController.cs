@@ -1,4 +1,4 @@
-﻿using UniversityBusinessLogic.Interfaces;
+﻿using UniversityBusinessLogic.BusinessLogics;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +10,8 @@ namespace UniversityRestApi.Controllers
     [ApiController]
     public class DeaneryController : ControllerBase
     {
-        private readonly IDeaneryLogic _logic;
-        public DeaneryController(IDeaneryLogic logic)
+        private readonly DeaneryLogic _logic;
+        public DeaneryController(DeaneryLogic logic)
         {
             _logic = logic;
         }
@@ -20,7 +20,7 @@ namespace UniversityRestApi.Controllers
         {
             var list = _logic.Read(new DeaneryBindingModel
             {
-                Email = login,
+                Login = login,
                 Password = password
             });
             return (list != null && list.Count > 0) ? list[0] : null;
