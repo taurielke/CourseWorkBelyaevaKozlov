@@ -111,7 +111,10 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Attestation()
         {
-            
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
             return View(APIDeanery.GetRequest<List<AttestationViewModel>>($"api/attestation/GetAttestations?deaneryId={Program.Deanery.Id}"));
         }
 
@@ -180,6 +183,10 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Student()
         {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
             return View(APIDeanery.GetRequest<List<StudentViewModel>>($"api/student/GetStudents?deaneryId={Program.Deanery.Id}"));
  
         }
@@ -247,6 +254,10 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult LearningPlan()
         {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
             return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}"));
         }
 

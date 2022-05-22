@@ -28,7 +28,9 @@ namespace UniversityDataBaseImplement.Implements
             using var context = new UniversityDatabase();
             return context.Deaneries
             .Include(rec => rec.LearningPlans)
-            .Where(rec => rec.Login == model.Login)
+            .Include(rec => rec.Attestations)
+            .Include(rec => rec.Students)
+            .Where(rec => rec.Login == model.Login && rec.Password == model.Password)
             .Select(CreateModel)
             .ToList();
         }

@@ -19,7 +19,7 @@ namespace UniversityRestApi.Controllers
         public List<StudentViewModel> GetStudentList() => logic.Read(null)?.ToList();
 
         [HttpGet]
-        public List<StudentViewModel> GetStudents(int deaneryId) => logic.Read(new StudentBindingModel { DeaneryId = deaneryId }).ToList();
+        public List<StudentViewModel> GetStudents(int deaneryId) => logic.Read(new StudentBindingModel { DeaneryId = deaneryId });
 
         [HttpGet]
         public StudentViewModel GetStudent(int gradeBookNumber) => logic.Read(new StudentBindingModel { GradebookNumber = gradeBookNumber })?[0];

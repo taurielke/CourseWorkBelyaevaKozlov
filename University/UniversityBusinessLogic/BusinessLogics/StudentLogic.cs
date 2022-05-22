@@ -31,8 +31,7 @@ namespace UniversityBusinessLogic.BusinessLogics
         {
             var element = _studentStorage.GetElement(new StudentBindingModel
             {
-                DeaneryId = model.DeaneryId,
-                Name = model.Name,
+                GradebookNumber = model.GradebookNumber,
             });
             if (element != null && element.GradebookNumber != model.GradebookNumber)
             {

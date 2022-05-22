@@ -33,7 +33,7 @@ namespace UniversityDataBaseImplement.Implements
             var context = new UniversityDatabase();
             
             return context.Attestations
-            .Where(rec => rec.StudentGradebookNumber == model.StudentId && rec.Date >= model.DateFrom && rec.Date <= model.DateTo)
+            .Where(rec => (rec.StudentGradebookNumber == model.StudentId && rec.Date >= model.DateFrom && rec.Date <= model.DateTo) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
             .Select(rec => new AttestationViewModel
             {
                 Id = rec.Id,

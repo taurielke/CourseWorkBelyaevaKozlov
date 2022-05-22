@@ -27,7 +27,7 @@ namespace UniversityDataBaseImplement.Implements
             var context = new UniversityDatabase();
             
                 return context.LearningPlans
-                .Where(rec => rec.StreamName == model.StreamName)
+                .Where(rec => (rec.StreamName == model.StreamName) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
                 .Select(CreateModel)
                 .ToList();
             

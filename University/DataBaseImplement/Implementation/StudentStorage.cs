@@ -19,7 +19,8 @@ namespace UniversityDataBaseImplement.Implements
                 .Include(rec => rec.StudentDisciplines)
                 .ThenInclude(rec => rec.Discipline)
                 .Include(rec => rec.LearningPlanStudents)
-                .ThenInclude(rec => rec.LearningPlan).ToList()
+                .ThenInclude(rec => rec.LearningPlan)
+                .ToList()
                 .Select(CreateModel).ToList();
             
         }
@@ -36,7 +37,7 @@ namespace UniversityDataBaseImplement.Implements
                 .ThenInclude(rec => rec.Discipline)
                 .Include(rec => rec.LearningPlanStudents)
                 .ThenInclude(rec => rec.LearningPlan)
-                .Where(rec => rec.Name == model.Name)
+                .Where(rec => (rec.Name == model.Name) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
                 .Select(CreateModel)
                 .ToList();
             
