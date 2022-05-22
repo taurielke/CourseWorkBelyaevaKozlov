@@ -14,24 +14,14 @@ namespace UniversityDataBaseImplement.Implements
     {
         public List<StudentViewModel> GetFullList()
         {
-            using (var context = new UniversityDatabase())
-            {
-                return context.Students
-                  .Include(rec => rec.StudentDisciplines)
-                  .ThenInclude(rec => rec.Discipline)
-                  .Include(rec => rec.LearningPlanStudents)
-                  .ThenInclude(rec => rec.LearningPlan).ToList()
-                  .Select(rec => new StudentViewModel
-                  {
-                      GradebookNumber = rec.GradebookNumber,
-                      Name = rec.Name,
-                      Disciplines = rec.StudentDisciplines
-                      .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
-                      LearningPlans = rec.LearningPlanStudents
-                      .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
-
-                  }).ToList();
-            }
+            using var context = new UniversityDatabase();
+            return context.Students
+                .Include(rec => rec.StudentDisciplines)
+                .ThenInclude(rec => rec.Discipline)
+                .Include(rec => rec.LearningPlanStudents)
+                .ThenInclude(rec => rec.LearningPlan).ToList()
+                .Select(CreateModel).ToList();
+            
         }
         public List<StudentViewModel> GetFilteredList(StudentBindingModel model)
         {
@@ -39,25 +29,17 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
-                return context.Students
-                  .Include(rec => rec.StudentDisciplines)
-                  .ThenInclude(rec => rec.Discipline)
-                  .Include(rec => rec.LearningPlanStudents)
-                  .ThenInclude(rec => rec.LearningPlan)
-                  .Where(rec => rec.Name == model.Name)
-                  .Select(rec => new StudentViewModel
-                  {
-                      GradebookNumber = rec.GradebookNumber,
-                      Name = rec.Name,
-                      Disciplines = rec.StudentDisciplines
-                      .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
-                      LearningPlans = rec.LearningPlanStudents
-                      .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
-                  })
-                  .ToList();
-            }
+            var context = new UniversityDatabase();
+            
+            return context.Students
+                .Include(rec => rec.StudentDisciplines)
+                .ThenInclude(rec => rec.Discipline)
+                .Include(rec => rec.LearningPlanStudents)
+                .ThenInclude(rec => rec.LearningPlan)
+                .Where(rec => rec.Name == model.Name)
+                .Select(CreateModel)
+                .ToList();
+            
         }
         public StudentViewModel GetElement(StudentBindingModel model)
         {
@@ -73,101 +55,85 @@ namespace UniversityDataBaseImplement.Implements
                   .Include(rec => rec.LearningPlanStudents)
                   .ThenInclude(rec => rec.LearningPlan)
                   .FirstOrDefault(rec => rec.Name == model.Name || rec.GradebookNumber == model.GradebookNumber);
-                return student != null ?
-                  new StudentViewModel
-                  {
-                      GradebookNumber = student.GradebookNumber,
-                      Name = student.Name,
-                      Disciplines = student.StudentDisciplines
-                      .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
-                      LearningPlans = student.LearningPlanStudents
-                      .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
-                  } :
-                  null;
+                return student != null ? CreateModel(student) : null;
             }
         }
         public void Insert(StudentBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            var transaction = context.Database.BeginTransaction();           
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                Student student = new Student
                 {
-                    try
-                    {
-                        Student s = new Student
-                        {
-                            Name = model.Name,
-                        };
-                        context.Students.Add(s);
-                        context.SaveChanges();
-                        CreateModel(model, s, context);
-                        context.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        throw ex;
-                    }
-                }
+                    GradebookNumber = (int)model.GradebookNumber,
+                    Name = model.Name,
+                    DeaneryId = (int)model.DeaneryId
+                };
+                context.Students.Add(student);
+                context.SaveChanges();
+                CreateModel(model, student, context);
+                transaction.Commit();
             }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                throw ex;
+            }
+                
+            
         }
         public void Update(StudentBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            var transaction = context.Database.BeginTransaction();
+                
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                var element = context.Students.FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
+                if (element == null)
                 {
-                    try
-                    {
-                        var element = context.Students
-                          .Include(rec => rec.StudentDisciplines)
-                          .ThenInclude(rec => rec.Discipline)
-                          .Include(rec => rec.LearningPlanStudents)
-                          .ThenInclude(rec => rec.LearningPlan).FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
-                        if (element == null)
-                        {
-                            throw new Exception("Элемент не найден");
-                        }
-                        element.Name = model.Name;
-                        CreateModel(model, element, context);
-                        context.SaveChanges();
-                        transaction.Commit();
-                    }
-                    catch
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
+                    throw new Exception("Элемент не найден");
                 }
+                CreateModel(model, element, context);
+                context.SaveChanges();
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
             }
         }
         public void Delete(StudentBindingModel model)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            Student element = context.Students.FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
+            if (element != null)
             {
-                Student element = context.Students.FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
-                if (element != null)
-                {
-                    context.Students.Remove(element);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                context.Students.Remove(element);
+                context.SaveChanges();
             }
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
+            
         }
         private Student CreateModel(StudentBindingModel model, Student student, UniversityDatabase context)
         {
+            student.GradebookNumber = (int)model.GradebookNumber;
+            student.Name = model.Name;
+            student.DeaneryId = (int)model.DeaneryId;
+
             // нужно передавать student уже с заполнеными полями и добавленным таблицу Students  
-            if (!model.GradebookNumber.HasValue)
+            if (model.GradebookNumber.HasValue)
             {
                 var studentDisciplines = context.StudentDisciplines.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
                 context.StudentDisciplines.RemoveRange(studentDisciplines.Where(rec => !model.Disciplines.ContainsKey(rec.DisciplineId)).ToList());
-                var educationPlanStudents = context.LearningPlanStudents.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
-
-                context.LearningPlanStudents.RemoveRange(educationPlanStudents.Where(rec => !model.LearningPlans.ContainsKey(rec.LearningPlanId)).ToList());
+                var learningPlanStudents = context.LearningPlanStudents.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
+                context.LearningPlanStudents.RemoveRange(learningPlanStudents.Where(rec => !model.LearningPlans.ContainsKey(rec.LearningPlanId)).ToList());
                 context.SaveChanges();
             }
             foreach (var ss in model.Disciplines)
@@ -179,12 +145,12 @@ namespace UniversityDataBaseImplement.Implements
                 });
                 context.SaveChanges();
             }
-            foreach (var ss in model.Disciplines)
+            foreach (var ss in model.LearningPlans)
             {
-                context.StudentDisciplines.Add(new StudentDiscipline
+                context.LearningPlanStudents.Add(new LearningPlanStudent
                 {
                     GradebookNumber = student.GradebookNumber,
-                    DisciplineId = ss.Key,
+                    LearningPlanId = ss.Key,
                 });
                 context.SaveChanges();
             }
@@ -225,6 +191,18 @@ namespace UniversityDataBaseImplement.Implements
                   })
                   .ToList();
             }
+        }
+        private static StudentViewModel CreateModel(Student student)
+        {
+            return new StudentViewModel
+            {
+                GradebookNumber = student.GradebookNumber,
+                Name = student.Name,
+                Disciplines = student.StudentDisciplines
+                .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
+                LearningPlans = student.LearningPlanStudents
+                .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
+            };
         }
     }
 }

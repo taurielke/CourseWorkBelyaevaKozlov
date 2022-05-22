@@ -111,8 +111,9 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Attestation()
         {
-            return View(APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestations?deaneryId={Program.Deanery.Id}"));
-        }
+            return View(APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestationList"));
+/*            return View(APIDeanery.GetRequest<List<AttestationViewModel>>("api/attestation/GetAttestations?deaneryId={Program.Deanery.Id}"));
+*/        }
 
         [HttpGet]
         public IActionResult AttestationCreate()
@@ -179,7 +180,8 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult Student()
         {
-            return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}"));
+            /*return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudents?deaneryId={Program.Deanery.Id}"));*/
+            return View(APIDeanery.GetRequest<List<StudentViewModel>>("api/student/GetStudentList"));
         }
 
         [HttpGet]
@@ -197,6 +199,8 @@ namespace UniversityDeaneryApp.Controllers
                 {
                     GradebookNumber = gradebookNumber,
                     Name = name,
+                    LearningPlans = new Dictionary<int, string>(),
+                    Disciplines = new Dictionary<int, string>(),
                     DeaneryId = Program.Deanery.Id
                 });
                 Response.Redirect("Student");
@@ -244,7 +248,7 @@ namespace UniversityDeaneryApp.Controllers
 
         public IActionResult LearningPlan()
         {
-            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}"));
+            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>("api/LearningPlan/GetLearningPlanList"));
         }
 
         [HttpGet]
