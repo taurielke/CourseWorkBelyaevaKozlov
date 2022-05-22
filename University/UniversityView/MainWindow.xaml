@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Loaded="MainWindow_Loaded"
+        mc:Ignorable="d" 
        Title="Главная форма" MinHeight="450" MinWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -11,13 +11,13 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="White" Height="20">
-            <MenuItem Header="Дисциплины" Click="MenuItemSubjects_Click"/>
-            <MenuItem Header="Преподаватели" Click="MenuItemLectors_Click" />
-            <MenuItem Header="Ведомости" Click="MenuItemCheckLists_Click" />
-            <MenuItem Header="Привязка дисциплины" Click="MenuItemBinding_Click" />
-            <MenuItem Header="Получение списка" Click="MenuItemGetList_Click" />
-            <MenuItem Header="Отчёт" Click="MenuItemReport_Click" />
-            <MenuItem Header="Статистика" Click="MenuItemStats_Click" />
+            <MenuItem Header="Дисциплины" />
+            <MenuItem Header="Преподаватели" />
+            <MenuItem Header="Ведомости"  />
+            <MenuItem Header="Привязка дисциплины"  />
+            <MenuItem Header="Получение списка"  />
+            <MenuItem Header="Отчёт" />
+            <MenuItem Header="Статистика" />
         </Menu>
         <StackPanel Grid.Row="1">
             <Label Margin="10" Height="30" Name="labelUser"></Label>

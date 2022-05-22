@@ -12,9 +12,8 @@ namespace UniversityDataBaseImplement.Models
         public DateTime Date { get; set; }
         [ForeignKey("GradebookNumber")]
         public string StudentGradebookNumber { get; set; }
-        
-        public int DeaneryId { get; set; }
-        public virtual Deanery Deanery { get; set; }
+        [ForeignKey("DenearyLogin")]
+        public string DenearyLogin { get; set; }
 
     }
 }

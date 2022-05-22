@@ -12,6 +12,6 @@ namespace UniversityBusinessLogic.BindingModels
 
         public string StudentId { get; set; }
 
-        public int? DeaneryId { get; set; }
+        public string DenearyLogin { get; set; }
     }
 }

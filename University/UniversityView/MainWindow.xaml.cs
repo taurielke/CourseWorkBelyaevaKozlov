@@ -11,7 +11,7 @@ namespace UniversityView
     /// </summary>
     public partial class MainWindow : Window
     {
-        [Dependency]
+        /*[Dependency]
         public IUnityContainer Container { get; set; }
 
         public string Login { set { login = value; } }
@@ -76,6 +76,6 @@ namespace UniversityView
         {
             var window = Container.Resolve<StatsWindow>();
             window.ShowDialog();
-        }
+        }*/
     }
 }
