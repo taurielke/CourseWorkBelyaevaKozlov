@@ -36,7 +36,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             });
             if (element != null && element.Id != model.Id)
             {
-                throw new Exception("Уже есть студент с таким именем");
+                throw new Exception("Уже есть такая аттестация с таким именем");
             }
             if (model.Id.HasValue)
             {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels; 
 
@@ -9,8 +9,8 @@ namespace UniversityRestApi.Controllers
     [ApiController]
     public class AttestationController : ControllerBase
     {
-        private readonly AttestationLogic logic;
-        public AttestationController(AttestationLogic logic)
+        private readonly IAttestationLogic logic;
+        public AttestationController(IAttestationLogic logic)
         {
             this.logic = logic;
         }

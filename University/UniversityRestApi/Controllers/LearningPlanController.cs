@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels;
 
@@ -9,9 +9,9 @@ namespace UniversityRestApi.Controllers
     [ApiController]
     public class LearningPlanController : ControllerBase
     {
-        private readonly LearningPlanLogic logic;
-        private readonly DisciplineLogic dLogic;
-        public LearningPlanController(LearningPlanLogic logic, DisciplineLogic dLogic)
+        private readonly ILearningPlanLogic logic;
+        private readonly IDisciplineLogic dLogic;
+        public LearningPlanController(ILearningPlanLogic logic, IDisciplineLogic dLogic)
         {
             this.logic = logic;
             this.dLogic = dLogic;

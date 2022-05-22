@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using UniversityBusinessLogic.BusinessLogics;
+using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels;
 
@@ -9,8 +9,8 @@ namespace UniversityRestApi.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private readonly StudentLogic logic;
-        public StudentController(StudentLogic logic)
+        private readonly IStudentLogic logic;
+        public StudentController(IStudentLogic logic)
         {
             this.logic = logic;
         }

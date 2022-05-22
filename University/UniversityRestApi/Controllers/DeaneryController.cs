@@ -1,4 +1,4 @@
-﻿using UniversityBusinessLogic.BusinessLogics;
+﻿using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.BindingModels;
 using UniversityBusinessLogic.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +10,8 @@ namespace UniversityRestApi.Controllers
     [ApiController]
     public class DeaneryController : ControllerBase
     {
-        private readonly DeaneryLogic _logic;
-        public DeaneryController(DeaneryLogic logic)
+        private readonly IDeaneryLogic _logic;
+        public DeaneryController(IDeaneryLogic logic)
         {
             _logic = logic;
         }

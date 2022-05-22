@@ -21,16 +21,17 @@ namespace UniversityRestApi
         //to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<StudentStorage>();
-            services.AddTransient<AttestationStorage>();
-            services.AddTransient<DeaneryStorage>();
-            services.AddTransient<LearningPlanStorage>();
-            services.AddTransient<DisciplineStorage>();
-            services.AddTransient<StudentLogic>();
-            services.AddTransient<AttestationLogic>();
-            services.AddTransient<DeaneryLogic>();
-            services.AddTransient<LearningPlanLogic>();
-            services.AddTransient<DisciplineLogic>();
+            services.AddTransient<IStudentStorage, StudentStorage>();
+            services.AddTransient<IAttestationStorage, AttestationStorage>();
+            services.AddTransient<IDeaneryStorage, DeaneryStorage>();
+            services.AddTransient<ILearningPlanStorage, LearningPlanStorage>();
+            services.AddTransient<IDisciplineStorage, DisciplineStorage>();
+            services.AddTransient<ITeacherStorage, TeacherStorage>();
+            services.AddTransient<IStudentLogic, StudentLogic>();
+            services.AddTransient<IAttestationLogic, AttestationLogic>();
+            services.AddTransient<IDeaneryLogic, DeaneryLogic>();
+            services.AddTransient<ILearningPlanLogic, LearningPlanLogic>();
+            services.AddTransient<IDisciplineLogic, DisciplineLogic>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
