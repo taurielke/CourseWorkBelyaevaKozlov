@@ -11,5 +11,6 @@ namespace UniversityBusinessLogic.ViewModels
 		public string Name { get; set; }
 		public Dictionary<int, string> Disciplines { get; set; }
 		public Dictionary<int, string> LearningPlans { get; set; }
+		public int? DeaneryId { get; set; }
 	}
 }

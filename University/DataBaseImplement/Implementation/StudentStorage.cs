@@ -130,9 +130,9 @@ namespace UniversityDataBaseImplement.Implements
             if (model.GradebookNumber.HasValue)
             {
                 var studentDisciplines = context.StudentDisciplines.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
-                context.StudentDisciplines.RemoveRange(studentDisciplines.Where(rec => !model.Disciplines.ContainsKey(rec.DisciplineId)).ToList());
+                context.StudentDisciplines.RemoveRange(studentDisciplines);
                 var learningPlanStudents = context.LearningPlanStudents.Where(rec => rec.GradebookNumber == model.GradebookNumber).ToList();
-                context.LearningPlanStudents.RemoveRange(learningPlanStudents.Where(rec => !model.LearningPlans.ContainsKey(rec.LearningPlanId)).ToList());
+                context.LearningPlanStudents.RemoveRange(learningPlanStudents);
                 context.SaveChanges();
             }
             foreach (var ss in model.Disciplines)
@@ -182,6 +182,7 @@ namespace UniversityDataBaseImplement.Implements
                   .Select(rec => new StudentViewModel
                   {
                       GradebookNumber = rec.GradebookNumber,
+                      DeaneryId = rec.DeaneryId,
                       Name = rec.Name,
                       Disciplines = rec.StudentDisciplines
                       .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
@@ -196,6 +197,7 @@ namespace UniversityDataBaseImplement.Implements
             return new StudentViewModel
             {
                 GradebookNumber = student.GradebookNumber,
+                DeaneryId = student.DeaneryId,
                 Name = student.Name,
                 Disciplines = student.StudentDisciplines
                 .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),

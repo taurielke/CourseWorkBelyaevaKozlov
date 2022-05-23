@@ -11,5 +11,6 @@ namespace UniversityBusinessLogic.Interfaces
         List<StudentViewModel> Read(StudentBindingModel model);
         void CreateOrUpdate(StudentBindingModel model);
         void Delete(StudentBindingModel model);
+        void BindStudentLearningPlans(AddStudentToLearningPlanBindingModel model);
     }
 }

@@ -268,6 +268,10 @@ namespace UniversityDeaneryApp.Controllers
         [HttpGet]
         public IActionResult LearningPlanCreate()
         {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
             ViewBag.Teachers = APIDeanery.GetRequest<List<TeacherViewModel>>("api/learningPlan/GetTeacherList");
             return View();
         }
@@ -299,6 +303,10 @@ namespace UniversityDeaneryApp.Controllers
         [HttpGet]
         public IActionResult LearningPlanUpdate(int learningPlanId)
         {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
             ViewBag.LearningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
             ViewBag.Teachers = APIDeanery.GetRequest<List<TeacherViewModel>>("api/learningPlan/GetTeacherList");
             return View();
@@ -340,6 +348,34 @@ namespace UniversityDeaneryApp.Controllers
             var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/learningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
             APIDeanery.PostRequest("api/learningPlan/DeleteLearningPlan", learningPlan);
             Response.Redirect("LearningPlan");
+        }
+
+        [HttpGet]
+        public IActionResult BindStudentLearningPlans() 
+        {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.Students = APIDeanery.GetRequest<List<StudentViewModel>>($"api/Student/GetStudents?deaneryId={Program.Deanery.Id}");
+            ViewBag.LearningPlans = APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}");
+            return View();
+        }
+
+        [HttpPost]
+        public void BindStudentLearningPlans(int studentId, List<int> learningPlansId) 
+        {
+            if (studentId != 0 && learningPlansId !=null)
+            {
+                APIDeanery.PostRequest("api/Student/BindStudentLearningPlans", new AddStudentToLearningPlanBindingModel
+                {
+                    GradebookNumber = studentId,
+                    LearningPlansId = learningPlansId
+                });
+                Response.Redirect("Student");
+                return;
+            }
+            throw new Exception("Заполните все поля и выберете преподавателей");
         }
     }
 }

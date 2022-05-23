@@ -10,10 +10,13 @@ namespace UniversityBusinessLogic.BusinessLogics
     {
         private readonly IStudentStorage _studentStorage;
         private readonly ITeacherStorage _teacherStorage;
-        public StudentLogic(IStudentStorage studentStorage, ITeacherStorage teacherStorage)
+        private readonly ILearningPlanStorage _learningPlanStorage;
+
+        public StudentLogic(IStudentStorage studentStorage, ITeacherStorage teacherStorage, ILearningPlanStorage learningPlanStorage)
         {
             _studentStorage = studentStorage;
             _teacherStorage = teacherStorage;
+            _learningPlanStorage = learningPlanStorage;
         }
         public List<StudentViewModel> Read(StudentBindingModel model)
         {
@@ -69,6 +72,37 @@ namespace UniversityBusinessLogic.BusinessLogics
         public void BindingDiscipline(int gradebookNumber, int subjectId)
         {
             _studentStorage.BindingDiscipline(gradebookNumber, subjectId);
+        }
+
+        public void BindStudentLearningPlans(AddStudentToLearningPlanBindingModel model) 
+        {
+            var student = _studentStorage.GetElement(new StudentBindingModel { GradebookNumber = model.GradebookNumber });
+            if (student == null) 
+            {
+                throw new Exception("Студент не найден");
+            }
+            student.LearningPlans.Clear();
+            foreach (var learningPlanId in model.LearningPlansId)
+            {
+                var learningPlan = _learningPlanStorage.GetElement(new LearningPlanBindingModel { Id = learningPlanId });
+                if (learningPlan == null)
+                {
+                    throw new Exception("План обучения не найден");
+                }
+                if (!student.LearningPlans.ContainsKey(learningPlanId)) 
+                {
+                    student.LearningPlans.Add(learningPlanId, learningPlan.StreamName);
+                }
+            }
+            _studentStorage.Update(new StudentBindingModel
+            {
+                GradebookNumber = student.GradebookNumber,
+                Name = student.Name,
+                DeaneryId = student.DeaneryId,
+                Disciplines = student.Disciplines,
+                LearningPlans = student.LearningPlans
+
+            });
         }
     }
 }

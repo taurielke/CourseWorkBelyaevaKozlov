@@ -15,5 +15,6 @@ namespace UniversityBusinessLogic.ViewModels
 
         [DisplayName("Студент")]
         public string StudentName { get; set; }
+        public int? DeaneryId { get; set; }
     }
 }

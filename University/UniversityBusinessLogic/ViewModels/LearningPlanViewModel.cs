@@ -16,5 +16,6 @@ namespace UniversityBusinessLogic.ViewModels
         public int Hours { get; set; }
         public Dictionary<int, string> LearningPlanTeachers { get; set; }
         public Dictionary<int, string> LearningPlanStudents { get; set; }
+        public int? DeaneryId { get; set; }
     }
 }

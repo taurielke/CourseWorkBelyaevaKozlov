@@ -29,5 +29,8 @@ namespace UniversityRestApi.Controllers
 
         [HttpPost]
         public void DeleteStudent(StudentBindingModel model) => logic.Delete(model);
+
+        [HttpPost]
+        public void BindStudentLearningPlans(AddStudentToLearningPlanBindingModel model) => logic.BindStudentLearningPlans(model);
     }
 }

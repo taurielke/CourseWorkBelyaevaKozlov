@@ -19,20 +19,29 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-rowreverse">
                 <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuItem" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Справочники
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <a class="dropdown-item"  asp-area="" asp-controller="Home" asp-action="LearningPlan">Планы обучения</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Student">Студенты</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Attestation">Аттестация</a>
+                        <li><hr class="dropdown-divider"></li>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="BindStudentLearningPlans">Связать план обучения и студентов</a>
+                      </ul>
+                    </li>      
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuItem" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Отчеты
+                      </a>
+                      <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <a class="dropdown-item"  asp-area="" asp-controller="Home" asp-action="ReportWordExcel">Отчет по дисциплинам, привязанным к выбранным планам обучений</a>
+                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="ReportPdf">Отчет по аттестации студентов и еще чему-то</a>
+                      </ul>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Личные данные</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="LearningPlan">Планы обучения</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Student">Студенты</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Attestation">Аттестация</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Reports">Отчеты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Enter">Вход</a>
