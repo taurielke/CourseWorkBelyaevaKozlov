@@ -128,7 +128,7 @@ namespace UniversityDeaneryApp.Controllers
         [HttpPost]
         public void AttestationCreate(int gradebookNumber, int semesterNumber)
         {
-            if (gradebookNumber != 0)
+            if (gradebookNumber != 0 && semesterNumber != 0)
             {
                 APIDeanery.PostRequest("api/attestation/CreateOrUpdateAttestation", new AttestationBindingModel
                 {
@@ -154,7 +154,7 @@ namespace UniversityDeaneryApp.Controllers
         [HttpPost]
         public void AttestationUpdate(int attestationId, int gradebookNumber, int semesterNumber)
         {
-            if (attestationId !=0 && gradebookNumber!=0)
+            if (attestationId !=0 && gradebookNumber!=0 && semesterNumber !=0)
             {
                 var attestation = APIDeanery.GetRequest<AttestationViewModel>($"api/attestation/GetAttestation?attestationId={attestationId}");
                 if (attestation == null)
@@ -180,7 +180,7 @@ namespace UniversityDeaneryApp.Controllers
         {
             var attestation = APIDeanery.GetRequest<AttestationViewModel>($"api/attestation/GetAttestation?attestationId={attestationId}");
             APIDeanery.PostRequest("api/attestation/DeleteAttestation", attestation);
-            Response.Redirect("Index");
+            Response.Redirect("Attestation");
         }
 
         public IActionResult Student()
@@ -339,7 +339,7 @@ namespace UniversityDeaneryApp.Controllers
         {
             var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/learningPlan/GetLearningPlan?learningPlanId={learningPlanId}");
             APIDeanery.PostRequest("api/learningPlan/DeleteLearningPlan", learningPlan);
-            Response.Redirect("Index");
+            Response.Redirect("LearningPlan");
         }
     }
 }

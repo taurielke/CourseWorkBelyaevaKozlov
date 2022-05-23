@@ -59,7 +59,7 @@
                             <a class="btn btn-warning button-fixed button-sm" asp-action="AttestationUpdate" asp-route-attestationId="@item.Id" asp-route-date="@item.Date" 
                             asp-route-studentName="@item.StudentName">Изменить</a>
 
-                            <a class="btn btn-danger button-fixed button-sm" asp-action="AttestationDelete" asp-route-Id="@item.Id">Удалить</a>
+                            <a class="btn btn-danger button-fixed button-sm" asp-action="AttestationDelete" asp-route-attestationId="@item.Id">Удалить</a>
                         </td>
                     </tr>
                 }
