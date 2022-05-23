@@ -24,7 +24,7 @@ namespace UniversityDeaneryApp.Controllers
             {
                 return Redirect("~/Home/Enter");
             }
-            return View(APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/learningPlan/getlearningplans?deaneryId={Program.Deanery.Id}"));
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -126,12 +126,13 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void AttestationCreate(int gradebookNumber)
+        public void AttestationCreate(int gradebookNumber, int semesterNumber)
         {
             if (gradebookNumber != 0)
             {
                 APIDeanery.PostRequest("api/attestation/CreateOrUpdateAttestation", new AttestationBindingModel
                 {
+                    SemesterNumber = semesterNumber,
                     StudentId = gradebookNumber,
                     Date = DateTime.Now,
                     DeaneryId = Program.Deanery.Id
@@ -151,7 +152,7 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void AttestationUpdate(int attestationId, int gradebookNumber)
+        public void AttestationUpdate(int attestationId, int gradebookNumber, int semesterNumber)
         {
             if (attestationId !=0 && gradebookNumber!=0)
             {
@@ -163,6 +164,7 @@ namespace UniversityDeaneryApp.Controllers
                 APIDeanery.PostRequest("api/attestation/CreateOrUpdateAttestation", new AttestationBindingModel
                 {
                     Id = attestation.Id,
+                    SemesterNumber = semesterNumber,
                     StudentId = gradebookNumber,
                     Date = DateTime.Now, 
                     DeaneryId= Program.Deanery.Id
@@ -173,7 +175,7 @@ namespace UniversityDeaneryApp.Controllers
             throw new Exception("Выберите студента");
         }
 
-        [HttpPost]
+        [HttpGet]
         public void AttestationDelete(int attestationId)
         {
             var attestation = APIDeanery.GetRequest<AttestationViewModel>($"api/attestation/GetAttestation?attestationId={attestationId}");
@@ -246,12 +248,12 @@ namespace UniversityDeaneryApp.Controllers
             throw new Exception("Заполните все поля");
         }
 
-        [HttpPost]
+        [HttpGet]
         public void StudentDelete(int gradebookNumber)
         {
             var student = APIDeanery.GetRequest<StudentViewModel>($"api/student/GetStudent?gradebookNumber={gradebookNumber}");
             APIDeanery.PostRequest("api/student/DeleteStudent", student);
-            Response.Redirect("Index");
+            Response.Redirect("Student");
         }
 
         public IActionResult LearningPlan()
@@ -271,15 +273,21 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void LearningPlanCreate(string streamName, int hours, Dictionary<int, string> Teachers)
+        public void LearningPlanCreate(string streamName, int hours, List <int> teachersId)
         {
-            if ( !string.IsNullOrEmpty(streamName) && hours !=0 && Teachers.Count != 0)
+            List<TeacherViewModel> teachers = new List<TeacherViewModel>();
+            foreach(var teacherId in teachersId)
+            {
+                teachers.Add(APIDeanery.GetRequest<TeacherViewModel>($"api/learningPlan/GetTeacher?teacherId={teacherId}"));
+            }
+
+            if ( !string.IsNullOrEmpty(streamName) && hours !=0 && teachers!=null)
             {
                 APIDeanery.PostRequest("api/LearningPlan/CreateOrUpdateLearningPlan", new LearningPlanBindingModel
                 {
                     StreamName =  streamName,
                     Hours = hours,
-                    Teachers = Teachers,
+                    Teachers = teachers.ToDictionary(x => x.Id, x=>x.Name),
                     DeaneryId = Program.Deanery.Id
                 });
                 Response.Redirect("LearningPlan");
@@ -297,9 +305,15 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void LearningPlanUpdate(int learningPlanId, string streamName, int hours, Dictionary<int, string> Teachers)
+        public void LearningPlanUpdate(int learningPlanId, string streamName, int hours, List<int> teachersId)
         {
-            if (learningPlanId != 0 && !string.IsNullOrEmpty(streamName) && hours != 0 && Teachers.Count != 0)
+            List<TeacherViewModel> teachers = new List<TeacherViewModel>();
+            foreach (var teacherId in teachersId)
+            {
+                teachers.Add(APIDeanery.GetRequest<TeacherViewModel>($"api/learningPlan/GetTeacher?teacherId={teacherId}"));
+            }
+
+            if (learningPlanId != 0 && !string.IsNullOrEmpty(streamName) && hours != 0 && teachers != null)
             {
                 var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?LearningPlanId={learningPlanId}");
                 if (learningPlan == null)
@@ -311,16 +325,16 @@ namespace UniversityDeaneryApp.Controllers
                     Id = learningPlan.Id,
                     StreamName = streamName,
                     Hours = hours,
-                    Teachers = Teachers,
+                    Teachers = teachers.ToDictionary(x => x.Id, x => x.Name),
                     DeaneryId = Program.Deanery.Id
                 });
                 Response.Redirect("LearningPlan");
                 return;
             }
-            throw new Exception("Выберите студента");
+            throw new Exception("Заполните все поля и выберете преподавателей");
         }
 
-        [HttpPost]
+        [HttpGet]
         public void LearningPlanDelete(int learningPlanId)
         {
             var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/learningPlan/GetLearningPlan?learningPlanId={learningPlanId}");

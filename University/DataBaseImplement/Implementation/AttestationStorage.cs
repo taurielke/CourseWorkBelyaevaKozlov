@@ -20,6 +20,7 @@ namespace UniversityDataBaseImplement.Implements
             .Select(rec => new AttestationViewModel
             {
                 Id = rec.Id,
+                SemesterNumber = rec.SemesterNumber,
                 Date = rec.Date,
                 StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
             }).ToList();
@@ -39,6 +40,7 @@ namespace UniversityDataBaseImplement.Implements
             {
                 Id = rec.Id,
                 Date = rec.Date,
+                SemesterNumber = rec.SemesterNumber,
                 StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
             })
             .ToList();
@@ -52,14 +54,15 @@ namespace UniversityDataBaseImplement.Implements
             }
             var context = new UniversityDatabase();
             
-            var Cert = context.Attestations
+            var attestation = context.Attestations
             .FirstOrDefault(rec => rec.Id == model.Id || rec.Date == model.Date);
-            return Cert != null ?
+            return attestation != null ?
             new AttestationViewModel
             {
-                Id = Cert.Id,
-                Date = Cert.Date,
-                StudentId = Cert.StudentGradebookNumber,
+                Id = attestation.Id,
+                Date = attestation.Date,
+                SemesterNumber = attestation.SemesterNumber,
+                StudentId = attestation.StudentGradebookNumber,
                 StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == x.GradebookNumber).Name
             } :
             null;
@@ -105,6 +108,7 @@ namespace UniversityDataBaseImplement.Implements
         private Attestation CreateModel(AttestationBindingModel model, Attestation attestation)
         {
             attestation.Date = model.Date;
+            attestation.SemesterNumber = model.SemesterNumber;
             attestation.StudentGradebookNumber = model.StudentId;
             attestation.DeaneryId = (int)model.DeaneryId;
             return attestation;

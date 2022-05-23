@@ -23,6 +23,7 @@ namespace UniversityDataBaseImplement
         public virtual DbSet<Department> Departments { set; get; }
         public virtual DbSet<StudentDiscipline> StudentDisciplines { set; get; }
         public virtual DbSet<LearningPlanStudent> LearningPlanStudents { set; get; }
+        public virtual DbSet<LearningPlanTeacher> LearningPlanTeachers { set; get; }
         public virtual DbSet<DisciplineLearningPlan> DisciplineLearningPlans { set; get; }
         public virtual DbSet<InterimReport> InterimReports { set; get; }
         public virtual DbSet<LearningPlan> LearningPlans { set; get; }

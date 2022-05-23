@@ -10,7 +10,7 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220522172559_coursework")]
+    [Migration("20220523124533_coursework")]
     partial class coursework
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace UniversityDataBaseImplement.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("DeaneryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SemesterNumber")
                         .HasColumnType("int");
 
                     b.Property<int>("StudentGradebookNumber")
@@ -214,7 +217,7 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("LearningPlanTeacher");
+                    b.ToTable("LearningPlanTeachers");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>

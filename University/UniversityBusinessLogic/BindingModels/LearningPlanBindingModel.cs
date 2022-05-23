@@ -13,5 +13,6 @@ namespace UniversityBusinessLogic.BindingModels
 
         public int Hours { get; set; }
         public Dictionary<int, string> Teachers { get; set; }
+        public Dictionary<int, string> Students { get; set; }
     }
 }

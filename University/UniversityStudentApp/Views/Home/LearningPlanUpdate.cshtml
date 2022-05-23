@@ -13,6 +13,12 @@
         <div class="col-4">Количество часов:</div>
         <div class="col-8"><input type="text" name="hours" id="hours" value="@ViewBag.LearningPlan.Hours" /></div>
     </div>
+    <div class="row">
+        <div class="col-4">Преподаватели:</div>
+        <div class="col-8">
+            <select id="teachersId" name="teachersId" class="form-control" asp-items="@(new SelectList(@ViewBag.Teachers,"Id", "Name"))" multiple ></select>
+        </div>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -26,7 +32,7 @@
             {
                 <tr>
                     <td>
-                        @item.Value.Item1
+                        @item.Value
                     </td>
                 </tr>
             }

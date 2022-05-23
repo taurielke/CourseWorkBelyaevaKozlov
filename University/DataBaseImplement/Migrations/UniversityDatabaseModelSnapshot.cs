@@ -32,6 +32,9 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("DeaneryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SemesterNumber")
+                        .HasColumnType("int");
+
                     b.Property<int>("StudentGradebookNumber")
                         .HasColumnType("int");
 
@@ -212,7 +215,7 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("LearningPlanTeacher");
+                    b.ToTable("LearningPlanTeachers");
                 });
 
             modelBuilder.Entity("UniversityDataBaseImplement.Models.Student", b =>

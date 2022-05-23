@@ -51,9 +51,8 @@
                         </td>
                         <td>
                             <a class="btn btn-warning button-fixed button-sm" asp-action="LearningPlanUpdate"
-                            asp-route-Id="@item.Id" asp-route-streamName="@item.StreamName" 
+                            asp-route-learningPlanId="@item.Id" asp-route-streamName="@item.StreamName" 
                             asp-route-hours="@item.Hours">Изменить</a>
-
                             <a class="btn btn-danger button-fixed button-sm" asp-action="LearningPlanDelete" asp-route-replenishmentId="@item.Id">Удалить</a>
                         </td>
                     </tr>

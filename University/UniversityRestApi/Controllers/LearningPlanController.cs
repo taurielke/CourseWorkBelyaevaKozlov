@@ -19,6 +19,8 @@ namespace UniversityRestApi.Controllers
 
         [HttpGet]
         public List<TeacherViewModel> GetTeacherList() => dLogic.Read(null)?.ToList();
+        [HttpGet]
+        public TeacherViewModel GetTeacher(int teacherId) => dLogic.Read(new TeacherBindingModel { Id = teacherId })?[0];
 
         [HttpGet]
         public List<LearningPlanViewModel> GetLearningPlanList() => logic.Read(null)?.ToList();

@@ -35,7 +35,7 @@ namespace UniversityBusinessLogic.BusinessLogics
 			});
 			if (element != null && element.Id != model.Id)
 			{
-				throw new Exception("Уже есть план с такими данными");
+				throw new Exception("Уже есть план обучения для данного потока с таким количеством часов");
 			}
 			if (model.Id.HasValue)
 			{

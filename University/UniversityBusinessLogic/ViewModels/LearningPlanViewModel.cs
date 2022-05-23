@@ -15,5 +15,6 @@ namespace UniversityBusinessLogic.ViewModels
         [DisplayName("Количество часов")]
         public int Hours { get; set; }
         public Dictionary<int, string> LearningPlanTeachers { get; set; }
+        public Dictionary<int, string> LearningPlanStudents { get; set; }
     }
 }

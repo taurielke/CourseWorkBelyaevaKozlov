@@ -84,6 +84,7 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SemesterNumber = table.Column<int>(type: "int", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     StudentGradebookNumber = table.Column<int>(type: "int", nullable: false),
                     DeaneryId = table.Column<int>(type: "int", nullable: false)
@@ -167,7 +168,7 @@ namespace UniversityDataBaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LearningPlanTeacher",
+                name: "LearningPlanTeachers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -177,15 +178,15 @@ namespace UniversityDataBaseImplement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LearningPlanTeacher", x => x.Id);
+                    table.PrimaryKey("PK_LearningPlanTeachers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LearningPlanTeacher_LearningPlans_LearningPlanId",
+                        name: "FK_LearningPlanTeachers_LearningPlans_LearningPlanId",
                         column: x => x.LearningPlanId,
                         principalTable: "LearningPlans",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LearningPlanTeacher_Teachers_TeacherId",
+                        name: "FK_LearningPlanTeachers_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
@@ -275,13 +276,13 @@ namespace UniversityDataBaseImplement.Migrations
                 column: "LearningPlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LearningPlanTeacher_LearningPlanId",
-                table: "LearningPlanTeacher",
+                name: "IX_LearningPlanTeachers_LearningPlanId",
+                table: "LearningPlanTeachers",
                 column: "LearningPlanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LearningPlanTeacher_TeacherId",
-                table: "LearningPlanTeacher",
+                name: "IX_LearningPlanTeachers_TeacherId",
+                table: "LearningPlanTeachers",
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
@@ -318,7 +319,7 @@ namespace UniversityDataBaseImplement.Migrations
                 name: "LearningPlanStudents");
 
             migrationBuilder.DropTable(
-                name: "LearningPlanTeacher");
+                name: "LearningPlanTeachers");
 
             migrationBuilder.DropTable(
                 name: "StudentDisciplines");
