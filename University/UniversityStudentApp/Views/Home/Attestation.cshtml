@@ -16,9 +16,9 @@
             <h3 class="display-4">Авторизируйтесь</h3>
             return;
         }
-        <p>
-            <a asp-action="AttestationCreate">Добавить аттестацию</a>
-        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a type="button" class="btn btn-outline-dark" asp-action="AttestationCreate">Добавить аттестацию</a>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -56,14 +56,15 @@
                             @Html.DisplayFor(modelItem => item.SemesterNumber)
                         </td>
                         <td>
-                            <a class="btn btn-warning button-fixed button-sm" asp-action="AttestationUpdate" asp-route-attestationId="@item.Id" asp-route-date="@item.Date" 
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="AttestationUpdate" asp-route-attestationId="@item.Id" asp-route-date="@item.Date" 
                             asp-route-studentName="@item.StudentName">Изменить</a>
 
-                            <a class="btn btn-danger button-fixed button-sm" asp-action="AttestationDelete" asp-route-attestationId="@item.Id">Удалить</a>
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="AttestationDelete" asp-route-attestationId="@item.Id">Удалить</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
+        
     }
 </div>

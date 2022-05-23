@@ -55,7 +55,7 @@ namespace UniversityDataBaseImplement.Implements
             var context = new UniversityDatabase();
             
             var attestation = context.Attestations
-            .FirstOrDefault(rec => rec.Id == model.Id || rec.Date == model.Date || rec.StudentGradebookNumber == model.StudentId || rec.SemesterNumber == model.SemesterNumber);
+            .FirstOrDefault(rec => rec.Id == model.Id || rec.Date == model.Date || (rec.StudentGradebookNumber == model.StudentId && rec.SemesterNumber == model.SemesterNumber));
             return attestation != null ?
             new AttestationViewModel
             {

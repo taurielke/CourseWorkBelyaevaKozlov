@@ -16,9 +16,9 @@
             <h3 class="display-4">Авторизируйтесь</h3>
             return;
         }
-        <p>
-            <a asp-action="LearningPlanCreate">Создать план обучения</a>
-        </p>
+         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a type="button" class="btn btn-outline-dark" asp-action="LearningPlanCreate">Создать план обучения</a>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -50,10 +50,10 @@
                             @Html.DisplayFor(modelItem => item.Hours)
                         </td>
                         <td>
-                            <a class="btn btn-warning button-fixed button-sm" asp-action="LearningPlanUpdate"
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="LearningPlanUpdate"
                             asp-route-learningPlanId="@item.Id" asp-route-streamName="@item.StreamName" 
                             asp-route-hours="@item.Hours">Изменить</a>
-                            <a class="btn btn-danger button-fixed button-sm" asp-action="LearningPlanDelete" asp-route-learningPlanId="@item.Id">Удалить</a>
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="LearningPlanDelete" asp-route-learningPlanId="@item.Id">Удалить</a>
                         </td>
                     </tr>
                 }

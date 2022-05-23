@@ -48,16 +48,15 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
-            {
-                var student = context.Students
-                  .Include(rec => rec.StudentDisciplines)
-                  .ThenInclude(rec => rec.Discipline)
-                  .Include(rec => rec.LearningPlanStudents)
-                  .ThenInclude(rec => rec.LearningPlan)
-                  .FirstOrDefault(rec => rec.Name == model.Name || rec.GradebookNumber == model.GradebookNumber);
-                return student != null ? CreateModel(student) : null;
-            }
+            var context = new UniversityDatabase();
+            var student = context.Students
+                .Include(rec => rec.StudentDisciplines)
+                .ThenInclude(rec => rec.Discipline)
+                .Include(rec => rec.LearningPlanStudents)
+                .ThenInclude(rec => rec.LearningPlan)
+                .FirstOrDefault(rec => rec.Name == model.Name || rec.GradebookNumber == model.GradebookNumber);
+            return student != null ? CreateModel(student) : null;
+            
         }
         public void Insert(StudentBindingModel model)
         {
@@ -87,7 +86,6 @@ namespace UniversityDataBaseImplement.Implements
         {
             var context = new UniversityDatabase();
             var transaction = context.Database.BeginTransaction();
-                
             try
             {
                 var element = context.Students.FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
@@ -108,7 +106,6 @@ namespace UniversityDataBaseImplement.Implements
         public void Delete(StudentBindingModel model)
         {
             var context = new UniversityDatabase();
-            
             Student element = context.Students.FirstOrDefault(rec => rec.GradebookNumber == model.GradebookNumber);
             if (element != null)
             {
@@ -158,39 +155,37 @@ namespace UniversityDataBaseImplement.Implements
 
         public void BindingDiscipline(int gradebookNumber, int subjectId)
         {
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            context.StudentDisciplines.Add(new StudentDiscipline
             {
-                context.StudentDisciplines.Add(new StudentDiscipline
-                {
-                    GradebookNumber = gradebookNumber,
-                    DisciplineId = subjectId,
-                });
-                context.SaveChanges();
-            }
+                GradebookNumber = gradebookNumber,
+                DisciplineId = subjectId,
+            });
+            context.SaveChanges();
+            
         }
         public List<StudentViewModel> GetByDisciplineId(int subjectId)
         {
-            using (var context = new UniversityDatabase())
-            {
-                return context.Students
-                  .Include(rec => rec.StudentDisciplines)
-                  .ThenInclude(rec => rec.Discipline)
-                  .Include(rec => rec.LearningPlanStudents)
-                  .ThenInclude(rec => rec.LearningPlan)
-                  .ToList()
-                  .Where(rec => rec.StudentDisciplines.FirstOrDefault(ss => ss.DisciplineId == subjectId) != null)
-                  .Select(rec => new StudentViewModel
-                  {
-                      GradebookNumber = rec.GradebookNumber,
-                      DeaneryId = rec.DeaneryId,
-                      Name = rec.Name,
-                      Disciplines = rec.StudentDisciplines
-                      .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
-                      LearningPlans = rec.LearningPlanStudents
-                      .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
-                  })
-                  .ToList();
-            }
+            var context = new UniversityDatabase();
+            return context.Students
+                .Include(rec => rec.StudentDisciplines)
+                .ThenInclude(rec => rec.Discipline)
+                .Include(rec => rec.LearningPlanStudents)
+                .ThenInclude(rec => rec.LearningPlan)
+                .ToList()
+                .Where(rec => rec.StudentDisciplines.FirstOrDefault(ss => ss.DisciplineId == subjectId) != null)
+                .Select(rec => new StudentViewModel
+                {
+                    GradebookNumber = rec.GradebookNumber,
+                    DeaneryId = rec.DeaneryId,
+                    Name = rec.Name,
+                    Disciplines = rec.StudentDisciplines
+                    .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
+                    LearningPlans = rec.LearningPlanStudents
+                    .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
+                })
+                .ToList();
+            
         }
         private static StudentViewModel CreateModel(Student student)
         {

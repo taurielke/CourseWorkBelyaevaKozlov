@@ -16,9 +16,9 @@
             <h3 class="display-4">Авторизируйтесь</h3>
             return;
         }
-        <p>
-            <a asp-action="StudentCreate">Добавить студента</a>
-        </p>
+         <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a type="button" class="btn btn-outline-dark" asp-action="StudentCreate">Добавить студента</a>
+        </div>
         <table class="table">
             <thead>
                 <tr>
@@ -44,8 +44,8 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            <a class="btn btn-warning button-fixed button-sm" asp-action="StudentUpdate" asp-route-gradebookNumber="@item.GradebookNumber" asp-route-name="@item.Name">Изменить</a>
-                            <a class="btn btn-danger button-fixed button-sm" asp-action="StudentDelete" asp-route-gradebookNumber="@item.GradebookNumber">Удалить</a>
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="StudentUpdate" asp-route-gradebookNumber="@item.GradebookNumber" asp-route-name="@item.Name">Изменить</a>
+                            <a class="btn btn-outline-dark button-fixed button-sm" asp-action="StudentDelete" asp-route-gradebookNumber="@item.GradebookNumber">Удалить</a>
                         </td>
                     </tr>
                 }
