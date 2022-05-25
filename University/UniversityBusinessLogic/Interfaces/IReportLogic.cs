@@ -8,10 +8,10 @@ namespace UniversityBusinessLogic.Interfaces
 {
     public interface IReportLogic
     {
-        List<ReportDisciplinesInLearningPlansViewModel> GetLearningPlanDiscipline();
-        List<ReportAttestationViewModel> GetAttestations(ReportBindingModel model);
-        void SaveDisciplinesInLearningPlansToWordFile(ReportBindingModel model);
-        void SaveDisciplinesInLearningPlansToExcelFile(ReportBindingModel model);
-        void SaveAttestationToPdfFile(ReportBindingModel model);
+        List<ReportLearningPlanDisciplinesViewModel> GetLearningPlanDisciplines(ReportBindingModel model);
+        void SaveLearningPlanDisciplinesToWordFile(ReportBindingModel model);
+        void SaveLearningPlanDisciplinesToExcelFile(ReportBindingModel model);
+        List<ReportAttestationsViewModel> GetAttestations(ReportBindingModel model);
+        void SaveAttestationsToPdfFile(ReportBindingModel model);
     }
 }
