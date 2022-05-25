@@ -113,30 +113,30 @@ namespace UniversityDataBaseImplement.Implements
             return checkList;
         }
 
-        //public List<ReportInterimReportViewModel> GetByDiscipline(DateTime? dateFrom, DateTime? dateTo, int? subjectId)
-        //{
-        //    if (dateFrom.HasValue && dateTo.HasValue && subjectId.HasValue)
-        //    {
-        //        using (var context = new UniversityDatabase())
-        //        {
-        //            return context.InterimReports
-        //            .Where(rec => rec.DateOfExam >= dateFrom && rec.DateOfExam <= dateTo &&
-        //            context.Teachers.FirstOrDefault(l => l.Id == rec.TeacherId && l.DisciplineId == subjectId) != null)
-        //            .ToList()
-        //            .Select(rec => new ReportInterimReportViewModel
-        //            {
-        //                InterimReportId = rec.Id,
-        //                InterimReportDate = rec.DateOfExam,
-        //                TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
-        //            })
-        //            .ToList();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new Exception("Данные не переданы");
-        //    }
-        //}
+        public List<ReportInterimReportViewModel> GetByDiscipline(DateTime? dateFrom, DateTime? dateTo, int? disciplineId)
+        {
+            if (dateFrom.HasValue && dateTo.HasValue && disciplineId.HasValue)
+            {
+                using (var context = new UniversityDatabase())
+                {
+                    return context.InterimReports
+                    .Where(rec => rec.DateOfExam >= dateFrom && rec.DateOfExam <= dateTo &&
+                    context.Teachers.FirstOrDefault(l => l.Id == rec.TeacherId && l.DisciplineId == disciplineId) != null)
+                    .ToList()
+                    .Select(rec => new ReportInterimReportViewModel
+                    {
+                        InterimReportId = rec.Id,
+                        InterimReportDate = rec.DateOfExam,
+                        TeacherName = context.Teachers.FirstOrDefault(recTeacher => recTeacher.Id == rec.TeacherId).Name,
+                    })
+                    .ToList();
+                }
+            }
+            else
+            {
+                throw new Exception("Данные не переданы");
+            }
+        }
 
         public List<InterimReportViewModel> GetByDateRange(InterimReportBindingModel model)
         {

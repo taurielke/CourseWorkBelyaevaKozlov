@@ -8,26 +8,26 @@ namespace UniversityBusinessLogic.BusinessLogics
 {
     public class InterimReportLogic : IInterimReportLogic
     {
-        private readonly IInterimReportStorage _checkListStorage;
-        public InterimReportLogic(IInterimReportStorage checkListStorage)
+        private readonly IInterimReportStorage _interimReportStorage;
+        public InterimReportLogic(IInterimReportStorage interimReportStorage)
         {
-            _checkListStorage = checkListStorage;
+            _interimReportStorage = interimReportStorage;
         }
         public List<InterimReportViewModel> Read(InterimReportBindingModel model)
         {
             if (model == null)
             {
-                return _checkListStorage.GetFullList();
+                return _interimReportStorage.GetFullList();
             }
             if (model.Id.HasValue)
             {
-                return new List<InterimReportViewModel> { _checkListStorage.GetElement(model) };
+                return new List<InterimReportViewModel> { _interimReportStorage.GetElement(model) };
             }
-            return _checkListStorage.GetFilteredList(model);
+            return _interimReportStorage.GetFilteredList(model);
         }
         public void CreateOrUpdate(InterimReportBindingModel model)
         {
-            var element = _checkListStorage.GetElement(new InterimReportBindingModel
+            var element = _interimReportStorage.GetElement(new InterimReportBindingModel
             {
                 DateOfExam = model.DateOfExam,
                 TeacherId = model.TeacherId,
@@ -38,21 +38,21 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             if (model.Id.HasValue)
             {
-                _checkListStorage.Update(model);
+                _interimReportStorage.Update(model);
             }
             else
             {
-                _checkListStorage.Insert(model);
+                _interimReportStorage.Insert(model);
             }
         }
         public void Delete(InterimReportBindingModel model)
         {
-            var element = _checkListStorage.GetElement(new InterimReportBindingModel { Id = model.Id });
+            var element = _interimReportStorage.GetElement(new InterimReportBindingModel { Id = model.Id });
             if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            _checkListStorage.Delete(model);
+            _interimReportStorage.Delete(model);
         }
     }
 }
