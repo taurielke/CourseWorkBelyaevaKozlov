@@ -6,6 +6,7 @@ using UniversityBusinessLogic.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using UniversityBusinessLogic.Mail;
 
 
 namespace UniversityDeaneryApp.Controllers
@@ -14,11 +15,13 @@ namespace UniversityDeaneryApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _environment;
+        private readonly MailKitWorker _mailKitWorker;
 
-        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment)
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment, MailKitWorker mailKitWorker)
         {
             _logger = logger;
             _environment = environment;
+            _mailKitWorker = mailKitWorker;
         }
         public IActionResult Index()
         {
@@ -460,7 +463,6 @@ namespace UniversityDeaneryApp.Controllers
             return View("ReportPdf");
         }
 
-       /* [HttpPost]
         public IActionResult SendReportOnMail(DateTime dateFrom, DateTime dateTo)
         {
             var model = new ReportBindingModel
@@ -468,18 +470,18 @@ namespace UniversityDeaneryApp.Controllers
                 DateFrom = dateFrom,
                 DateTo = dateTo
             };
-            model.FileName = @"..\BankDeaneryApp\wwwroot\ReportClientCurrency\ReportClientsPdf.pdf";
-            APIDeanery.PostRequest("api/report/CreateReportClientsToPdfFile", model);
+            model.FileName = @"..\UniversityStudentApp\wwwroot\ReportAttestations\ReportAttestationsPdf.pdf";
+            APIDeanery.PostRequest("api/report/CreateReportAttestationsToPdfFile", model);
             _mailKitWorker.MailSendAsync(new MailSendInfoBindingModel
             {
-                MailAddress = Program.Deanery.Email,
-                Subject = "Отчет по клиентам. Банк \"Вы банкрот\"",
-                Text = "Отчет по клиентам с " + dateFrom.ToShortDateString() + " по " + dateTo.ToShortDateString() +
-                "\nРуководитель - " + Program.Deanery.DeaneryFIO,
+                MailAddress = Program.Deanery.Login,
+                Subject = "Отчет по аттестациям. Университет \"Все отчислены\"",
+                Text = "Отчет по аттестациям с " + dateFrom.ToShortDateString() + " по " + dateTo.ToShortDateString() +
+                "\nДеканат - " + Program.Deanery.Name,
                 FileName = model.FileName,
             });
-            return View("ReportPdf");
-        }*/
+            return Redirect("~/Home/Index");
+        }
 
     }
 }

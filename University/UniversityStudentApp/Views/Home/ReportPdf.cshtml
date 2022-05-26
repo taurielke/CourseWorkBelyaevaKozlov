@@ -15,7 +15,7 @@
         </p>
         <p>
             <input type="submit" class="btn btn-outline-dark" asp-route-dateFrom="dateFrom" asp-route-dateTo="dateTo" asp-action="ReportAttestationsPDF" value="Вывести отчет на форму"/>
-            <button type="submit" class="btn btn-outline-dark" asp-route-dateFrom="dateFrom" asp-route-dateTo="dateTo" asp-action="SendReportOnMail">Отправить на почту</button>            
+            <input type="submit" class="btn btn-outline-dark" asp-route-dateFrom="dateFrom" asp-route-dateTo="dateTo" asp-action="SendReportOnMail" value = "Отправить отчет на почту"/>            
         </p>
         @if(ViewBag.Report != null){
             string period = ViewBag.Period;
@@ -59,7 +59,7 @@
                             @{string disciplines = "";}
                             @foreach(var disc in @item.LearningPlanDisciplines[i].Item2)
                             {
-                                    disciplines += disc.Name + ", ";
+                                    disciplines += disc.Name + "; ";
                             }                            
                         <td>
                             @disciplines
@@ -77,7 +77,7 @@
                              @{string disciplines = "";}
                             @foreach(var disc in @item.LearningPlanDisciplines[i].Item2)
                             {
-                                    disciplines += disc.Name + ", ";
+                                    disciplines += disc.Name + "; ";
                             }                            
                         <td>
                             @disciplines
