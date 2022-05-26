@@ -72,7 +72,7 @@ namespace UniversityView
 
         private void ButtonWord_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBoxTeachers.SelectedIndex == -1)
+           /* if (ComboBoxTeachers.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите преподавателя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -93,12 +93,12 @@ namespace UniversityView
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+            }*/
         }
 
         private void ButtonExcel_Click(object sender, RoutedEventArgs e)
         {
-            if (ComboBoxTeachers.SelectedIndex == -1)
+            /*if (ComboBoxTeachers.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите преподавателя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -119,7 +119,7 @@ namespace UniversityView
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+            }*/
         }
     }
 }

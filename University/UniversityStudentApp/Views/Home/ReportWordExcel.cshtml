@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "LearningPlanDisciplinesReport";
+}
+<div class="text-center">
+    <h5 class="display-4" style="font-size: 30px;">Список дисциплин по планам обучения</h5>
+</div>
+
+<div class="text-center">
+    <h5 class="display-4" style="font-size: 24px; margin-bottom: 30px">Выберите планы обучения для отчета:</h5>
+</div>
+
+<form method="post">
+<div class="row">
+        <div class="col-4" style="align-self:center" >Планы обучения:</div>
+        <div class="col-8">
+            @foreach (var item in ViewBag.LearningPlans)
+                {
+                    <input type="checkbox" id="learningPlansId" name="learningPlansId" multiple="multiple" value="@item.Id" /> @item.LearningPlanName<Br>
+                }           
+        </div>
+        <div class="row">
+        <div class="col-4"></div>
+        <div class="col-8">
+            <input type="submit" value="Сформировать отчет в Word" class="btn btn-outline-dark" asp-action="CreateReportLearningPlanDisciplinesToWordFile" style="margin-top:20px; padding-right: 40px; padding-left: 40px"/>
+            <input type="submit" value="Сформировать отчет в Excel" class="btn btn-outline-dark" asp-action="CreateReportLearningPlanDisciplinesToExcelFile" style="margin-top:20px; padding-right: 40px; padding-left: 40px;"/>
+        </div>
+    </div>
+</div>
+</form>

@@ -16,6 +16,10 @@
     <ProjectReference Include="..\UniversityBusinessLogic\UniversityBusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ReportLearningPlanDisciplines\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

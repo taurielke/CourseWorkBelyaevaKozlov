@@ -62,7 +62,7 @@ namespace UniversityBusinessLogic.BusinessLogics
                 Students = students
             });
         }*/
-        public void SaveTeacherStudentToExcelFile(ReportBindingModel model, List<StudentViewModel> students)
+       /* public void SaveTeacherStudentToExcelFile(ReportBindingModel model, List<StudentViewModel> students)
         {
             SaveToExcelWarehouser.CreateDoc(new ExcelInfoWarehouser
             {
@@ -74,7 +74,7 @@ namespace UniversityBusinessLogic.BusinessLogics
                 Title = "Список студентов",
                 Students = students
             });
-        }
+        }*/
 
         /*[Obsolete]
         public void SaveInterimReportsByDateByDisciplineToPdfFile(ReportBindingModel model)

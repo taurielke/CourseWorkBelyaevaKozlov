@@ -13,10 +13,12 @@ namespace UniversityDeaneryApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IWebHostEnvironment _environment;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment)
         {
             _logger = logger;
+            _environment = environment;
         }
         public IActionResult Index()
         {
@@ -377,5 +379,76 @@ namespace UniversityDeaneryApp.Controllers
             }
             throw new Exception("Заполните все поля и выберете преподавателей");
         }
+
+
+
+
+
+
+        public IActionResult ReportWordExcel()
+        {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            ViewBag.LearningPlans = APIDeanery.GetRequest<List<LearningPlanViewModel>>($"api/LearningPlan/GetLearningPlans?deaneryId={Program.Deanery.Id}");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateReportLearningPlanDisciplinesToWordFile(List<int> learningPlansId)
+        {
+            if (learningPlansId != null)
+            {
+                var model = new ReportBindingModel
+                {
+                    LearningPlans = new List<LearningPlanViewModel>(),
+                    Disciplines = new List<DisciplineViewModel>()
+                };
+                foreach (var learningPlanId in learningPlansId)
+                {
+                    model.LearningPlans.Add(APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}"));
+                }
+                model.FileName = @"..\UniversityDeaneryApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesDoc.doc";
+                APIDeanery.PostRequest("api/report/CreateReportLearningPlanDisciplinesToWordFile", model);
+                var fileName = "ReportLearningPlanDisciplinesDoc.doc";
+                var filePath = _environment.WebRootPath + @"\ReportLearningPlanDisciplines\" + fileName;
+                return PhysicalFile(filePath, "application/doc", fileName);
+            }
+            throw new Exception("Выберите хотя бы один план обучения");
+        }
+
+        [HttpPost]
+        public IActionResult CreateReportClientCurrencyToExcelFile(List<int> learningPlansId)
+        {
+            if (learningPlansId != null)
+            {
+                var model = new ReportBindingModel
+                {
+                    LearningPlans = new List<LearningPlanViewModel>(),
+                    Disciplines = new List<DisciplineViewModel>()
+                };
+                foreach (var learningPlanId in learningPlansId)
+                {
+                    model.LearningPlans.Add(APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}"));
+                }
+                model.FileName = @"..\UniversityDeaneryApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesExcel.xls";
+                APIDeanery.PostRequest("api/report/CreateReportLearningPlanDisciplinesToExcelFile", model);
+                var fileName = "ReportLearningPlanDisciplinesExcel.xls";
+                var filePath = _environment.WebRootPath + @"\ReportLearningPlanDisciplines\" + fileName;
+                return PhysicalFile(filePath, "application/xls", fileName);
+            }
+            throw new Exception("Выберите хотя бы один план обучения");
+        }
+
+        public IActionResult ReportPDF()
+        {
+            if (Program.Deanery == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View();
+        }
+
     }
 }

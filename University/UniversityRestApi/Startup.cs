@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using UniversityDataBaseImplement.Implements;
+using UniversityBusinessLogic.OfficePackage;
+using UniversityBusinessLogic.OfficePackage.Implements;
 
 namespace UniversityRestApi
 {
@@ -33,6 +35,10 @@ namespace UniversityRestApi
             services.AddTransient<ILearningPlanLogic, LearningPlanLogic>();
             services.AddTransient<IDisciplineLogic, DisciplineLogic>();
             services.AddTransient<ITeacherLogic, TeacherLogic>();
+            services.AddTransient<IReportLogic, ReportLogic>();
+            services.AddTransient<AbstractSaveToWord, SaveToWord>();
+            services.AddTransient<AbstractSaveToExcel, SaveToExcel>();
+            services.AddTransient<AbstractSaveToPdf, SaveToPdf>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
