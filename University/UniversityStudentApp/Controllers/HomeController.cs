@@ -452,5 +452,34 @@ namespace UniversityDeaneryApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ReportAttestationsPDF(DateTime dateFrom, DateTime dateTo)
+        {
+            ViewBag.Period = "C " + dateFrom.ToLongDateString() + " по " + dateTo.ToLongDateString();
+            ViewBag.Report = APIDeanery.GetRequest<List<ReportAttestationsViewModel>>($"api/report/GetAttestationsReport?dateFrom={dateFrom.ToLongDateString()}&dateTo={dateTo.ToLongDateString()}");
+            return View("ReportPdf");
+        }
+
+       /* [HttpPost]
+        public IActionResult SendReportOnMail(DateTime dateFrom, DateTime dateTo)
+        {
+            var model = new ReportBindingModel
+            {
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            };
+            model.FileName = @"..\BankDeaneryApp\wwwroot\ReportClientCurrency\ReportClientsPdf.pdf";
+            APIDeanery.PostRequest("api/report/CreateReportClientsToPdfFile", model);
+            _mailKitWorker.MailSendAsync(new MailSendInfoBindingModel
+            {
+                MailAddress = Program.Deanery.Email,
+                Subject = "Отчет по клиентам. Банк \"Вы банкрот\"",
+                Text = "Отчет по клиентам с " + dateFrom.ToShortDateString() + " по " + dateTo.ToShortDateString() +
+                "\nРуководитель - " + Program.Deanery.DeaneryFIO,
+                FileName = model.FileName,
+            });
+            return View("ReportPdf");
+        }*/
+
     }
 }

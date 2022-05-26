@@ -1,1 +1,92 @@
-﻿
+﻿@{
+    ViewData["Title"] = "AttestationsReport";
+}
+
+<div class="text-center">
+    <h5 class="display-4" style="font-size: 30px;">Отчёт по аттестациям</h5>
+</div>
+
+<form method="post">
+        <p>
+            <label for="date">С </label>
+            <input type="date" id="dateFrom" name="dateFrom"/>
+            <label for="date">По </label>
+            <input type="date" id="dateTo" name="dateTo"/>
+        </p>
+        <p>
+            <input type="submit" class="btn btn-outline-dark" asp-route-dateFrom="dateFrom" asp-route-dateTo="dateTo" asp-action="ReportAttestationsPDF" value="Вывести отчет на форму"/>
+            <button type="submit" class="btn btn-outline-dark" asp-route-dateFrom="dateFrom" asp-route-dateTo="dateTo" asp-action="SendReportOnMail">Отправить на почту</button>            
+        </p>
+        @if(ViewBag.Report != null){
+            string period = ViewBag.Period;
+            <div style="text-align:center">
+            <label style="font-weight:bold">@period</label>
+            </div>
+        <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ФИО студента
+                </th>
+                <th>
+                    Дата аттестации
+                </th>
+                <th>
+                    Планы обучения
+                </th>
+                <th>
+                    Дисциплины
+                </th>
+            </tr>
+        </thead>
+        <tbody>            
+            @foreach (var item in ViewBag.Report)
+            {
+                @for (int i = 0; i < item.LearningPlanDisciplines.Count; i++)
+                {
+                    if(i == 0)
+                    {
+                        <tr>
+                        <td>
+                            @item.StudentName
+                        </td>
+                        <td>
+                            @item.AttestationDate
+                        </td>
+                        <td>
+                            @item.LearningPlanDisciplines[i].Item1.LearningPlanName
+                        </td>
+                            @{string disciplines = "";}
+                            @foreach(var disc in @item.LearningPlanDisciplines[i].Item2)
+                            {
+                                    disciplines += disc.Name + ", ";
+                            }                            
+                        <td>
+                            @disciplines
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @item.LearningPlanDisciplines[i].Item1.LearningPlanName
+                        </td>
+                             @{string disciplines = "";}
+                            @foreach(var disc in @item.LearningPlanDisciplines[i].Item2)
+                            {
+                                    disciplines += disc.Name + ", ";
+                            }                            
+                        <td>
+                            @disciplines
+                        </td>
+                    </tr>
+                    }
+                }                    
+            }         
+        </tbody>
+    </table>
+    }      
+</form>

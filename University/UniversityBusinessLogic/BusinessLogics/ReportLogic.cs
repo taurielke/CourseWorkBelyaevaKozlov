@@ -53,13 +53,6 @@ namespace UniversityBusinessLogic.BusinessLogics
                     var discipline = disciplineStorage.GetElement(new DisciplineBindingModel { Id = teach.DisciplineId });
                     record.Disciplines.Add(discipline.Name);
                 }
-                /*var deposits = _depositStorage.GetFullList().Where(rec => rec.DepositClients.Keys.ToList().Contains(client.Id)).ToList();
-                foreach (var deposit in deposits)
-                {
-                    var currencies = _currencyStorage.GetFullList().Where(rec => rec.CurrencyDeposits.Keys.ToList().Contains(deposit.Id)).ToList();
-                    record.Currencies.AddRange(currencies.Select(cur => cur.CurrencyName));
-                }
-                record.Currencies = record.Currencies.Distinct().ToList();*/
                 list.Add(record);
             }
             return list;
@@ -72,13 +65,14 @@ namespace UniversityBusinessLogic.BusinessLogics
             {
                 DateFrom = model.DateFrom,
                 DateTo = model.DateTo,
+                StudentId = model.StudentId,
                 DeaneryId = model.DeaneryId
             });
             foreach (var att in attestations)
             {
                 var record = new ReportAttestationsViewModel
                 {
-                    StudentName = studentStorage.GetElement(new StudentBindingModel { GradebookNumber = att.StudentId}).Name,
+                    StudentName = att.StudentName,
                     AttestationDate = att.Date,
                     LearningPlanDisciplines = new List<(LearningPlanViewModel, List<DisciplineViewModel>)>()
                 };

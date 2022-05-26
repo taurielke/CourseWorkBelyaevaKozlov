@@ -40,7 +40,8 @@ namespace UniversityRestApi
             services.AddTransient<AbstractSaveToExcel, SaveToExcel>();
             services.AddTransient<AbstractSaveToPdf, SaveToPdf>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo

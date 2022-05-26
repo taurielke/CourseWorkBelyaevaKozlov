@@ -20,6 +20,7 @@ namespace UniversityDataBaseImplement.Implements
             .Select(rec => new AttestationViewModel
             {
                 Id = rec.Id,
+                StudentId = rec.StudentGradebookNumber,
                 SemesterNumber = rec.SemesterNumber,
                 Date = rec.Date,
                 StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name
@@ -35,10 +36,11 @@ namespace UniversityDataBaseImplement.Implements
             var context = new UniversityDatabase();
             
             return context.Attestations
-            .Where(rec => (rec.StudentGradebookNumber == model.StudentId && rec.Date >= model.DateFrom && rec.Date <= model.DateTo) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
+            .Where(rec => (rec.StudentGradebookNumber == model.StudentId )||( rec.Date >= model.DateFrom && rec.Date <= model.DateTo) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
             .Select(rec => new AttestationViewModel
             {
                 Id = rec.Id,
+                StudentId= rec.StudentGradebookNumber,
                 Date = rec.Date,
                 SemesterNumber = rec.SemesterNumber,
                 StudentName = context.Students.FirstOrDefault(x => x.GradebookNumber == rec.StudentGradebookNumber).Name

@@ -9,6 +9,7 @@ namespace UniversityBusinessLogic.BindingModels
         public string FileName { get; set; }
         public DateTime? DateFrom { get; set; }
         public DateTime? DateTo { get; set; }
+        public int StudentId { get; set; }
         public List<LearningPlanViewModel> LearningPlans { get; set; }
         public List <DisciplineViewModel> Disciplines { get; set; }
         public List<AttestationViewModel> Attestations { get; set; }

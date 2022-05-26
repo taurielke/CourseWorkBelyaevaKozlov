@@ -53,22 +53,22 @@ namespace UniversityDataBaseImplement.Implements
             {
                 return null;
             }
-            using (var context = new UniversityDatabase())
+            var context = new UniversityDatabase();
+            
+            var teacher = context.Teachers
+            .Include(rec => rec.LearningPlanTeachers)
+            .ThenInclude(rec => rec.LearningPlan)
+            .FirstOrDefault(rec => rec.Name == model.TeacherName || rec.Id == model.Id);
+            return teacher != null ?
+            new TeacherViewModel
             {
-                var teacher = context.Teachers
-                .Include(rec => rec.LearningPlanTeachers)
-                .ThenInclude(rec => rec.LearningPlan)
-                .FirstOrDefault(rec => rec.Name == model.TeacherName || rec.Id == model.Id);
-                return teacher != null ?
-                new TeacherViewModel
-                {
-                    Id = teacher.Id,
-                    Name = teacher.Name,
-                    DisciplineName = context.Disciplines.FirstOrDefault(recDiscipline => teacher.DisciplineId == recDiscipline.Id).Name,
-                    DisciplineId = teacher.DisciplineId
-                } :
-                null;
-            }
+                Id = teacher.Id,
+                Name = teacher.Name,
+                DisciplineName = context.Disciplines.FirstOrDefault(recDiscipline => teacher.DisciplineId == recDiscipline.Id).Name,
+                DisciplineId = teacher.DisciplineId
+            } :
+            null;
+            
         }
         public void Insert(TeacherBindingModel model)
         {
