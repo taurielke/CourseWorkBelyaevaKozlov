@@ -232,6 +232,9 @@ namespace UniversityDataBaseImplement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("StreamName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("GradebookNumber");
 
                     b.HasIndex("DeaneryId");

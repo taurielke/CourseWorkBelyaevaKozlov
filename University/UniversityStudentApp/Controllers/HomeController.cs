@@ -202,13 +202,14 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void StudentCreate(string name)
+        public void StudentCreate(string name, string streamName)
         {
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(streamName))
             {
                 APIDeanery.PostRequest("api/student/CreateOrUpdateStudent", new StudentBindingModel
                 {
                     Name = name,
+                    StreamName = streamName,
                     LearningPlans = new Dictionary<int, string>(),
                     Disciplines = new Dictionary<int, string>(),
                     DeaneryId = Program.Deanery.Id
@@ -227,7 +228,7 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void StudentUpdate(int gradebookNumber, string name)
+        public void StudentUpdate(int gradebookNumber, string name, string streamName)
         {
             if (gradebookNumber != 0 && !string.IsNullOrEmpty(name))
             {
@@ -239,6 +240,7 @@ namespace UniversityDeaneryApp.Controllers
                 APIDeanery.PostRequest("api/student/CreateOrUpdateStudent", new StudentBindingModel
                 {
                     GradebookNumber = gradebookNumber,
+                    StreamName=streamName,
                     Name=name,
                     LearningPlans = student.LearningPlans,
                     Disciplines = student.Disciplines,

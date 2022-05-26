@@ -67,6 +67,7 @@ namespace UniversityDataBaseImplement.Implements
                 Student student = new Student
                 {
                     Name = model.Name,
+                    StreamName = model.StreamName,
                     DeaneryId = (int)model.DeaneryId,
                 };
                 context.Students.Add(student);
@@ -120,6 +121,7 @@ namespace UniversityDataBaseImplement.Implements
         }
         private Student CreateModel(StudentBindingModel model, Student student, UniversityDatabase context)
         {
+            student.StreamName = model.StreamName;
             student.Name = model.Name;
             student.DeaneryId = (int)model.DeaneryId;
 
@@ -178,6 +180,7 @@ namespace UniversityDataBaseImplement.Implements
                 {
                     GradebookNumber = rec.GradebookNumber,
                     DeaneryId = rec.DeaneryId,
+                    StreamName = rec.StreamName,
                     Name = rec.Name,
                     Disciplines = rec.StudentDisciplines
                     .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
@@ -193,6 +196,7 @@ namespace UniversityDataBaseImplement.Implements
             {
                 GradebookNumber = student.GradebookNumber,
                 DeaneryId = student.DeaneryId,
+                StreamName = student.StreamName,
                 Name = student.Name,
                 Disciplines = student.StudentDisciplines
                 .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),

@@ -10,6 +10,7 @@ namespace UniversityDataBaseImplement.Models
 	{
 		[Key]
 		public int GradebookNumber { get; set; }
+		public string StreamName { get; set; }
 		public int DeaneryId { get; set; }
 		[Required]
 		public string Name { get; set; }

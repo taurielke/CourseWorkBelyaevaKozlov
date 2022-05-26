@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UniversityDataBaseImplement.Migrations
 {
-    public partial class courseWork : Migration
+    public partial class cw : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -127,6 +127,7 @@ namespace UniversityDataBaseImplement.Migrations
                 {
                     GradebookNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    StreamName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DeaneryId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

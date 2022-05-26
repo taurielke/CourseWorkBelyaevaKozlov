@@ -10,8 +10,8 @@ using UniversityDataBaseImplement;
 namespace UniversityDataBaseImplement.Migrations
 {
     [DbContext(typeof(UniversityDatabase))]
-    [Migration("20220526081517_courseWork")]
-    partial class courseWork
+    [Migration("20220526103711_cw")]
+    partial class cw
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,6 +232,9 @@ namespace UniversityDataBaseImplement.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreamName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GradebookNumber");

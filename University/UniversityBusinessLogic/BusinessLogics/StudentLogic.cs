@@ -97,6 +97,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             _studentStorage.Update(new StudentBindingModel
             {
                 GradebookNumber = student.GradebookNumber,
+                StreamName = student.StreamName,
                 Name = student.Name,
                 DeaneryId = student.DeaneryId,
                 Disciplines = student.Disciplines,

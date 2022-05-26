@@ -29,6 +29,9 @@
                         ФИО студента
                     </th>
                     <th>
+                        Название потока
+                    </th>
+                    <th>
                         Изменение студента
                     </th>
                 </tr>
@@ -42,6 +45,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StreamName)
                         </td>
                         <td>
                             <a class="btn btn-outline-dark button-fixed button-sm" asp-action="StudentUpdate" asp-route-gradebookNumber="@item.GradebookNumber" asp-route-name="@item.Name">Изменить</a>
