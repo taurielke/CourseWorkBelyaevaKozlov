@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using UniversityBusinessLogic.BusinessLogics;
 using UniversityBusinessLogic.BindingModels;
-using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.OfficePackage.HelperModels;
-using UniversityBusinessLogic.OfficePackage.Implements;
+using UniversityBusinessLogic.Interfaces;
 using UniversityBusinessLogic.ViewModels;
+using UniversityBusinessLogic.OfficePackage.Implements;
 
 namespace UniversityBusinessLogic.BusinessLogics
 {
-    public class DocReportWarehouserLogic
+    public class ReportWarehouserLogic
     {
-        private readonly ITeacherStorage _lectorStorage;
+        private readonly ITeacherStorage _teacherStorage;
         private readonly IInterimReportStorage _interimReportStorage;
         private readonly IStudentStorage _studentStorage;
         private readonly IDisciplineStorage _disciplineStorage;
-        private readonly SaveToWordWarehouser _saveToWordWarehouser;
-        public DocReportWarehouserLogic(ITeacherStorage lectorStorage, IInterimReportStorage interimReportStorage, IStudentStorage studentStorage, IDisciplineStorage disciplineStorage,
-            SaveToWordWarehouser saveToWordWarehouser, SaveToExcelWarehouser saveToExcelWarehouser)
+        public ReportWarehouserLogic(ITeacherStorage teacherStorage, IInterimReportStorage interimReportStorage, IStudentStorage studentStorage, IDisciplineStorage disciplineStorage)
         {
-            _lectorStorage = lectorStorage;
+            _teacherStorage = teacherStorage;
             _interimReportStorage = interimReportStorage;
             _studentStorage = studentStorage;
             _disciplineStorage = disciplineStorage;
-            _saveToWordWarehouser = saveToWordWarehouser;
         }
         public List<ReportDisciplineStudentViewModel> GetDisciplineStudent()
         {
@@ -54,7 +51,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             SaveToWordWarehouser.CreateDoc(new WordInfoWarehouser
             {
                 FileName = model.FileName,
-                TeacherName = _lectorStorage.GetElement(new TeacherBindingModel
+                TeacherName = _teacherStorage.GetElement(new TeacherBindingModel
                 {
                     Id = model.TeacherId
                 }).Name,
@@ -67,7 +64,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             SaveToExcelWarehouser.CreateDoc(new ExcelInfoWarehouser
             {
                 FileName = model.FileName,
-                TeacherName = _lectorStorage.GetElement(new TeacherBindingModel
+                TeacherName = _teacherStorage.GetElement(new TeacherBindingModel
                 {
                     Id = model.TeacherId
                 }).Name,

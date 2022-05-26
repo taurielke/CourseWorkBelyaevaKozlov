@@ -21,6 +21,12 @@ namespace UniversityView
     public partial class App : Application
     {
         private static IUnityContainer container = null;
+        public static string defaultReportPath = "C:\\тп\\Report.pdf";
+        public static string emailSender = "nelikeyyy@gmail.com";
+        public static string emailHost = "smtp.gmail.com";
+        public static int emailPort = 587;
+        public static string emailPassword = "poias2015";
+
         public static IUnityContainer Container
         {
             get
