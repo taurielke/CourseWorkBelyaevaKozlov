@@ -45,7 +45,7 @@ namespace UniversityBusinessLogic.BusinessLogics
             }
             return list;
         }
-        public List<ReportInterimReportViewModel> GetInterimReports(ReportBindingModel model)
+        /*public List<ReportInterimReportViewModel> GetInterimReports(ReportBindingModel model)
         {
             return _interimReportStorage.GetByDiscipline(model.DateFrom, model.DateTo, model.DisciplineId);
         }
@@ -61,7 +61,7 @@ namespace UniversityBusinessLogic.BusinessLogics
                 Title = "Список студентов",
                 Students = students
             });
-        }
+        }*/
         public void SaveTeacherStudentToExcelFile(ReportBindingModel model, List<StudentViewModel> students)
         {
             SaveToExcelWarehouser.CreateDoc(new ExcelInfoWarehouser

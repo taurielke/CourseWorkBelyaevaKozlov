@@ -107,7 +107,7 @@ namespace UniversityDataBaseImplement.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DeaneryId = table.Column<int>(type: "int", nullable: false),
-                    StreamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LearningPlanName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Hours = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

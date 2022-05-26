@@ -163,7 +163,7 @@ namespace UniversityDataBaseImplement.Migrations
                     b.Property<int>("Hours")
                         .HasColumnType("int");
 
-                    b.Property<string>("StreamName")
+                    b.Property<string>("LearningPlanName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

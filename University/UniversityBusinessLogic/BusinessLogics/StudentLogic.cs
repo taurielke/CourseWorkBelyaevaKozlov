@@ -91,7 +91,7 @@ namespace UniversityBusinessLogic.BusinessLogics
                 }
                 if (!student.LearningPlans.ContainsKey(learningPlanId)) 
                 {
-                    student.LearningPlans.Add(learningPlanId, learningPlan.StreamName);
+                    student.LearningPlans.Add(learningPlanId, learningPlan.LearningPlanName);
                 }
             }
             _studentStorage.Update(new StudentBindingModel

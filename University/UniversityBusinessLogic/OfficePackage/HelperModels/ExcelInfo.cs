@@ -9,6 +9,6 @@ namespace UniversityBusinessLogic.OfficePackage.HelperModels
     {
         public string FileName { get; set; }
         public string Title { get; set; }
-        public List<ReportDisciplinesInLearningPlansViewModel> LearningPlanDisciplines { get; set; }
+        public List<ReportLearningPlanDisciplinesViewModel> LearningPlanDisciplines { get; set; }
     }
 }

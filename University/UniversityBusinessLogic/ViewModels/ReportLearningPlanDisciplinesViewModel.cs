@@ -6,7 +6,7 @@ namespace UniversityBusinessLogic.ViewModels
 {
     public class ReportLearningPlanDisciplinesViewModel
     {
-        public string StreamName { get; set; }
+        public string LearningPlanName { get; set; }
         public List<string> Disciplines { get; set; }
     }
 }

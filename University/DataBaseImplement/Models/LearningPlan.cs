@@ -12,7 +12,7 @@ namespace UniversityDataBaseImplement.Models
 		public int Id { get; set; }
 		public int DeaneryId { get; set; }
 		[Required]
-		public string StreamName { get; set; }
+		public string LearningPlanName { get; set; }
 		[Required]
 		public int Hours { get; set; }
 		[ForeignKey("LearningPlanId")]

@@ -277,7 +277,7 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void LearningPlanCreate(string streamName, int hours, List <int> teachersId)
+        public void LearningPlanCreate(string learningPlanName, int hours, List <int> teachersId)
         {
             List<TeacherViewModel> teachers = new List<TeacherViewModel>();
             foreach(var teacherId in teachersId)
@@ -285,11 +285,11 @@ namespace UniversityDeaneryApp.Controllers
                 teachers.Add(APIDeanery.GetRequest<TeacherViewModel>($"api/learningPlan/GetTeacher?teacherId={teacherId}"));
             }
 
-            if ( !string.IsNullOrEmpty(streamName) && hours !=0 && teachers!=null)
+            if ( !string.IsNullOrEmpty(learningPlanName) && hours !=0 && teachers!=null)
             {
                 APIDeanery.PostRequest("api/LearningPlan/CreateOrUpdateLearningPlan", new LearningPlanBindingModel
                 {
-                    StreamName =  streamName,
+                    LearningPlanName =  learningPlanName,
                     Hours = hours,
                     Teachers = teachers.ToDictionary(x => x.Id, x=>x.Name),
                     DeaneryId = Program.Deanery.Id
@@ -313,7 +313,7 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public void LearningPlanUpdate(int learningPlanId, string streamName, int hours, List<int> teachersId)
+        public void LearningPlanUpdate(int learningPlanId, string learningPlanName, int hours, List<int> teachersId)
         {
             List<TeacherViewModel> teachers = new List<TeacherViewModel>();
             foreach (var teacherId in teachersId)
@@ -321,7 +321,7 @@ namespace UniversityDeaneryApp.Controllers
                 teachers.Add(APIDeanery.GetRequest<TeacherViewModel>($"api/learningPlan/GetTeacher?teacherId={teacherId}"));
             }
 
-            if (learningPlanId != 0 && !string.IsNullOrEmpty(streamName) && hours != 0 && teachers != null)
+            if (learningPlanId != 0 && !string.IsNullOrEmpty(learningPlanName) && hours != 0 && teachers != null)
             {
                 var learningPlan = APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?LearningPlanId={learningPlanId}");
                 if (learningPlan == null)
@@ -331,7 +331,7 @@ namespace UniversityDeaneryApp.Controllers
                 APIDeanery.PostRequest("api/learningPlan/CreateOrUpdateLearningPlan", new LearningPlanBindingModel
                 {
                     Id = learningPlan.Id,
-                    StreamName = streamName,
+                    LearningPlanName = learningPlanName,
                     Hours = hours,
                     Teachers = teachers.ToDictionary(x => x.Id, x => x.Name),
                     DeaneryId = Program.Deanery.Id

@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-4">Доступные планы обучения:</div>
         <div class="col-8">
-            <select id="learningPlansId" name="learningPlansId" class="form-control" asp-items="@(new SelectList(@ViewBag.LearningPlans,"Id", "StreamName"))" multiple="multiple" ></select>
+            <select id="learningPlansId" name="learningPlansId" class="form-control" asp-items="@(new SelectList(@ViewBag.LearningPlans,"Id", "LearningPlanName"))" multiple="multiple" ></select>
         </div>
     </div>
     <div class="row">

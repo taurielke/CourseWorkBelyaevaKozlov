@@ -182,7 +182,7 @@ namespace UniversityDataBaseImplement.Implements
                     Disciplines = rec.StudentDisciplines
                     .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
                     LearningPlans = rec.LearningPlanStudents
-                    .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
+                    .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.LearningPlanName)
                 })
                 .ToList();
             
@@ -197,7 +197,7 @@ namespace UniversityDataBaseImplement.Implements
                 Disciplines = student.StudentDisciplines
                 .ToDictionary(recSS => recSS.DisciplineId, recSS => recSS.Discipline.Name),
                 LearningPlans = student.LearningPlanStudents
-                .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.StreamName)
+                .ToDictionary(recES => recES.LearningPlanId, recES => recES.LearningPlan.LearningPlanName)
             };
         }
     }

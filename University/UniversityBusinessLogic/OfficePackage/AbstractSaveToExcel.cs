@@ -40,26 +40,11 @@ namespace UniversityBusinessLogic.OfficePackage
                     {
                         ColumnName = "B",
                         RowIndex = rowIndex,
-                        Text = discipline.Name,
+                        Text = discipline,
                         StyleInfo = ExcelStyleInfoType.TextWithBroder
                     });
-                   /* InsertCellInWorksheet(new ExcelCellParameters
-                    {
-                        ColumnName = "C",
-                        RowIndex = rowIndex,
-                        Text = component.Item2.ToString(),
-                        StyleInfo = ExcelStyleInfoType.TextWithBroder
-                    });*/
                     rowIndex++;
                 }
-                /*InsertCellInWorksheet(new ExcelCellParameters
-                {
-                    ColumnName = "C",
-                    RowIndex = rowIndex,
-                    Text = furniture.TotalCount.ToString(),
-                    StyleInfo = ExcelStyleInfoType.Text
-                });
-                rowIndex++;*/
             }
             SaveExcel(info);
         }

@@ -35,7 +35,7 @@ namespace UniversityDataBaseImplement.Implements
                 .ThenInclude(rec => rec.Teacher)
                 .Include(rec => rec.LearningPlanStudents)
                 .ThenInclude(rec => rec.Student)
-                .Where(rec => (rec.StreamName == model.StreamName) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
+                .Where(rec => (rec.LearningPlanName == model.LearningPlanName) || (model.DeaneryId.HasValue && rec.DeaneryId == model.DeaneryId))
                 .Select(CreateModel)
                 .ToList();
             
@@ -53,7 +53,7 @@ namespace UniversityDataBaseImplement.Implements
                 .ThenInclude(rec => rec.Teacher)
                 .Include(rec => rec.LearningPlanStudents)
                 .ThenInclude(rec => rec.Student)
-                .FirstOrDefault(rec => rec.StreamName == model.StreamName || rec.Id == model.Id);
+                .FirstOrDefault(rec => rec.LearningPlanName == model.LearningPlanName || rec.Id == model.Id);
             return lp != null ? CreateModel(lp) : null;
             
         }
@@ -67,7 +67,7 @@ namespace UniversityDataBaseImplement.Implements
             {
                 LearningPlan learningPlan = new LearningPlan()
                 {
-                    StreamName = model.StreamName,
+                    LearningPlanName = model.LearningPlanName,
                     Hours = model.Hours,    
                     DeaneryId = (int)model.DeaneryId,   
                 };
@@ -117,7 +117,7 @@ namespace UniversityDataBaseImplement.Implements
         }
         private static LearningPlan CreateModel(LearningPlanBindingModel model, LearningPlan learningPlan, UniversityDatabase context)
         {
-            learningPlan.StreamName = model.StreamName;
+            learningPlan.LearningPlanName = model.LearningPlanName;
             learningPlan.Hours = model.Hours;
             learningPlan.DeaneryId = (int)model.DeaneryId;
             
@@ -156,7 +156,7 @@ namespace UniversityDataBaseImplement.Implements
             return new LearningPlanViewModel
             {
                 Id = learningPlan.Id,
-                StreamName = learningPlan.StreamName,
+                LearningPlanName = learningPlan.LearningPlanName,
                 Hours = learningPlan.Hours,
                 LearningPlanTeachers = learningPlan.LearningPlanTeachers
                 .ToDictionary(recCLP => recCLP.TeacherId, recCLP => (recCLP.Teacher?.Name)),

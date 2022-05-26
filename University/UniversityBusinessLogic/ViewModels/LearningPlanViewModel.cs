@@ -10,7 +10,7 @@ namespace UniversityBusinessLogic.ViewModels
         public int Id { get; set; }
 
         [DisplayName("Название потока")]
-        public string StreamName { get; set; }
+        public string LearningPlanName { get; set; }
 
         [DisplayName("Количество часов")]
         public int Hours { get; set; }

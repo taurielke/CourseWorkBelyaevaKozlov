@@ -11,6 +11,6 @@ namespace UniversityBusinessLogic.OfficePackage.HelperModels
         public string Title { get; set; }
         public DateTime DateFrom { get; set; }
         public DateTime DateTo { get; set; }
-        public List<ReportAttestationViewModel> Attestations { get; set; }
+        public List<ReportAttestationsViewModel> Attestations { get; set; }
     }
 }
