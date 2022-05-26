@@ -411,7 +411,7 @@ namespace UniversityDeaneryApp.Controllers
                 {
                     model.LearningPlans.Add(APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}"));
                 }
-                model.FileName = @"..\UniversityDeaneryApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesDoc.doc";
+                model.FileName = @"..\UniversityStudentApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesDoc.doc";
                 APIDeanery.PostRequest("api/report/CreateReportLearningPlanDisciplinesToWordFile", model);
                 var fileName = "ReportLearningPlanDisciplinesDoc.doc";
                 var filePath = _environment.WebRootPath + @"\ReportLearningPlanDisciplines\" + fileName;
@@ -421,7 +421,7 @@ namespace UniversityDeaneryApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateReportClientCurrencyToExcelFile(List<int> learningPlansId)
+        public IActionResult CreateReportLearningPlanDisciplinesToExcelFile(List<int> learningPlansId)
         {
             if (learningPlansId != null)
             {
@@ -434,7 +434,7 @@ namespace UniversityDeaneryApp.Controllers
                 {
                     model.LearningPlans.Add(APIDeanery.GetRequest<LearningPlanViewModel>($"api/LearningPlan/GetLearningPlan?learningPlanId={learningPlanId}"));
                 }
-                model.FileName = @"..\UniversityDeaneryApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesExcel.xls";
+                model.FileName = @"..\UniversityStudentApp\wwwroot\ReportLearningPlanDisciplines\ReportLearningPlanDisciplinesExcel.xls";
                 APIDeanery.PostRequest("api/report/CreateReportLearningPlanDisciplinesToExcelFile", model);
                 var fileName = "ReportLearningPlanDisciplinesExcel.xls";
                 var filePath = _environment.WebRootPath + @"\ReportLearningPlanDisciplines\" + fileName;

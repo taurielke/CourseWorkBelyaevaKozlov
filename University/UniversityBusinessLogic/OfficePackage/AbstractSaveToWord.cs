@@ -20,30 +20,56 @@ namespace UniversityBusinessLogic.OfficePackage
                     JustificationType = WordJustificationType.Center
                 }
             });
+
+            /* foreach (var lp in info.LearningPlanDisciplines)
+             {
+                 CreateParagraph(new WordParagraph
+                 {
+                     Texts = new List<(string, WordTextProperties)> { (lp.LearningPlanName, new WordTextProperties {Size = "24", Bold = true})},
+                     TextProperties = new WordTextProperties
+                     {
+                         Size = "24",
+                         JustificationType = WordJustificationType.Both
+                     }
+                 });
+                 foreach (var discipline in lp.Disciplines)
+                 {
+                     CreateParagraph(new WordParagraph
+                     {
+                         Texts = new List<(string, WordTextProperties)> {(discipline, new WordTextProperties {Size = "24", Bold = true})},
+                         TextProperties = new WordTextProperties
+                         {
+                             Size = "24",
+                             JustificationType = WordJustificationType.Both
+                         }
+                     });
+                 }
+             }*/
+
             foreach (var lp in info.LearningPlanDisciplines)
             {
+                var learningPlanDisciplines = new List<(string, WordTextProperties)>();
+                learningPlanDisciplines.Add((lp.LearningPlanName + ": ", new WordTextProperties { Bold = true, Size = "24", }));
+
+                foreach (var d in lp.Disciplines)
+                {
+                    learningPlanDisciplines.Add((d + "; ", new WordTextProperties { Size = "24", }));
+
+                }
+
                 CreateParagraph(new WordParagraph
                 {
-                    Texts = new List<(string, WordTextProperties)> { (lp.LearningPlanName, new WordTextProperties {Size = "24", Bold = true})},
+                    Texts = learningPlanDisciplines,
                     TextProperties = new WordTextProperties
                     {
                         Size = "24",
                         JustificationType = WordJustificationType.Both
                     }
                 });
-                foreach (var discipline in lp.Disciplines)
-                {
-                    CreateParagraph(new WordParagraph
-                    {
-                        Texts = new List<(string, WordTextProperties)> {(discipline, new WordTextProperties {Size = "24", Bold = true})},
-                        TextProperties = new WordTextProperties
-                        {
-                            Size = "24",
-                            JustificationType = WordJustificationType.Both
-                        }
-                    });
-                }
             }
+
+
+
             SaveWord(info);
         }
         protected abstract void CreateWord(WordInfo info);
