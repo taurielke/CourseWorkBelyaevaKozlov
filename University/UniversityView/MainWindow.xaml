@@ -21,7 +21,7 @@
         <StackPanel Grid.Row="1">
             <Label Margin="10" Height="30" Name="labelUser"></Label>
             <DockPanel>
-                <Image VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Image Source="/Logo.jpg" Height="343" Width="689"/>
             </DockPanel>
         </StackPanel>
     </Grid>

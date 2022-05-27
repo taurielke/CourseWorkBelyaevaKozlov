@@ -41,7 +41,7 @@ namespace UniversityView
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            var startWindow = Container.Resolve<AuthorizationWindow>();
+            var startWindow = Container.Resolve<EnterWindow>();
             startWindow.Show();
         }
         private static IUnityContainer BuildUnityContainer()

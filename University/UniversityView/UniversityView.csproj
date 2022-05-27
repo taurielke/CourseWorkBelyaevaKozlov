@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Logo.jpg" />
     <None Remove="nicePic.png" />
   </ItemGroup>
 
@@ -30,7 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Logo.jpg" />
     <Resource Include="nicePic.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

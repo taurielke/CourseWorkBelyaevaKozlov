@@ -4,16 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:BoldReports="clr-namespace:BoldReports.UI.Xaml;assembly=BoldReports.Wpf"
         mc:Ignorable="d"
-        Title="Отчёт" Height="600" Width="800" Loaded="ReportWindow_Loaded">
-    <Grid>
+        Title="Отчёт" Height="600" Width="1000" Loaded="ReportWindow_Loaded">
+    <Grid Margin="0,0,-150,0">
         <BoldReports:ReportViewer Name ="ReportViewer" Margin="0,100,0,0"></BoldReports:ReportViewer>
         <Label Content="С" HorizontalAlignment="Left" Margin="11,37,0,0" VerticalAlignment="Top"/>
         <Label Content="по" HorizontalAlignment="Left" Margin="147,37,0,0" VerticalAlignment="Top"/>
         <DatePicker x:Name="datePickerFrom" HorizontalAlignment="Left" Margin="34,38,0,0" VerticalAlignment="Top" Width="105"/>
         <DatePicker x:Name="datePickerTo" HorizontalAlignment="Left" Margin="176,38,0,0" VerticalAlignment="Top" Width="105"/>
         <Button x:Name="buttonMake" Content="Показать" HorizontalAlignment="Left" Margin="530,37,0,0" VerticalAlignment="Top" Width="80" Height="27" Click="ButtonShow_Click"/>
-        <Button x:Name="buttonSendMail" Content="На почту" HorizontalAlignment="Left" Margin="635,38,0,0" VerticalAlignment="Top" Width="80" Height="27" Click="ButtonSendToMail"/>
+        <Button x:Name="buttonSendMail" Content="На почту" HorizontalAlignment="Left" Margin="860,36,0,0" VerticalAlignment="Top" Width="80" Height="27" Click="ButtonSendToMail"/>
         <ComboBox x:Name="ComboBoxDiscipline" HorizontalAlignment="Left" Margin="400,38,0,0" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="label" Content="Дисциплина:" HorizontalAlignment="Left" Margin="305,34,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBoxMail" HorizontalAlignment="Left" Height="22" Margin="661,38,0,0" TextWrapping="Wrap" Text="Адрес почты" VerticalAlignment="Top" Width="168"/>
     </Grid>
 </Window>

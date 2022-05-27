@@ -35,14 +35,16 @@ namespace UniversityView
             _logicDiscipline = logicDiscipline;
             _logicDepartment = departmentLogic;
             InitializeComponent();
-            ReportViewer.ReportPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"Resources\Report.rdlc");
+            ReportViewer.ReportPath = @"C:\Users\Алексей\Documents\GitHub\CourseWorkBelyaevaKozlov\University\UniversityView\Report.rdlc";
             ReportViewer.ProcessingMode = BoldReports.UI.Xaml.ProcessingMode.Local;
         }
 
         private void ReportWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBoxDiscipline.ItemsSource = _logicDiscipline.Read(new DisciplineBindingModel { DepartmentLogin = login });
+             
         }
+
 
         private void ButtonShow_Click(object sender, RoutedEventArgs e)
         {
@@ -130,7 +132,7 @@ namespace UniversityView
                 client.Port = App.emailPort;
                 client.EnableSsl = true;
                 client.UseDefaultCredentials = false;
-                client.Credentials = new NetworkCredential(App.emailSender, App.emailPassword);
+                client.Credentials = new NetworkCredential(textBoxMail.Text, App.emailPassword);
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.Send(msg);
                 MessageBox.Show("Сообщение отправлено", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
