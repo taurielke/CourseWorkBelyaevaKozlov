@@ -28,15 +28,7 @@ namespace UniversityBusinessLogic.BusinessLogics
         }
         public void CreateOrUpdate(AttestationBindingModel model)
         {
-            /*var element = _attestationStorage.GetElement(new AttestationBindingModel
-            {
-                StudentId = model.StudentId,
-                SemesterNumber = model.SemesterNumber
-            });
-            if (element != null && element.Id != model.Id)
-            {
-                throw new Exception("Уже есть аттестация для данного студента на этот семестр");
-            }*/
+            
             if (model.Id.HasValue)
             {
                 _attestationStorage.Update(model);

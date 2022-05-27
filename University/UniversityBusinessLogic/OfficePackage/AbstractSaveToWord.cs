@@ -21,31 +21,6 @@ namespace UniversityBusinessLogic.OfficePackage
                 }
             });
 
-            /* foreach (var lp in info.LearningPlanDisciplines)
-             {
-                 CreateParagraph(new WordParagraph
-                 {
-                     Texts = new List<(string, WordTextProperties)> { (lp.LearningPlanName, new WordTextProperties {Size = "24", Bold = true})},
-                     TextProperties = new WordTextProperties
-                     {
-                         Size = "24",
-                         JustificationType = WordJustificationType.Both
-                     }
-                 });
-                 foreach (var discipline in lp.Disciplines)
-                 {
-                     CreateParagraph(new WordParagraph
-                     {
-                         Texts = new List<(string, WordTextProperties)> {(discipline, new WordTextProperties {Size = "24", Bold = true})},
-                         TextProperties = new WordTextProperties
-                         {
-                             Size = "24",
-                             JustificationType = WordJustificationType.Both
-                         }
-                     });
-                 }
-             }*/
-
             foreach (var lp in info.LearningPlanDisciplines)
             {
                 var learningPlanDisciplines = new List<(string, WordTextProperties)>();
@@ -67,8 +42,6 @@ namespace UniversityBusinessLogic.OfficePackage
                     }
                 });
             }
-
-
 
             SaveWord(info);
         }

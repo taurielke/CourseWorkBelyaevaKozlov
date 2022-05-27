@@ -41,8 +41,8 @@ namespace UniversityView
 
         private void ReportWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ComboBoxDiscipline.ItemsSource = _logicDiscipline.Read(new DisciplineBindingModel { DepartmentLogin = login });
-             
+            List<DisciplineViewModel> models = _logicDiscipline.Read(new DisciplineBindingModel { DepartmentLogin = login });
+            ComboBoxDiscipline.ItemsSource = models;
         }
 
 

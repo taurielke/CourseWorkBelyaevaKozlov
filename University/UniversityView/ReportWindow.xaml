@@ -13,7 +13,13 @@
         <DatePicker x:Name="datePickerTo" HorizontalAlignment="Left" Margin="176,38,0,0" VerticalAlignment="Top" Width="105"/>
         <Button x:Name="buttonMake" Content="Показать" HorizontalAlignment="Left" Margin="530,37,0,0" VerticalAlignment="Top" Width="80" Height="27" Click="ButtonShow_Click"/>
         <Button x:Name="buttonSendMail" Content="На почту" HorizontalAlignment="Left" Margin="860,36,0,0" VerticalAlignment="Top" Width="80" Height="27" Click="ButtonSendToMail"/>
-        <ComboBox x:Name="ComboBoxDiscipline" HorizontalAlignment="Left" Margin="400,38,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox MinWidth="100" VerticalAlignment='Top' HorizontalAlignment ='Left'  Name="ComboBoxDiscipline" Margin="400,38,0,0">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <Label x:Name="label" Content="Дисциплина:" HorizontalAlignment="Left" Margin="305,34,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="textBoxMail" HorizontalAlignment="Left" Height="22" Margin="661,38,0,0" TextWrapping="Wrap" Text="Адрес почты" VerticalAlignment="Top" Width="168"/>
     </Grid>
