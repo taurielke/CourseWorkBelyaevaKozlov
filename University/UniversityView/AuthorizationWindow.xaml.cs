@@ -46,8 +46,9 @@ namespace UniversityView
                 {
                     var window = Container.Resolve<MainWindow>();
                     window.Login = viewDepartment[0].Login;
-                    window.ShowDialog();
+                    window.ShowDialog();                    
                     DialogResult = true;
+                    Close();
                 }
                 else
                 {
