@@ -1,5 +1,8 @@
-﻿using Microsoft.Reporting.WinForms;
+﻿
+using BoldReports.UI.Xaml;
+using BoldReports.Windows;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
@@ -32,11 +35,8 @@ namespace UniversityView
             _logicDiscipline = logicDiscipline;
             _logicDepartment = departmentLogic;
             InitializeComponent();
-        }
-
-        private void ReportViewer_Load(object sender, EventArgs e)
-        {
-            reportViewer.LocalReport.ReportPath = "../../Report.rdlc";
+            ReportViewer.ReportPath = System.IO.Path.Combine(Environment.CurrentDirectory, @"Resources\Report.rdlc");
+            ReportViewer.ProcessingMode = BoldReports.UI.Xaml.ProcessingMode.Local;
         }
 
         private void ReportWindow_Loaded(object sender, RoutedEventArgs e)
@@ -64,10 +64,6 @@ namespace UniversityView
             try
             {
                 var discipline = (DisciplineViewModel)ComboBoxDiscipline.SelectedItem;
-                string desc = $"{discipline.Name}\nc {datePickerFrom.SelectedDate.Value.ToShortDateString()} по {datePickerTo.SelectedDate.Value.ToShortDateString()}";
-                ReportParameter parameterPeriod = new ReportParameter("ReportParameterPeriod", desc);
-                reportViewer.LocalReport.SetParameters(parameterPeriod);
-
                 var dataSource = _logic.GetInterimReports(new ReportWarehouserBindingModel
                 {
                     DateFrom = datePickerFrom.SelectedDate,
@@ -75,9 +71,20 @@ namespace UniversityView
                     DisciplineId = discipline.Id
                 });
                 ReportDataSource source = new ReportDataSource("DataSetDiscipline", dataSource);
-                reportViewer.LocalReport.DataSources.Clear();
-                reportViewer.LocalReport.DataSources.Add(source);
-                reportViewer.RefreshReport();
+                ReportViewer.DataSources.Clear();
+                ReportViewer.DataSources.Add(source);
+
+                
+                string desc = $"{discipline.Name}\nc {datePickerFrom.SelectedDate.Value.ToShortDateString()} по {datePickerTo.SelectedDate.Value.ToShortDateString()}";
+                var values = new List<string>();
+                values.Add(desc);
+                ReportParameter parameterPeriod = new ReportParameter { Name = "ReportParameterPeriod", Values = values };
+                var parameters = new List<ReportParameter>();
+                parameters.Add(parameterPeriod);
+                ReportViewer.SetParameters(parameters);
+
+                
+                ReportViewer.RefreshReport();
             }
             catch (Exception ex)
             {

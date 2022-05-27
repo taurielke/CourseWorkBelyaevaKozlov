@@ -12,14 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="C1.Xaml.WPF.ReportViewer" Version="4.6.20221.765" />
+    <PackageReference Include="BoldReports.WPF" Version="4.1.79" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.Winforms" Version="150.1484.0" />
     <PackageReference Include="Microsoft.ReportViewer.Runtime.Common" Version="12.0.2402.15" />
-    <PackageReference Include="Microsoft.ReportViewer.WinForms" Version="10.0.40219.1" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
     <PackageReference Include="Unity" Version="5.11.9" />
   </ItemGroup>
 

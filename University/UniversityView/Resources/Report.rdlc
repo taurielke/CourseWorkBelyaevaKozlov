@@ -11,29 +11,29 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetSubject">
+    <DataSet Name="DataSetDiscipline">
       <Query>
         <DataSourceName>UniversityBusinessLogicViewModels</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="CheckListDate">
-          <DataField>CheckListDate</DataField>
+        <Field Name="InterimReportDate">
+          <DataField>InterimReportDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="CheckListId">
-          <DataField>CheckListId</DataField>
+        <Field Name="InterimReportId">
+          <DataField>InterimReportId</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="LectorName">
-          <DataField>LectorName</DataField>
+        <Field Name="TeacherName">
+          <DataField>TeacherName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>UniversityBusinessLogic.ViewModels</rd:DataSetName>
-        <rd:TableName>ReportCheckListViewModel</rd:TableName>
-        <rd:ObjectDataSourceType>UniversityBusinessLogic.ViewModels.ReportCheckListViewModel, UniversityBusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>ReportInterimReportViewModel</rd:TableName>
+        <rd:ObjectDataSourceType>UniversityBusinessLogic.ViewModels.ReportInterimReportViewModel, UniversityBusinessLogic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -228,21 +228,21 @@
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="LectorName">
+                        <Textbox Name="TeacherName">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LectorName.Value</Value>
+                                  <Value>=Fields!TeacherName.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>LectorName</rd:DefaultName>
+                          <rd:DefaultName>TeacherName</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -258,21 +258,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="CheckListId">
+                        <Textbox Name="InterimReportId">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CheckListId.Value</Value>
+                                  <Value>=Fields!InterimReportId.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>CheckListId</rd:DefaultName>
+                          <rd:DefaultName>InterimReportId</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -288,21 +288,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="CheckListDate">
+                        <Textbox Name="InterimReportDate">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CheckListDate.Value</Value>
+                                  <Value>=Fields!InterimReportDate.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>CheckListDate</rd:DefaultName>
+                          <rd:DefaultName>InterimReportDate</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -337,7 +337,7 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
-            <DataSetName>DataSetSubject</DataSetName>
+            <DataSetName>DataSetDiscipline</DataSetName>
             <Top>3.49814cm</Top>
             <Left>0.34078cm</Left>
             <Height>1.2cm</Height>

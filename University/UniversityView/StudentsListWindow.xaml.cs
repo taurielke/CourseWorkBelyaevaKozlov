@@ -72,7 +72,7 @@ namespace UniversityView
 
         private void ButtonWord_Click(object sender, RoutedEventArgs e)
         {
-           /* if (ComboBoxTeachers.SelectedIndex == -1)
+            if (ComboBoxTeachers.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите преподавателя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -82,7 +82,7 @@ namespace UniversityView
             {
                 try
                 {
-                    _reportLogic.SaveTeacherStudentsToWordFile(new ReportBindingModel
+                    _reportLogic.SaveTeacherStudentsToWordFile(new ReportWarehouserBindingModel
                     {
                         FileName = dialog.FileName,
                         TeacherId = (ComboBoxTeachers.SelectedItem as TeacherViewModel).Id
@@ -93,12 +93,12 @@ namespace UniversityView
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }*/
+            }
         }
 
         private void ButtonExcel_Click(object sender, RoutedEventArgs e)
         {
-            /*if (ComboBoxTeachers.SelectedIndex == -1)
+            if (ComboBoxTeachers.SelectedIndex == -1)
             {
                 MessageBox.Show("Выберите преподавателя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -108,7 +108,7 @@ namespace UniversityView
             {
                 try
                 {
-                    _reportLogic.SaveTeacherStudentToExcelFile(new ReportBindingModel
+                    _reportLogic.SaveTeacherStudentToExcelFile(new ReportWarehouserBindingModel
                     {
                         FileName = dialog.FileName,
                         TeacherId = (ComboBoxTeachers.SelectedItem as TeacherViewModel).Id
@@ -119,7 +119,7 @@ namespace UniversityView
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }*/
+            }
         }
     }
 }

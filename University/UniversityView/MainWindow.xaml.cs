@@ -55,7 +55,7 @@ namespace UniversityView
         private void MenuItemReport_Click(object sender, RoutedEventArgs e)
         {
             var window = Container.Resolve<ReportWindow>();
-            //window.Login = login;
+            window.Login = login;
             window.ShowDialog();
         }
 
